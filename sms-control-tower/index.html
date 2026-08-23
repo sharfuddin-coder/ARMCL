@@ -101,7 +101,8 @@ function loadSheet(gid, cb){
   };
   var s = document.createElement('script');
   s.id = 'gs_' + gid;
-  s.src = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID + '/gviz/tq?tqx=out:json;gid=' + gid + '&callback=' + cbName;
+  // responseHandler (not callback) is what the gviz endpoint honors for JSONP
+  s.src = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID + '/gviz/tq?tqx=out:json;responseHandler:' + cbName + '&gid=' + gid;
   s.onerror = function(){ delete window[cbName]; document.getElementById('err').style.display='block'; document.getElementById('err').textContent='Failed to load sheet gid '+gid; };
   document.body.appendChild(s);
 }
@@ -130,8 +131,8 @@ function parseTargetReport(t){
         name: name, designation: dg,
         monthlyTarget: cleanNum(row[3]), targetADS: cleanNum(row[4]),
         salesTillDate: cleanNum(row[5]), presentADS: cleanNum(row[6]),
-        achivPct: cleanNum(row[7])*100, logicalSales: cleanNum(row[8]),
-        logicalAchivPct: cleanNum(row[9])*100, salesTrend: cleanNum(row[10]),
+        achivPct: cleanNum(row[7]), logicalSales: cleanNum(row[8]),
+        logicalAchivPct: cleanNum(row[9]), salesTrend: cleanNum(row[10]),
         remainingSales: cleanNum(row[11]), rads: cleanNum(row[12])
       });
     }
@@ -178,9 +179,9 @@ function render(rep, dw, daywise){
   var g = rep.glance;
   var target = cleanNum(g['Monthly Target']) || 1230000;
   var sales = cleanNum(g['Sales Till Date']);
-  var ach = cleanNum(g['Achiv % till date'])*100;
+  var ach = cleanNum(g['Achiv % till date']);
   var logical = cleanNum(g['Logical Sales till date']);
-  var logicalAch = cleanNum(g['Logical Achiv % till date'])*100;
+  var logicalAch = cleanNum(g['Logical Achiv % till date']);
   var targetADS = cleanNum(g['Target ADS']);
   var presentADS = cleanNum(g['Present ADS']);
   var rads = cleanNum(g['RADS']);

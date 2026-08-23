@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sales Target Achievement Status | August 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.container{max-width:1500px;margin:0 auto;padding:24px}
+.title-bar{background:#0f172a;color:#f8fafc;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.title-bar h1{font-size:1.15rem;font-weight:700}
+.title-bar .date{color:#94a3b8;font-size:0.85rem}
+.title-bar .sub{color:#94a3b8;font-size:0.78rem;margin-top:4px;max-width:900px}
+.chips{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:20px}
+.chip{background:#fff;border-radius:10px;padding:16px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.chip label{font-size:0.68rem;text-transform:uppercase;color:#64748b;letter-spacing:0.06em;display:block;margin-bottom:6px;font-weight:600}
+.chip .val{font-size:1.7rem;font-weight:800;color:#0f172a}
+.chip .extra{font-size:0.75rem;color:#64748b;margin-top:4px}
+.chip.blue{border-top:3px solid #3b82f6}
+.chip.green{border-top:3px solid #10b981}
+.chip.orange{border-top:3px solid #f59e0b}
+.chip.red{border-top:3px solid #ef4444}
+.chip.violet{border-top:3px solid #8b5cf6}
+.chip.teal{border-top:3px solid #14b8a6}
+.table-box{background:#fff;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05);overflow:hidden}
+.table-box .tb-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+.table-box .tb-head h3{font-size:0.95rem;font-weight:700;color:#0f172a}
+.table-box .tb-head .meta{font-size:0.75rem;color:#64748b}
+.table-scroll{overflow-x:auto;max-height:600px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;min-width:1100px}
+thead{position:sticky;top:0;background:#f8fafc;z-index:2}
+th{font-size:0.66rem;text-transform:uppercase;color:#64748b;letter-spacing:0.05em;padding:12px 14px;text-align:right;border-bottom:2px solid #e2e8f0;white-space:nowrap;font-weight:700}
+th:first-child,td:first-child{text-align:left}
+td{padding:11px 14px;font-size:0.8rem;border-bottom:1px solid #f1f5f9;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+tr:hover{background:#f8fafc}
+tr:nth-child(even){background:#fcfdff}
+.num{font-weight:600}
+.pos{color:#059669}
+.neg{color:#dc2626}
+.pct-badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700}
+.pct-badge.high{background:#dcfce7;color:#15803d}
+.pct-badge.mid{background:#fef3c7;color:#b45309}
+.pct-badge.low{background:#fee2e2;color:#b91c1c}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.dot-green{background:#10b981}
+.dot-orange{background:#f59e0b}
+.dot-red{background:#ef4444}
+.foot{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+.foot .box{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px;flex:1;min-width:200px}
+.foot .box label{font-size:0.68rem;text-transform:uppercase;color:#64748b;letter-spacing:0.06em;display:block;margin-bottom:6px;font-weight:600}
+.foot .box .val{font-size:1.1rem;font-weight:700;color:#0f172a}
+.loading,.error{text-align:center;padding:60px;color:#64748b;font-size:0.9rem}
+.error{color:#dc2626}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<div>
+<h1>Sales Target Achievement Status | August' 2026</h1>
+<div class="sub" id="subtitle">Loading data...</div>
+</div>
+<div class="date" id="dateLabel">Date: --/--/--</div>
+</div>
+
+<div class="chips" id="chips"></div>
+
+<div class="table-box">
+<div class="tb-head">
+<h3>Employee Target Achievement Tracker</h3>
+<span class="meta" id="tableMeta"></span>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>#</th><th>Name of Employee</th><th>Designation</th><th>Monthly Target</th><th>Target ADS</th><th>Sales Till Date</th><th>Present ADS</th><th>Achiev. %</th><th>Logical Sales</th><th>Logical %</th><th>Sales Trend</th><th>Remaining Sales</th><th>RADS</th><th>Status</th>
+</tr>
+</thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+</div>
+
+<div class="foot" id="foot"></div>
+
+<div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap">
+<a href="/daywise-sales" style="display:inline-block;padding:12px 24px;background:#3b82f6;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem">Day-wise Sales Dashboard &rarr;</a>
+<a href="/armcl-august" style="display:inline-block;padding:12px 24px;background:#8b5cf6;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem">ARMCL Sales Ranking &rarr;</a>
+<a href="/person-sales" style="display:inline-block;padding:12px 24px;background:#64748b;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem">Person-wise Sales &rarr;</a>
+<a href="/budget-dashboard" style="display:inline-block;padding:12px 24px;background:#a855f7;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.85rem">Budget Dashboard &rarr;</a>
+</div>
+</div>
+
+<script>
+const BASE='';
+
+function fmt(n){return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function pct(n){return Number(n||0).toFixed(0)+'%'}
+function statusBadge(p){
+  if(p>=32)return '<span class="pct-badge high">On Track</span>';
+  if(p>=20)return '<span class="pct-badge mid">Behind</span>';
+  return '<span class="pct-badge low">Off Track</span>';
+}
+function statusDot(p){
+  if(p>=32)return '<span class="status-dot dot-green"></span>On Track';
+  if(p>=20)return '<span class="status-dot dot-orange"></span>Behind';
+  return '<span class="status-dot dot-red"></span>Off Track';
+}
+
+async function load(){
+  try{
+    const d=await fetch(BASE+'/api/dashboard').then(r=>r.json());
+    renderChips(d);
+    renderTable(d.topPerformers, d);
+    renderFoot(d);
+  }catch(e){
+    document.getElementById('subtitle').textContent='Failed to load: '+e.message;
+    document.getElementById('chips').innerHTML='<div class="error">Error loading data</div>';
+  }
+}
+
+function renderChips(d){
+  const s=d.stats;
+  const emps=d.topPerformers.concat(d.bottomPerformers);
+  const all=d.topPerformers;
+  let onTrack=0,offTrack=0,completed=0;
+  (d.topPerformers||[]).forEach(e=>{
+    if(e.achivPct>=32)onTrack++;
+    if(e.achivPct>=20)completed++;
+    if(e.achivPct<20)offTrack++;
+  });
+  const targetMet=s.logicalAchivPct>=32?'YES':'NO';
+  const c=[];
+  c.push('<div class="chip blue"><label>Total Employees</label><div class="val">'+s.employees+'</div><div class="extra">Team size</div></div>');
+  c.push('<div class="chip green"><label>On Track</label><div class="val">'+onTrack+'</div><div class="extra">>=32% achievement</div></div>');
+  c.push('<div class="chip orange"><label>Behind</label><div class="val">'+(s.employees-onTrack)+'</div><div class="extra"><32% achievement</div></div>');
+  c.push('<div class="chip violet"><label>Sales Till Date</label><div class="val">'+fmt(s.salesTillDate)+'</div><div class="extra">Target: '+fmt(s.monthlyTarget)+'</div></div>');
+  c.push('<div class="chip teal"><label>Achiev. %</label><div class="val">'+pct(s.achivPct)+'</div><div class="extra">Logical: '+pct(s.logicalAchivPct)+'</div></div>');
+  c.push('<div class="chip red"><label>Remaining</label><div class="val">'+fmt(s.remainingSales)+'</div><div class="extra">Days left: '+s.daysRemaining+'</div></div>');
+  document.getElementById('chips').innerHTML=c.join('');
+  document.getElementById('subtitle').textContent='Every record: monthly target, sales till date, logical sales, achievement % and status';
+  document.getElementById('dateLabel').textContent='Date: 10/08/26';
+  document.getElementById('tableMeta').textContent=s.employees+' employees · Days consumed: '+s.daysConsumed+' · Days remaining: '+s.daysRemaining;
+}
+
+function renderTable(list, d){
+  const tb=document.getElementById('tbody');
+  tb.innerHTML='';
+  list.forEach((e,i)=>{
+    tb.innerHTML+=
+    '<tr>'+
+    '<td>'+(i+1)+'</td>'+
+    '<td style="font-weight:600">'+e.name+'</td>'+
+    '<td>'+e.designation+'</td>'+
+    '<td class="num">'+fmt(e.monthlyTarget)+'</td>'+
+    '<td class="num">'+fmt(e.targetADS)+'</td>'+
+    '<td class="num pos">'+fmt(e.salesTillDate)+'</td>'+
+    '<td class="num">'+fmt(e.presentADS)+'</td>'+
+    '<td>'+statusBadge(e.achivPct)+' '+pct(e.achivPct)+'</td>'+
+    '<td class="num">'+fmt(e.logicalSales)+'</td>'+
+    '<td class="num">'+pct(e.logicalAchivPct)+'</td>'+
+    '<td class="num">'+fmt(e.salesTrend)+'</td>'+
+    '<td class="num '+(e.remainingSales>0?'neg':'')+'">'+fmt(e.remainingSales)+'</td>'+
+    '<td class="num">'+fmt(e.rads)+'</td>'+
+    '<td>'+statusDot(e.achivPct)+'</td>'+
+    '</tr>';
+  });
+}
+
+function renderFoot(d){
+  const s=d.stats;
+  const f=[];
+  f.push('<div class="box"><label>Target ADS</label><div class="val">'+fmt(s.targetADS)+'</div></div>');
+  f.push('<div class="box"><label>Present ADS</label><div class="val">'+fmt(s.presentADS)+'</div></div>');
+  f.push('<div class="box"><label>Sales Trend</label><div class="val">'+fmt(s.salesTrend)+'</div></div>');
+  f.push('<div class="box"><label>Logical Sales</label><div class="val">'+fmt(s.logicalSales)+'</div></div>');
+  f.push('<div class="box"><label>RADS</label><div class="val">'+fmt(s.rads)+'</div></div>');
+  f.push('<div class="box"><label>Days</label><div class="val">'+s.daysConsumed+' / '+s.daysRemaining+'</div></div>');
+  document.getElementById('foot').innerHTML=f.join('');
+}
+
+load();
+</script>
+</body>
+</html>

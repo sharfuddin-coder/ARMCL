@@ -1,0 +1,29 @@
+{
+  "name": "default-project",
+  "version": "1.0.0",
+  "description": "Sales Dashboard with Google Sheets API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "node -e \"console.log('build ok')\""
+  },
+  "keywords": [
+    "sales",
+    "dashboard",
+    "google-sheets",
+    "api"
+  ],
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@googleapis/sheets": "^14.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "googleapis": "^174.0.1",
+    "mssql": "^12.7.0",
+    "playwright-core": "^1.62.1",
+    "xlsx": "^0.18.5"
+  }
+}

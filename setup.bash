@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# Setup Google Sheets API connection for this project
+
+echo "=== Google Sheets API Setup ==="
+echo ""
+
+echo "Step 1: Install dependencies"
+npm install googleapis dotenv
+
+echo ""
+echo "Step 2: Create credentials file"
+echo "1. Go to Google Cloud Console: https://console.cloud.google.com/"
+echo "2. Create a new project or use an existing one"
+echo "3. Navigate to APIs & Services > Credentials"
+echo "4. Click 'Create Credentials' > 'Service Account'"
+echo "5. Name your service account"
+echo "6. Click 'Create and continue'"
+echo "7. On OAuth 2.0 Client ID screen, click 'New Client'"
+echo "8. Select 'Service Account' and click 'Continue'"
+echo "9. Click 'Create'"
+echo "10. Click 'Save' to download the JSON key file"
+echo ""
+echo "Step 3: Share your Google Sheet"
+echo "1. Open: https://docs.google.com/spreadsheets/d/1vPlcijsZkj4p6ZHmzg7jEAutNrW5l2YKlbNUtgXkNbI/edit?gid=990537426"
+echo "2. Click 'Share'"
+echo "3. Add the service account email (from the JSON key) as a reader"
+echo "4. Click 'Send'"
+echo ""
+echo "Step 4: Configure your project"
+echo "1. Rename credentials.json to credentials.json (in this project directory)"
+echo "2. Create .env file:"
+echo "   echo 'GOOGLE_APPLICATION_CREDENTIALS=./credentials.json' > .env"
+echo "   echo 'SPREADSHEET_ID=1vPlcijsZkj4p6ZHmzg7jEAutNrW5l2YKlbNUtgXkNbI' >> .env"
+echo "   echo 'READ_RANGE=Sheet1!A1:Z100' >> .env"
+echo ""
+echo "Step 5: Run the script"
+echo "node googleSheets.js"
+
+echo ""
+echo "Done!"

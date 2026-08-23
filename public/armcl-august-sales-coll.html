@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL Sales & Collection | August 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.container{max-width:1400px;margin:0 auto;padding:24px}
+.title-bar{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.title-bar h1{font-size:1.2rem;font-weight:700;color:#f8fafc}
+.title-bar .sub{color:#94a3b8;font-size:0.8rem;margin-top:4px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.chip{background:#1e293b;border-radius:10px;padding:16px;border:1px solid #334155}
+.chip label{font-size:0.65rem;text-transform:uppercase;color:#94a3b8;letter-spacing:0.05em;margin-bottom:6px;font-weight:600;display:block}
+.chip .val{font-size:1.3rem;font-weight:800;color:#f8fafc}
+.chip .sub{font-size:0.72rem;color:#64748b;margin-top:3px}
+.chip.blue{border-top:3px solid #3b82f6}.chip.green{border-top:3px solid #10b981}.chip.orange{border-top:3px solid #f59e0b}.chip.violet{border-top:3px solid #8b5cf6}.chip.red{border-top:3px solid #ef4444}.chip.teal{border-top:3px solid #14b8a6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.box{background:#1e293b;border-radius:10px;padding:20px;border:1px solid #334155}
+.box h3{font-size:0.8rem;color:#94a3b8;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.bar{position:relative;height:22px;background:#0f172a;border-radius:4px;margin-bottom:5px;overflow:hidden}
+.bar .fill{height:100%;border-radius:4px}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:0.7rem;font-weight:600;color:#e2e8f0;z-index:1}
+.note{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:10px 16px;margin-bottom:20px;font-size:0.78rem;color:#fbbf24}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<h1>ARMCL Sales & Collection Dashboard | August 2026</h1>
+<div class="sub">Akij Ready Mix Concrete Ltd. — Source: iBOS ERP (Sales Orders + Trade Receivable)</div>
+</div>
+<div class="note" id="note"></div>
+<div class="chips" id="chips"></div>
+<div class="row">
+<div class="box"><h3>Daily Sales Orders (Value)</h3><div id="sDaily" style="max-height:350px;overflow-y:auto"></div></div>
+<div class="box"><h3>Daily Collection (Trade Receivable)</h3><div id="cDaily" style="max-height:350px;overflow-y:auto"></div></div>
+</div>
+<div class="row">
+<div class="box"><h3>Sales vs Collection Comparison</h3><div id="compare" style="max-height:350px;overflow-y:auto"></div></div>
+<div class="box"><h3>Summary</h3><div id="summary" style="font-size:0.85rem;line-height:2.2"></div></div>
+</div>
+</div>
+<script>
+function fm(n){return (n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmtK(n){const v=Number(n||0);if(v>=1e9)return (v/1e9).toFixed(2)+'B';if(v>=1e6)return (v/1e6).toFixed(1)+'M';return (v/1e3).toFixed(0)+'K'}
+
+async function load(){
+const d=await fetch('/api/armcl-sales-collection-august-2026').then(r=>r.json());
+const s=d.sales,c=d.collection;
+
+document.getElementById('note').textContent=d.sales.note||'Source: Sales Orders (numNetOrderValue)';
+
+document.getElementById('chips').innerHTML=[
+'<div class="chip green"><label>Sales Orders</label><div class="val">'+s.totalOrders+'</div><div class="sub">Aug 1-12, 2026 (MTD)</div></div>',
+'<div class="chip blue"><label>Sales Value (Net)</label><div class="val">'+fmtK(s.totalValue)+'</div><div class="sub">numNetOrderValue</div></div>',
+'<div class="chip teal"><label>Total Collection</label><div class="val">'+fmtK(c.totalCollection)+'</div><div class="sub">Trade Receivable | '+c.totalTxns+' entries</div></div>',
+'<div class="chip orange"><label>Avg Order Value</label><div class="val">'+fmtK(s.totalOrders>0?s.totalValue/s.totalOrders:0)+'</div><div class="sub">Per sales order</div></div>',
+'<div class="chip violet"><label>Avg Daily Sales</label><div class="val">'+fmtK(s.totalValue/s.daily.length)+'</div><div class="sub">'+s.daily.length+' active days</div></div>',
+'<div class="chip red"><label>Avg Daily Collection</label><div class="val">'+fmtK(c.totalCollection/c.daily.length)+'</div><div class="sub">'+c.daily.length+' days</div></div>',
+'<div class="chip green"><label>Collection Rate</label><div class="val">'+(s.totalValue>0?(c.totalCollection/s.totalValue*100).toFixed(1):0)+'%</div><div class="sub">Collection vs Sales</div></div>',
+'<div class="chip blue"><label>Peak Sales Day</label><div class="val" style="font-size:0.9rem">'+fmtK(Math.max(...s.daily.map(x=>x.value)))+'</div><div class="sub">Aug 1</div></div>'
+].join('');
+
+const ms=Math.max(...s.daily.map(x=>x.value||0));
+document.getElementById('sDaily').innerHTML=s.daily.map(d=>{
+const w=Math.round((d.value||0)/ms*100);
+return '<div class="bar"><div class="fill" style="width:'+w+'%;background:linear-gradient(90deg,#10b981,#34d399)"></div><div class="txt"><span>'+d.date.substring(5)+'</span><span>'+fmtK(d.value)+' ('+d.orders+' orders)</span></div></div>';
+}).join('');
+
+const mc=Math.max(...c.daily.map(x=>x.amount));
+document.getElementById('cDaily').innerHTML=c.daily.map(d=>{
+const w=Math.round(d.amount/mc*100);
+return '<div class="bar"><div class="fill" style="width:'+w+'%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div><div class="txt"><span>'+d.date.substring(5)+'</span><span>'+fmtK(d.amount)+' ('+d.txns+')</span></div></div>';
+}).join('');
+
+document.getElementById('compare').innerHTML=c.daily.map(cd=>{
+const sd=s.daily.find(x=>x.date===cd.date)||{};
+const ws=Math.round((sd.value||0)/ms*100),wc=Math.round(cd.amount/mc*100);
+return '<div class="bar" style="height:34px;margin-bottom:3px"><div style="position:absolute;left:0;top:0;height:50%;background:rgba(52,211,153,0.7);width:'+ws+'%;border-radius:4px 4px 0 0"></div><div style="position:absolute;left:0;top:50%;height:50%;background:rgba(59,130,246,0.7);width:'+wc+'%;border-radius:0 0 4px 4px"></div><div class="txt" style="font-size:0.65rem"><span>'+cd.date.substring(5)+'</span><span>S:'+fmtK(sd.value||0)+' C:'+fmtK(cd.amount)+'</span></div></div>';
+}).join('');
+
+document.getElementById('summary').innerHTML=
+'<div><b>Sales Orders:</b> <span class="pos">'+fm(s.totalOrders)+'</span> | Value: '+fmtK(s.totalValue)+'</div>'+
+'<div><b>Collection:</b> <span class="pos">'+fmtK(c.totalCollection)+'</span> | Entries: '+fm(c.totalTxns)+'</div>'+
+'<div><b>Collection %:</b> '+(s.totalValue>0?(c.totalCollection/s.totalValue*100).toFixed(1):0)+'% of sales</div>'+
+'<div><b>Sales Days:</b> '+s.daily.length+' | <b>Collection Days:</b> '+c.daily.length+'</div>'+
+'<div><b>Peak Sales:</b> '+fmtK(Math.max(...s.daily.map(x=>x.value)))+' | <b>Peak Collection:</b> '+fmtK(Math.max(...c.daily.map(x=>x.amount)))+'</div>'+
+'<div><b>Data Source:</b> Sales: tblSalesOrderHeaderArc | Collection: tblAccountingJournalArc (Trade Recv)</div>';
+}
+load();
+</script>
+</body>
+</html>

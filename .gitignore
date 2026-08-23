@@ -1,0 +1,11 @@
+node_modules/
+.gprofile/
+downloads/
+.env
+token.json
+logs/
+server.log
+
+akij-crm-skills/
+server.err.log
+*.err.log

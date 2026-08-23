@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL Sales & Collection | July 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.container{max-width:1500px;margin:0 auto;padding:24px}
+.title-bar{background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.title-bar h1{font-size:1.2rem;font-weight:700;color:#f8fafc}
+.title-bar .sub{color:#94a3b8;font-size:0.8rem;margin-top:4px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.chip{background:#1e293b;border-radius:10px;padding:16px;border:1px solid #334155}
+.chip label{font-size:0.65rem;text-transform:uppercase;color:#94a3b8;letter-spacing:0.05em;margin-bottom:6px;font-weight:600;display:block}
+.chip .val{font-size:1.3rem;font-weight:800;color:#f8fafc}
+.chip .sub{font-size:0.72rem;color:#64748b;margin-top:3px}
+.chip.blue{border-top:3px solid #3b82f6}
+.chip.green{border-top:3px solid #10b981}
+.chip.orange{border-top:3px solid #f59e0b}
+.chip.violet{border-top:3px solid #8b5cf6}
+.chip.red{border-top:3px solid #ef4444}
+.chip.teal{border-top:3px solid #14b8a6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.col3{grid-template-columns:1fr 1fr 1fr}
+.box{background:#1e293b;border-radius:10px;padding:20px;border:1px solid #334155}
+.box h3{font-size:0.8rem;color:#94a3b8;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.bar{position:relative;height:22px;background:#0f172a;border-radius:4px;margin-bottom:5px;overflow:hidden}
+.bar .fill{height:100%;border-radius:4px}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 8px;font-size:0.7rem;font-weight:600;color:#e2e8f0;z-index:1}
+.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid #334155;font-size:0.78rem}
+th{color:#94a3b8;font-weight:600;text-transform:uppercase;font-size:0.62rem;letter-spacing:0.04em}
+th:first-child,td:first-child{text-align:left}
+tr:hover{background:rgba(59,130,246,0.06)}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.pos{color:#34d399}
+.section-title{color:#94a3b8;font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;margin:20px 0 12px 0;padding-bottom:8px;border-bottom:1px solid #334155}
+.note{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);border-radius:8px;padding:10px 16px;margin-bottom:20px;font-size:0.78rem;color:#60a5fa}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<h1>ARMCL Sales & Collection Dashboard | July 2026</h1>
+<div class="sub">Akij Ready Mix Concrete Ltd. — Source: iBOS ERP</div>
+</div>
+
+<div class="note">Sales: oms.tblSalesInvoiceArc | Collection: fin.tblAccountingJournalArc (Trade Receivable entries)</div>
+
+<div class="chips" id="chips"></div>
+
+<div class="section-title">Sales Performance</div>
+<div class="row">
+<div class="box"><h3>Daily Sales (Invoices)</h3><div id="salesDaily" style="max-height:400px;overflow-y:auto"></div></div>
+<div class="box"><h3>Top 10 Sales Persons</h3><div id="salesPersons"></div></div>
+</div>
+
+<div class="section-title">Collection Performance</div>
+<div class="row">
+<div class="box"><h3>Daily Collection (Trade Receivable)</h3><div id="collDaily" style="max-height:400px;overflow-y:auto"></div></div>
+<div class="box"><h3>Sales vs Collection Trend</h3><div id="compare"></div></div>
+</div>
+
+<div class="row">
+<div class="box"><h3>All Sales Persons</h3><div style="overflow-x:auto"><table><thead><tr><th>Rank</th><th>Name</th><th>Role</th><th>Invoices</th><th>Quantity</th><th>Share</th><th>Avg Qty/Inv</th></tr></thead><tbody id="personTable"></tbody></table></div></div>
+<div class="box"><h3>Collection Summary</h3><div id="collSummary"></div></div>
+</div>
+</div>
+
+<script>
+function fm(n){return (n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmtK(n){const v=Number(n||0);if(v>=1e9)return (v/1e9).toFixed(2)+'B';if(v>=1e6)return (v/1e6).toFixed(1)+'M';return (v/1e3).toFixed(0)+'K'}
+
+async function load(){
+const d=await fetch('/api/armcl-sales-collection-july-2026').then(r=>r.json());
+
+const s=d.sales, c=d.collection;
+const cA=[];
+cA.push('<div class="chip green"><label>Sales: Total Invoices</label><div class="val">'+fm(s.totalInvoices)+'</div><div class="sub">Sales persons: '+s.salesPersons+'</div></div>');
+cA.push('<div class="chip blue"><label>Sales: Total Quantity</label><div class="val">'+fm(s.totalQty)+'</div><div class="sub">Tonnes/units</div></div>');
+cA.push('<div class="chip teal"><label>Collection: Total Received</label><div class="val">'+fm(c.totalCollection)+'</div><div class="sub">Trade receivable entries: '+c.totalTxns+'</div></div>');
+cA.push('<div class="chip orange"><label>Avg Daily Collection</label><div class="val">'+fm(c.totalCollection/c.daily.length)+'</div><div class="sub">31 days active</div></div>');
+cA.push('<div class="chip violet"><label>Avg/Invoice Qty</label><div class="val">'+fm(s.totalInvoices>0?s.totalQty/s.totalInvoices:0)+'</div><div class="sub">Per invoice</div></div>');
+cA.push('<div class="chip red"><label>Avg/Collection Txn</label><div class="val">'+fm(c.totalTxns>0?c.totalCollection/c.totalTxns:0)+'</div><div class="sub">Per collection entry</div></div>');
+const collRate=s.totalQty>0?(c.totalCollection/s.totalQty):0;
+cA.push('<div class="chip green"><label>Collection/Sales Ratio</label><div class="val">'+fm(collRate)+'</div><div class="sub">Collected per unit sold</div></div>');
+cA.push('<div class="chip blue"><label>Top Sales Person</label><div class="val" style="font-size:0.9rem">'+s.persons[0].name+'</div><div class="sub">'+fm(s.persons[0].qty)+' qty / '+s.persons[0].invoices+' inv</div></div>');
+document.getElementById('chips').innerHTML=cA.join('');
+
+const maxSD=Math.max(...s.daily.map(x=>x.qty));
+document.getElementById('salesDaily').innerHTML=s.daily.map(day=>
+'<div class="bar"><div class="fill" style="width:'+Math.round(day.qty/maxSD*100)+'%;background:linear-gradient(90deg,#10b981,#34d399)"></div><div class="txt"><span>'+day.date.substring(5)+'</span><span>'+fm(day.qty)+' qty ('+day.invoices+' inv)</span></div></div>'
+).join('');
+
+const maxSP=Math.max(...s.persons.map(x=>x.qty));
+document.getElementById('salesPersons').innerHTML=s.persons.slice(0,10).map((p,i)=>{
+const cols=['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ef4444','#14b8a6','#ec4899','#6366f1','#84cc16','#06b6d4'];
+return '<div class="bar"><div class="fill" style="width:'+Math.round(p.qty/maxSP*100)+'%;background:'+cols[i]+'"></div><div class="txt"><span><b>'+(i+1)+'.</b> '+p.name+'</span><span>'+fm(p.qty)+' qty ('+p.invoices+' inv)</span></div></div>';
+}).join('');
+
+const maxCD=Math.max(...c.daily.map(x=>x.amount));
+document.getElementById('collDaily').innerHTML=c.daily.map(day=>
+'<div class="bar"><div class="fill" style="width:'+Math.round(day.amount/maxCD*100)+'%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div><div class="txt"><span>'+day.date.substring(5)+'</span><span>'+fmtK(day.amount)+' ('+day.txns+' Txn)</span></div></div>'
+).join('');
+
+// Comparison
+document.getElementById('compare').innerHTML=c.daily.map((cd,i)=>{
+const sd=s.daily.find(x=>x.date===cd.date);
+const salesScaled=sd?sd.qty:0;
+const maxSS=Math.max(...s.daily.map(x=>x.qty));
+const wS=Math.round(salesScaled/maxSS*100);
+return '<div class="bar" style="height:36px;margin-bottom:4px"><div style="position:absolute;left:0;top:0;height:50%;background:rgba(52,211,153,0.7);width:'+wS+'%;border-radius:4px 4px 0 0"></div><div style="position:absolute;left:0;top:50%;height:50%;background:rgba(59,130,246,0.7);width:'+Math.round(cd.amount/maxCD*100)+'%;border-radius:0 0 4px 4px"></div><div class="txt" style="font-size:0.65rem"><span>'+cd.date.substring(5)+'</span><span>S:'+fmtK(salesScaled)+' C:'+fmtK(cd.amount)+'</span></div></div>';
+}).slice(-15).join('');
+
+// Person table
+document.getElementById('personTable').innerHTML=s.persons.map(p=>{
+const share=p.qty/s.totalQty*100;
+return '<tr><td>'+p.rank+'</td><td style="font-weight:600">'+p.name+'</td><td style="font-size:0.7rem;color:#94a3b8">'+p.role+'</td><td class="num">'+p.invoices+'</td><td class="num pos">'+fm(p.qty)+'</td><td class="num">'+share.toFixed(1)+'%</td><td class="num">'+fm(p.invoices>0?p.qty/p.invoices:0)+'</td></tr>';
+}).join('');
+
+// Collection summary
+document.getElementById('collSummary').innerHTML=
+'<div style="padding:16px 0;font-size:0.85rem;line-height:2"><div><b>Total Collection:</b> <span class="pos">'+fm(c.totalCollection)+'</span></div>'+
+'<div><b>Collection Entries:</b> '+fm(c.totalTxns)+'</div>'+
+'<div><b>Collection Days:</b> '+c.daily.length+' days</div>'+
+'<div><b>Avg Daily Collection:</b> <span class="pos">'+fm(c.totalCollection/c.daily.length)+'</span></div>'+
+'<div><b>Max Day:</b> '+fm(Math.max(...c.daily.map(x=>x.amount)))+'</div>'+
+'<div><b>Min Day:</b> '+fm(Math.min(...c.daily.map(x=>x.amount)))+'</div></div>';
+}
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+{
+  "crm": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/crm/SKILL.md",
+    "computedHash": "local"
+  },
+  "deploy-render": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/deploy-render/SKILL.md",
+    "computedHash": "local"
+  },
+  "secure-node-app": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/secure-node-app/SKILL.md",
+    "computedHash": "local"
+  },
+  "build-crm-dashboard": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/build-crm-dashboard/SKILL.md",
+    "computedHash": "local"
+  },
+  "add-crud-module": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/add-crud-module/SKILL.md",
+    "computedHash": "local"
+  },
+  "add-team-management": {
+    "source": "local",
+    "sourceType": "local",
+    "skillPath": ".opencode/skills/add-team-management/SKILL.md",
+    "computedHash": "local"
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "name": "ABSL_SBU_Business_agent",
+  "company": "Akij Building Solutions Ltd (ABSL)",
+  "parent_group": "Akij Group",
+  "scope": "Strategic Business Unit (SBU) based view of Akij Building Solutions Ltd: each SBU, its mandate, functions, processes, knowledge documents, rules, and data coverage",
+  "source": "Google Sheet 'all file ABSL' (tabs: Powerplant, Utility, Electricial Maintenance, Mechanical Maintenance, Inventory, Production, Quality, Logistics & Distribution, ABSL Sust/Opex, ABSL HR & Admin, Legal, Procurement, Sales & Marketing, Policy List); SOP ARMCL-SLS-001; DWH database",
+  "generated_on": "2026-08-20",
+  "corporate": {
+    "absl": { "intBusinessUnitId": 220, "shortCode": "ABSL", "name": "Akij Building Solutions Limited" },
+    "armcl": { "intBusinessUnitId": 175, "shortCode": "ARMCL", "name": "Akij Ready Mix Concrete Ltd", "parent": "ABSL" }
+  },
+  "sbu_map": {
+    "sales_marketing": "Sales & Marketing (ARMCL ready-mix business)",
+    "production": "Production (batching plants)",
+    "quality": "Quality (QA/QC)",
+    "logistics": "Logistics & Distribution",
+    "inventory": "Inventory",
+    "powerplant": "Powerplant",
+    "utility": "Utility",
+    "electrical_maintenance": "Electricial Maintenance",
+    "mechanical_maintenance": "Mechanical Maintenance",
+    "sustainability_opex": "ABSL Sust/Opex",
+    "hr_admin": "ABSL HR & Admin",
+    "legal": "Legal",
+    "procurement": "Procurement",
+    "policy_list": "Policy List (central policy registry)"
+  },
+  "sbus": [
+    {
+      "sbu": "Sales & Marketing",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Sales & Marketing (gid=13336618)",
+      "mandate": "Generate revenue and profitable growth through ready-mix concrete sales, credit-controlled customer acquisition, and long-term relationships",
+      "knowledge_documents": [
+        "Sales Strategies", "Market Research Reports", "ARMCL Sales Policy", "Credit Policy (ARMCL)",
+        "Marketing Policy", "SOP-ARMCL (Sales)", "KPI", "Annual Business Plan",
+        "Order to Cash Process (B2B & B2C)", "Organogram", "ARMCL Weekly meeting minutes", "Sales Report"
+      ],
+      "process": "Plan -> Generate -> Acquire & Onboard -> Approve -> Order-to-Cash -> After-Sales & Retention -> Collection & Bad Debt -> Incentives -> Govern & Report",
+      "core_rules": [
+        "Discount: <=3% ASM | 3-7% HoS | 7-10% HoS+Finance | >10% or below breakeven CEO/MD",
+        "Credit days: <=45 ASM | 45-60 HoS+Finance | 60-70 CEO/MD+Finance",
+        "Credit limit: <=50 lac ASM | 50 lac-5 cr HoS+Finance | >5 cr CEO/MD+Finance",
+        "Overdue >60 days triggers auto credit hold",
+        "All orders booked in IBOS; same-day cutoff 3h before batching"
+      ],
+      "functions": ["Planning & Strategy", "Market Research & Lead Generation", "Customer Acquisition & Onboarding", "Pricing & Credit Approval", "Order-to-Cash (B2B & B2C)", "After-Sales Service & Retention", "Collection & Bad Debt Management", "Sales Incentives & Rewards", "Governance & Reporting"],
+      "departments": ["Sales", "Marketing", "Research", "Credit Control", "Finance & Accounts", "Compliance & Legal", "CRM / IBOS Admin / IT", "Customer Service", "Technical / QA / QC", "Logistics & Dispatch", "Production / Plant Operations", "HR", "Sales Admin", "SBU Head / CEO / MD", "Internal Audit"],
+      "dwh_tables": ["oms.tblSalesOrderHeaderArc (16,559)", "oms.tblSalesInvoiceArc", "prt.tblBusinessPartnerArc (3,640)", "pms.tblTargetSetupArc (8,252)", "pms.tblKPIsArc (7,307)", "saas.tblGrievanceArc (2)", "sms.tblEmployeeIncentiveArc (0)"],
+      "mcp_coverage": "High for transactional data (orders, invoices, partners, targets); low for policy docs, complaints, incentives, meeting minutes",
+      "knowledge_status": "12 items; 8 links point to a single private Google Doc (401); 2 missing (Market Research, Marketing Policy); 1 pending (weekly minutes)"
+    },
+    {
+      "sbu": "Production",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Production (gid=1255133250)",
+      "mandate": "Produce ready-mix concrete per IBOS schedule with quality compliance, capacity utilization, and cost efficiency",
+      "knowledge_documents": ["SOP_Production.docx", "Daily Production Report", "OEE data (ARMCL-03)"],
+      "process": "IBOS production plan -> material preparation -> batching -> QC check -> dispatch handover",
+      "core_rules": [
+        "Batching sequence follows IBOS schedule",
+        "Only confirmed, IBOS-approved orders batched",
+        "QC informed before each production run"
+      ],
+      "functions": ["Production Planning", "Batching", "Plant Operations", "Cost Control"],
+      "departments": ["Production / Plant Operations", "Batching Plant Operator", "Factory Incharge"],
+      "dwh_tables": ["oms (production-linked)", "scm/tblProductionPlanningArc"],
+      "mcp_coverage": "Local files: 17_ARMCL-03_OEE_New_Template.csv, 18_Daily_Production_Report.xlsx",
+      "knowledge_status": "Local SOP and reports present"
+    },
+    {
+      "sbu": "Quality",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Quality (gid=2143834420)",
+      "mandate": "Ensure consistent quality of raw materials and ready-mix concrete per approved mix designs and project specs",
+      "knowledge_documents": ["Quality SOPs", "Test reports", "Mix design register"],
+      "process": "Raw material QC -> batching QC (slump, cubes) -> delivery QC -> complaint investigation",
+      "core_rules": [
+        "QC team informed before production",
+        "Technical disputes verified via QC before credit note",
+        "Only QC-approved batches dispatched"
+      ],
+      "functions": ["Raw Material Testing", "Concrete Testing", "Quality Assurance", "Technical Dispute Resolution"],
+      "departments": ["Technical / QA / QC", "Quality Control Engineer"],
+      "dwh_tables": ["saas.tblGrievanceArc (quality-class complaints)"],
+      "mcp_coverage": "Complaint linkage via DWH; quality reports local",
+      "knowledge_status": "Present in local repo"
+    },
+    {
+      "sbu": "Logistics & Distribution",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Logistics & Distribution (gid=2037271795)",
+      "mandate": "Deliver ready-mix concrete from plant to site on time with fleet optimization and cost efficiency",
+      "knowledge_documents": ["Delivery SOPs", "Diesel report", "Vehicle logs"],
+      "process": "Delivery schedule -> TM/pump allocation -> dispatch -> in-transit -> site confirmation",
+      "core_rules": [
+        "Same-day delivery cutoff: 3h before batching",
+        "Priority to time-bound pours, government/large sites, strategic customers",
+        "Exceptions approved by Plant Manager or Sales Head, logged in IBOS"
+      ],
+      "functions": ["Dispatch Planning", "Fleet Management", "Route Optimization", "Delivery Execution"],
+      "departments": ["Logistics & Dispatch", "Logistic Supervisor", "Transit Mixture Driver"],
+      "dwh_tables": ["oms.tblSalesOrderHeaderArc", "tblDeliveryHeaderArc"],
+      "mcp_coverage": "Order/delivery data in DWH; diesel report local",
+      "knowledge_status": "Local 23_Diesel_Report.xlsx"
+    },
+    {
+      "sbu": "Inventory",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Inventory (gid=698951205)",
+      "mandate": "Manage raw material and finished goods inventory to support production without stockout or excess holding",
+      "knowledge_documents": ["Inventory registers", "Item masters"],
+      "process": "Stock planning -> receipt -> storage -> issue -> reconciliation",
+      "core_rules": ["Inventory movements recorded in DWH (tblInventoryTransactionHeaderArc)"],
+      "functions": ["Stock Control", "Material Receipt", "Issues & Transfers"],
+      "departments": ["Inventory / Stores"],
+      "dwh_tables": ["tblInventoryTransactionHeaderArc", "tblInventoryTransactionRowArc", "tblItemMasterArc"],
+      "mcp_coverage": "DWH inventory transaction tables available",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Powerplant",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Powerplant (gid=1782353920)",
+      "mandate": "Operate plant power generation reliably and efficiently to support production",
+      "knowledge_documents": ["Powerplant policies and SOPs"],
+      "process": "Load planning -> generation -> maintenance -> monitoring",
+      "core_rules": ["Plant uptime and safety compliance"],
+      "functions": ["Power Generation", "Plant Maintenance"],
+      "departments": ["Powerplant Operations"],
+      "dwh_tables": [],
+      "mcp_coverage": "Limited",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Utility",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Utility (gid=1847115917)",
+      "mandate": "Manage utilities (water, air, power distribution) for plant operations",
+      "knowledge_documents": ["Utility policies and SOPs"],
+      "process": "Utility supply -> monitoring -> maintenance",
+      "core_rules": ["Continuity of supply and compliance"],
+      "functions": ["Utility Management"],
+      "departments": ["Utility Operations"],
+      "dwh_tables": [],
+      "mcp_coverage": "Limited",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Electrical Maintenance",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Electricial Maintenance (gid=164783720)",
+      "mandate": "Ensure electrical systems reliability for plant and equipment",
+      "knowledge_documents": ["Electrical maintenance policies and SOPs"],
+      "process": "Preventive maintenance -> breakdown repair -> safety compliance",
+      "core_rules": ["Preventive maintenance schedule adherence"],
+      "functions": ["Electrical Maintenance"],
+      "departments": ["Maintenance"],
+      "dwh_tables": [],
+      "mcp_coverage": "Limited",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Mechanical Maintenance",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Mechanical Maintenance (gid=1109833652)",
+      "mandate": "Maintain mechanical equipment (mixers, transit mixers, pumps) for uptime and safety",
+      "knowledge_documents": ["Mechanical maintenance policies and SOPs"],
+      "process": "Preventive maintenance -> breakdown repair -> parts management",
+      "core_rules": ["Equipment downtime reduction targets"],
+      "functions": ["Mechanical Maintenance"],
+      "departments": ["Maintenance"],
+      "dwh_tables": ["tblVehicleArc (fleet)", "tblAssetArc"],
+      "mcp_coverage": "Asset/fleet tables in DWH",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Sustainability & Opex",
+      "dwh_business_unit": 175,
+      "sheet_tab": "ABSL Sust,Opex (gid=388991428)",
+      "mandate": "Drive sustainability initiatives and operational expenditure optimization",
+      "knowledge_documents": ["Sustainability policy", "Opex plans"],
+      "process": "ESG planning -> cost initiatives -> reporting",
+      "core_rules": ["Cost efficiency across SBUs"],
+      "functions": ["Sustainability", "Opex Management"],
+      "departments": ["Sustainability / Opex"],
+      "dwh_tables": ["tblBudgetIncomeExpenseHeaderArc"],
+      "mcp_coverage": "Budget/opex data in DWH",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "HR & Admin",
+      "dwh_business_unit": 175,
+      "sheet_tab": "ABSL HR & Admin (gid=321268613)",
+      "mandate": "Manage the workforce across ABSL/ARMCL: recruitment, payroll, performance, welfare",
+      "knowledge_documents": ["HR policies", "Employee JDs", "Org structure"],
+      "process": "Recruitment -> onboarding -> payroll -> performance -> separation",
+      "core_rules": ["Incentive eligibility and payroll processing (sales incentives, referral program)"],
+      "functions": ["Talent Management", "Payroll", "Performance Management", "Employee Relations"],
+      "departments": ["HR", "HRBP", "Admin"],
+      "dwh_tables": ["emp*Arc (employee master)", "saas.globalOrganogramTreeArc (6,806)", "sms.tblEmployeeIncentiveArc (0)"],
+      "mcp_coverage": "Employee master, attendance, leave, JD, org in DWH",
+      "knowledge_status": "JD workbook 13_JD_ARMCL_Employees.xlsx and organogram 14 present"
+    },
+    {
+      "sbu": "Legal",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Legal (gid=993449538)",
+      "mandate": "Provide legal oversight for contracts, agreements, compliance, and debt recovery",
+      "knowledge_documents": ["Legal policies", "Agreement templates", "Recovery templates"],
+      "process": "Contract review -> compliance -> dispute/recovery",
+      "core_rules": ["Bad debt write-off requires legal opinion for bankruptcies", "Records retained 3 years"],
+      "functions": ["Contract Management", "Compliance", "Litigation & Recovery"],
+      "departments": ["Compliance & Legal"],
+      "dwh_tables": ["saas.TblLegalNoticeArc", "TblLegalNoticeStatusHistoryArc"],
+      "mcp_coverage": "Legal notice tables in DWH",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Procurement",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Procurement (gid=0)",
+      "mandate": "Source raw materials (cement, aggregates, admixtures), spare parts, and services at optimal cost",
+      "knowledge_documents": ["Procurement policies", "Supplier agreements", "RFQ records"],
+      "process": "Requisition -> RFQ -> negotiation -> PO -> receipt -> payment",
+      "core_rules": ["Purchase orders documented and approved", "Supplier invoice matching"],
+      "functions": ["Sourcing", "Vendor Management", "Purchasing", "Contract Management"],
+      "departments": ["Procurement / SCM"],
+      "dwh_tables": ["tblPurchaseOrderHeaderArc", "tblPurchaseOrderRowArc", "tblSupplierInvoiceHeaderArc", "tblRequestForQuotationHeaderArc", "prt.tblBusinessPartnerArc (suppliers)"],
+      "mcp_coverage": "Strong procurement data in DWH",
+      "knowledge_status": "Not yet audited in detail"
+    },
+    {
+      "sbu": "Policy List",
+      "dwh_business_unit": 175,
+      "sheet_tab": "Policy List (gid=1993908252)",
+      "mandate": "Central registry of all ABSL/ARMCL policies, SOPs, and knowledge documents",
+      "knowledge_documents": ["All policies and SOPs across SBUs"],
+      "process": "Register -> link/store -> maintain -> audit",
+      "core_rules": ["Every knowledge item must have a verifiable link or attached file"],
+      "functions": ["Knowledge Management", "Policy Governance"],
+      "departments": ["Knowledge Owners (per SBU)"],
+      "dwh_tables": ["saas.PolicyHeaderArc (0 ARMCL rows)", "saas.empSOPArc (0 ARMCL rows)"],
+      "mcp_coverage": "None - policies live in private Google Docs (GAP G1, G2)",
+      "knowledge_status": "Knowledge audit flags: 8 of 12 Sales & Marketing links point to one private doc (401)"
+    }
+  ],
+  "mcp_gap_analysis": {
+    "available_mcp": ["mssql-test-server (DWH, read-only)", "gmail"],
+    "gaps": [
+      { "id": "G1", "gap": "No Google Drive/Docs/Sheets MCP", "detail": "Policy/SOP documents live in private Google Docs (shared doc 401)", "impact": "Cannot verify or read policy content through MCP" },
+      { "id": "G2", "gap": "Policies/SOPs not in DWH", "detail": "PolicyHeaderArc = 0 ARMCL rows; empSOPArc = 0 ARMCL rows", "impact": "No programmatic access to authoritative rules" },
+      { "id": "G3", "gap": "No iBOS ERP connector", "detail": "Live orders, credit hold, customer statements in iBOS web (login-gated)", "impact": "DWH is archival; no live ERP access" },
+      { "id": "G4", "gap": "Incentives missing in DWH", "detail": "sms.tblEmployeeIncentiveArc = 0 ARMCL rows", "impact": "Cannot audit incentive rules or payouts" },
+      { "id": "G5", "gap": "Complaint register thin", "detail": "saas.tblGrievanceArc = 2 ARMCL rows", "impact": "Complaint data not captured" },
+      { "id": "G6", "gap": "Meeting minutes not stored", "detail": "Weekly minutes flagged 'Need to Attach Support File'", "impact": "Governance trail incomplete" },
+      { "id": "G7", "gap": "Market research unstructured", "detail": "No DWH table; lives in Drive", "impact": "No trend/competitor data queryable" }
+    ],
+    "recommendations": [
+      "Add a Google Drive/Docs/Sheets MCP server (project has OAuth token.json + @googleapis/sheets)",
+      "Ingest Sales SOP + policies into saas.empSOPArc / saas.PolicyHeaderArc",
+      "Build an iBOS REST connector for live orders, credit hold, and customer statements",
+      "Seed sms.tblEmployeeIncentiveArc for ARMCL; enforce grievance logging",
+      "Attach weekly meeting minutes to Drive and link them in the register",
+      "Audit the remaining 12 SBU tabs in 'all file ABSL' the same way as Sales & Marketing"
+    ]
+  }
+}

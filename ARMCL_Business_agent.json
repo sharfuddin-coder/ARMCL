@@ -1,0 +1,147 @@
+{
+  "name": "ARMCL_Business_agent",
+  "company": "Akij Readymix Concrete Ltd (ARMCL)",
+  "business": "Ready Mix Concrete (RMC)",
+  "scope": "Sales & Marketing process map, business rules, knowledge register, source map, and MCP/data coverage",
+  "source": "Google Sheet 'all file ABSL' > tab 'Sales & Marketing' (gid=13336618); SOP ARMCL-SLS-001 (SALES DEPARTMENT-SOP-ARMCL-190625.pdf); DWH database (business unit 175, schema modules oms/prt/fin/sms/pms/saas)",
+  "generated_on": "2026-08-20",
+  "knowledge_register": [
+    { "sl": 1, "item": "Sales Strategies", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Points to shared Google Doc; not verifiable (401)" },
+    { "sl": 2, "item": "Market Research Reports", "status": "No link", "link": "", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "No link, no status; unstructured, not in DWH" },
+    { "sl": 3, "item": "ARMCL Sales Policy", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Same shared doc; PolicyHeaderArc has 0 ARMCL rows" },
+    { "sl": 4, "item": "Credit Policy (ARMCL)", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Same shared doc; partial local PDF (price/credit approval)" },
+    { "sl": 5, "item": "Marketing Policy", "status": "No link", "link": "", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "No link; typo in name (Mmarketing); owner column empty" },
+    { "sl": 6, "item": "SOP-ARMCL (Sales)", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs) + Drive PDF SALES DEPARTMENT-SOP-ARMCL-190625.pdf", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Authoritative SOP extracted; empSOPArc has 0 ARMCL rows" },
+    { "sl": 7, "item": "KPI", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "DWH pms tables cover targets/KPIs" },
+    { "sl": 8, "item": "Annual Business Plan", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Local 01_Budget_2026-27.xlsx exists" },
+    { "sl": 9, "item": "Order to Cash Process (B2B & B2C)", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Well covered by DWH oms tables" },
+    { "sl": 10, "item": "Organogram", "status": "Link", "link": "shared doc (1gcZtNTym_PDyIcnppXx-qALnrk9ppfbN3TpTC073LQs)", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Local 14_Sales_Manpower_Organogram.xlsx + DWH organogram tables" },
+    { "sl": 11, "item": "ARMCL Weekly meeting minutes", "status": "Need to Attach Support File", "link": "", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "Not attached; governance trail incomplete" },
+    { "sl": 12, "item": "Sales Report", "status": "Link", "link": "https://erp.ibos.io/sales-management/report/customerStatementModified", "owner": "Mohammad Moazzam Hossain Chowdhury", "audit": "iBOS ERP link, login-gated; aggregate data available in DWH" }
+  ],
+  "process_map": [
+    { "stage": 1, "name": "Plan", "description": "Annual Business Plan, Sales Strategy, monthly targets & KPIs set by role and region (100% sales target, >=90% collection baseline)" },
+    { "stage": 2, "name": "Generate", "description": "Market research reports; lead generation via field visits, digital campaigns, references, and inter-departmental referral program" },
+    { "stage": 3, "name": "Acquire & Onboard", "description": "Lead engagement (site visit, volume forecast) -> KYC + bank guarantee -> negotiation -> signed agreement -> customer code in IBOS/CRM" },
+    { "stage": 4, "name": "Approve", "description": "Price/discount + credit days/limit approval via delegation matrix; ERP system setup with price, credit days, limit, alerts" },
+    { "stage": 5, "name": "Order-to-Cash (B2B & B2C)", "description": "IBOS order booking (Order ID; cutoff 3h pre-batch) -> schedule (TM/pump/route) -> batch + QC (slump, cubes) -> dispatch 'In Transit' -> 'Delivered' + DO -> invoice -> collection" },
+    { "stage": 6, "name": "After-Sales & Retention", "description": "Follow-up call <=24h -> complaints (ack <=1h, resolve by class) -> service recovery -> KAM (top 20%, quarterly reviews) -> win-back dormant >90d" },
+    { "stage": 7, "name": "Collection & Bad Debt", "description": "0-30d Sales -> 31-60d Accounts -> 61d+ Recovery Cell/Legal -> credit note / partial settlement / write-off (CFO+Audit+CEO sign-off)" },
+    { "stage": 8, "name": "Incentives", "description": "Inner referral slabs, sales achievement incentives (100% sales + >=90% collection), external referral incentives (post-paid/pre-paid/non-cash)" },
+    { "stage": 9, "name": "Govern & Report", "description": "Weekly meetings, IBOS sales report, weekly aging review, quarterly credit limit review, monthly/quarterly pricing review, audit" }
+  ],
+  "business_rules": {
+    "onboarding_gates": [
+      "No credit customer activated without documented approval + bank guarantee/security",
+      "No sale without: application form, verified bank guarantee (if applicable), signed agreement, approved IBOS/CRM customer code",
+      "KYC documents: trade license, TIN, bank statement, solvency certificate, NID, references",
+      "Customer records digitized and retained >=3 years for audit"
+    ],
+    "approval_delegation_matrix": [
+      { "rule": "Discount", "asm": "<=3%", "head_of_sales": "3-7%", "hos_plus_finance": "7-10%", "ceo_md": ">10% or below breakeven" },
+      { "rule": "Credit days", "asm": "<=45 days", "head_of_sales": "-", "hos_plus_finance": "45-60 days", "ceo_md": "60-70 days" },
+      { "rule": "Credit limit", "asm": "<=BDT 50 lac", "head_of_sales": "-", "hos_plus_finance": "50 lac - 5 crore", "ceo_md": ">BDT 5 crore" }
+    ],
+    "credit_rules": [
+      "New customers: 0-45 days; existing customers: up to 60 days; exceptions up to 60 days (large projects/reputed corporates)",
+      "Overdue beyond 60 days triggers automatic credit hold",
+      "Credit limits reviewed every 3 months based on payment history",
+      "All credit backed by Trade License, TIN, BIN, PO/Work Order"
+    ],
+    "order_to_cash_rules": [
+      "All orders must be booked in IBOS; verbal/manual orders invalid",
+      "Same-day delivery cutoff: at least 3 hours before batching",
+      "Only confirmed, IBOS-approved orders can be batched",
+      "No unauthorized edits/deletions/offline entries; changes timestamped",
+      "Exceptions require Plant Manager or Sales Head approval and logged as 'exception entry'",
+      "Invoice generated only after order marked 'Delivered'"
+    ],
+    "complaint_and_service_recovery": [
+      "Acknowledge complaints within 1 hour",
+      "Resolve: Class A quality 48-72h, Class B delivery/pump 24h, Class C billing 48h, Class D behavior 72h",
+      "Escalate to Sales Head if TAT missed; to CEO if unresolved after 3 days",
+      "Compensation (replacement, pump refund, credit note, goodwill gift) requires Sales Head/CEO approval"
+    ],
+    "retention_rules": [
+      "Follow-up call within 24 hours of delivery",
+      "Review delivery history every 2 weeks",
+      "Customers inactive >90 days flagged for re-engagement",
+      "Top 20% of customers by revenue = Strategic Accounts (KAM, quarterly business reviews)",
+      "Quarterly customer satisfaction surveys; monthly service log trend review"
+    ],
+    "incentive_rules": {
+      "inner_referral": [
+        "Eligible: full-time Akij Resource employees outside ARMCL Sales/BD/Pricing; excludes temp/contract/intern",
+        "First valid submitter wins; duplicates/rejected if already in pipeline; validation within 48 working hours",
+        "Slabs by volume: <=2,000 CFT BDT 2,000 | 2,001-4,000 BDT 3,000 | 4,001-6,000 BDT 5,000 | 6,001-8,000 BDT 7,000 | 8,001-10,000 BDT 8,500 | >10,000 BDT 10,000",
+        "No prorated/partial payouts; paid only after full delivery + full payment; TDS deducted"
+      ],
+      "sales_achievement": [
+        "Mandatory 100% sales target; minimum qualifying collection 90%",
+        "Monthly slab by designation (100% collection / 90-99%): AGM-GM 14,000/12,000 | Manager-Sr.Mgr 13,000/12,000 | Dy.Mgr 12,000/9,000 | Asst.Mgr 11,000/8,500 | Officer 8,000/6,000",
+        "Bonus: +2,000 if collection >110%; 10,000 quarterly consistency (3 consecutive months); 5,000 monthly best performer per region",
+        "Disqualified if collection delayed beyond credit terms, dues unresolved >60 days, or documentation incomplete"
+      ],
+      "external_referral": [
+        "All incentives pre-approved by Sales Head and documented",
+        "Post-paid: commission per CFT (BDT 1-4/CFT) or fixed lump sum, only after full payment received",
+        "Pre-paid: written justification + customer details before disbursement",
+        "Non-cash gifts: against budgeted allocation, quarterly approved item list, store challan + recipient signature/photo",
+        "Records retained >=3 years; monthly report to CEO/CFO; annual audit"
+      ]
+    },
+    "bad_debt_rules": [
+      "Follow-up ladder: 0-30d Sales -> 31-60d Accounts -> 61d+ Recovery Cell, reported as potential bad debt in MIS",
+      "Sales incentives held or reversed for amounts pending beyond 60 days",
+      "Adjustments only post-dispute-resolution, documented, approved by Head of Sales + Head of Accounts, validated by Internal Audit",
+      "Write-off sign-off: CFO + Audit + CEO (if above threshold)",
+      "TDS/AIT delay: 3 reminders, ledger adjusted after 90 days with tax implications noted"
+    ],
+    "pricing_confidentiality": "Standard and customer-specific prices are confidential; external disclosure results in disciplinary action"
+  },
+  "source_map": [
+    { "item": "Sales Strategies", "source_of_truth": "Google Doc (private)", "dwh_table": "saas.masterProcessArc", "mcp_coverage": "No" },
+    { "item": "Market Research Reports", "source_of_truth": "Google Doc / Drive", "dwh_table": "none", "mcp_coverage": "No" },
+    { "item": "ARMCL Sales Policy", "source_of_truth": "Google Doc + 19_Akij_Readymix_Policy.docx", "dwh_table": "saas.PolicyHeaderArc (0 ARMCL rows)", "mcp_coverage": "No" },
+    { "item": "Credit Policy (ARMCL)", "source_of_truth": "Google Doc + partial PDF (price/credit approval)", "dwh_table": "none", "mcp_coverage": "No" },
+    { "item": "Marketing Policy", "source_of_truth": "Google Doc (none)", "dwh_table": "none", "mcp_coverage": "No" },
+    { "item": "SOP-ARMCL (Sales)", "source_of_truth": "Drive PDF SALES DEPARTMENT-SOP-ARMCL-190625.pdf", "dwh_table": "saas.empSOPArc (0 ARMCL rows)", "mcp_coverage": "Local copy only" },
+    { "item": "KPI", "source_of_truth": "Google Doc + DWH", "dwh_table": "pms.tblKPIsArc, pms.tblTargetSetupArc (8,252 ARMCL rows)", "mcp_coverage": "Yes" },
+    { "item": "Annual Business Plan", "source_of_truth": "Google Doc + 01_Budget_2026-27.xlsx", "dwh_table": "tblBudgetIncomeExpenseHeaderArc", "mcp_coverage": "Partial" },
+    { "item": "Order to Cash (B2B & B2C)", "source_of_truth": "iBOS ERP", "dwh_table": "oms.tblSalesOrderHeaderArc (16,559), oms.tblSalesInvoiceArc, prt.tblBusinessPartnerArc (3,640)", "mcp_coverage": "Yes" },
+    { "item": "Organogram", "source_of_truth": "Google Doc + 14_Sales_Manpower_Organogram.xlsx", "dwh_table": "saas.globalOrganogramTreeArc (6,806), empRoleWiseOrganogramArc", "mcp_coverage": "Yes" },
+    { "item": "Weekly meeting minutes", "source_of_truth": "Google Doc (needs support file)", "dwh_table": "saas.tblMeetingAgendaArc (239, not BU-specific)", "mcp_coverage": "Partial" },
+    { "item": "Sales Report", "source_of_truth": "iBOS ERP link (login-gated)", "dwh_table": "oms/fin aggregates", "mcp_coverage": "Partial" }
+  ],
+  "mcp_gap_analysis": {
+    "available_mcp": ["mssql-test-server (DWH, read-only)", "gmail"],
+    "gaps": [
+      { "id": "G1", "gap": "No Google Drive/Docs/Sheets MCP server", "detail": "All 8 policy/SOP links share one private Google Doc (401); content not accessible via MCP", "impact": "Cannot verify or read policy content through MCP; register links useless" },
+      { "id": "G2", "gap": "Policies/SOPs not loaded in DWH", "detail": "PolicyHeaderArc = 0 ARMCL rows; empSOPArc = 0 ARMCL rows (only 15 test rows)", "impact": "No programmatic access to authoritative rules" },
+      { "id": "G3", "gap": "No iBOS ERP connector", "detail": "Sales Report and live order/credit data live in iBOS web (login-gated)", "impact": "DWH covers 16,559 orders but not live credit hold, customer statements, or live reports" },
+      { "id": "G4", "gap": "Incentives missing in DWH", "detail": "sms.tblEmployeeIncentiveArc = 0 ARMCL rows", "impact": "Cannot audit incentive rules, slabs, or payouts" },
+      { "id": "G5", "gap": "Complaint register thin", "detail": "saas.tblGrievanceArc = 2 ARMCL rows", "impact": "Complaint/service-recovery process data not captured" },
+      { "id": "G6", "gap": "Meeting minutes not stored", "detail": "Weekly minutes flagged 'Need to Attach Support File'", "impact": "Governance trail incomplete" },
+      { "id": "G7", "gap": "Market research unstructured", "detail": "No DWH table; lives in Drive documents", "impact": "No trend/competitor data queryable" }
+    ],
+    "covered_by_mcp": [
+      "Order-to-cash transactional data: 16,559 orders, invoices, 3,640 customers, deliveries",
+      "Targets & KPI achievements: 8,252 target records, 7,307 KPIs, 409 achievements",
+      "Organogram & role/process metadata: 6,806 org nodes, 149 role-process links, 34 master processes"
+    ],
+    "recommendations": [
+      "Add a Google Drive/Docs/Sheets MCP server (project already has OAuth token.json + @googleapis/sheets)",
+      "Ingest ARMCL Sales SOP + policies into saas.empSOPArc / saas.PolicyHeaderArc (schema supports purpose, scope, procedure, responsibilities)",
+      "Build an iBOS REST connector for live orders, credit hold, and customer statements; keep DWH as archival read source",
+      "Seed sms.tblEmployeeIncentiveArc for ARMCL; enforce grievance logging",
+      "Attach weekly meeting minutes to Drive and link them in the register"
+    ]
+  },
+  "audit_findings": [
+    "12 knowledge items registered; 9/12 have links (75%) but 8 links point to the SAME private Google Doc",
+    "2 items have no link/status at all: Market Research Reports, Marketing Policy",
+    "1 item pending: ARMCL Weekly meeting minutes ('Need to Attach Support File')",
+    "SL numbers duplicated/non-sequential; typo 'Mmarketing Policy'; owner column concatenation bug; header row has repeated 'ABSL'",
+    "Sales Report links to iBOS ERP (external, login-gated)"
+  ]
+}

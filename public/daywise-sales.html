@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL & ABSL Sales Dashboard | August 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.container{max-width:1500px;margin:0 auto;padding:24px}
+.title-bar{background:linear-gradient(135deg,#0f172a,#1e293b);color:#f8fafc;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.title-bar h1{font-size:1.15rem;font-weight:700}
+.title-bar .sub{color:#94a3b8;font-size:0.78rem;margin-top:4px}
+.title-bar .date{color:#94a3b8;font-size:0.85rem}
+.nav-tabs{display:flex;gap:8px;margin-bottom:20px}
+.nav-tab{padding:10px 20px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:0.85rem;font-weight:600;color:#64748b;transition:all 0.2s}
+.nav-tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.nav-tab:hover:not(.active){background:#f8fafc;color:#3b82f6}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.chip{background:#fff;border-radius:10px;padding:16px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05);position:relative;overflow:hidden}
+.chip label{font-size:0.65rem;text-transform:uppercase;color:#64748b;letter-spacing:0.06em;display:block;margin-bottom:6px;font-weight:600}
+.chip .val{font-size:1.5rem;font-weight:800;color:#0f172a}
+.chip .sub{font-size:0.72rem;color:#64748b;margin-top:4px}
+.chip.blue{border-top:3px solid #3b82f6}
+.chip.green{border-top:3px solid #10b981}
+.chip.orange{border-top:3px solid #f59e0b}
+.chip.red{border-top:3px solid #ef4444}
+.chip.violet{border-top:3px solid #8b5cf6}
+.chip.teal{border-top:3px solid #14b8a6}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.box{background:#fff;border-radius:10px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.box h3{font-size:0.85rem;color:#64748b;margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.bar-chart{display:flex;flex-direction:column;gap:6px}
+.bar{position:relative;height:32px;background:#f1f5f9;border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;border-radius:6px;transition:width 0.4s;display:flex;align-items:center}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:0.72rem;font-weight:600;color:#1e293b;z-index:1}
+.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:55%}
+.bar .txt .n{font-size:0.7rem;font-weight:700}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid #f1f5f9;font-size:0.8rem}
+th{color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.65rem;letter-spacing:0.04em;background:#f8fafc}
+th:first-child,td:first-child{text-align:left}
+tr:hover{background:#f8fafc}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.pos{color:#059669}
+.neg{color:#dc2626}
+.progress-ring{width:80px;height:80px;margin:0 auto 12px}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .bg{fill:none;stroke:#e2e8f0;stroke-width:8}
+.progress-ring .fg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 0.5s}
+.progress-ring .pct{font-size:1rem;font-weight:800;fill:#0f172a}
+.gauge-row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px}
+.gauge-item{text-align:center}
+.gauge-item label{font-size:0.65rem;text-transform:uppercase;color:#64748b;display:block;margin-top:6px;font-weight:600}
+.foot-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
+.foot-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px}
+.foot-item label{font-size:0.65rem;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px;font-weight:600}
+.foot-item .val{font-size:1.1rem;font-weight:700;color:#0f172a}
+.loading{text-align:center;padding:60px;color:#64748b;font-size:0.9rem}
+.error{text-align:center;padding:60px;color:#dc2626}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700}
+.badge.high{background:#dcfce7;color:#15803d}
+.badge.mid{background:#fef3c7;color:#b45309}
+.badge.low{background:#fee2e2;color:#b91c1c}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<div>
+<h1>ARMCL & ABSL Sales Dashboard | August 2026</h1>
+<div class="sub">Day-wise Sales Target Achievement Status — Source: Google Sheets</div>
+</div>
+<div class="date" id="dateLabel"></div>
+</div>
+
+<div class="nav-tabs">
+<div class="nav-tab active" onclick="switchTab('armcl')">ARMCL (CFT)</div>
+<div class="nav-tab" onclick="switchTab('absl')">ABSL (MT)</div>
+<div class="nav-tab" onclick="switchTab('compare')">Comparison</div>
+</div>
+
+<div id="loading" class="loading">Loading data...</div>
+
+<div id="dashboard" class="hidden">
+
+<div id="armcl-tab">
+<div class="chips" id="armcl-chips"></div>
+<div class="row">
+<div class="box">
+<h3>Daily Sales Trend — ARMCL (CFT)</h3>
+<div class="bar-chart" id="armcl-bars"></div>
+</div>
+<div class="box">
+<h3>Target Achievement</h3>
+<div class="gauge-row" id="armcl-gauges"></div>
+</div>
+</div>
+<div class="box">
+<h3>Daily Sales Table — ARMCL</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Date</th><th>Sales (CFT)</th><th>Cumulative</th><th>Daily Avg Target</th><th>Variance</th><th>Status</th></tr></thead>
+<tbody id="armcl-table"></tbody></table>
+</div>
+</div>
+</div>
+
+<div id="absl-tab" class="hidden">
+<div class="chips" id="absl-chips"></div>
+<div class="row">
+<div class="box">
+<h3>Daily Sales Trend — ABSL (MT)</h3>
+<div class="bar-chart" id="absl-bars"></div>
+</div>
+<div class="box">
+<h3>Target Achievement</h3>
+<div class="gauge-row" id="absl-gauges"></div>
+</div>
+</div>
+<div class="box">
+<h3>Daily Sales Table — ABSL</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Date</th><th>Sales (MT)</th><th>Cumulative</th><th>Daily Avg Target</th><th>Variance</th><th>Status</th></tr></thead>
+<tbody id="absl-table"></tbody></table>
+</div>
+</div>
+</div>
+
+<div id="compare-tab" class="hidden">
+<div class="chips" id="compare-chips"></div>
+<div class="box">
+<h3>Side-by-Side Comparison</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Metric</th><th>ARMCL (CFT)</th><th>ABSL (MT)</th></tr></thead>
+<tbody id="compare-table"></tbody></table>
+</div>
+</div>
+<div class="row">
+<div class="box">
+<h3>ARMCL Daily Sales</h3>
+<div class="bar-chart" id="compare-armcl-bars"></div>
+</div>
+<div class="box">
+<h3>ABSL Daily Sales</h3>
+<div class="bar-chart" id="compare-absl-bars"></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+function cleanNum(v){return parseFloat(String(v).replace(/[^0-9.\-]/g,''))||0}
+function fm(n){return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmd(n){return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function pctBadge(p){
+  if(p>=70)return '<span class="badge high">On Track</span>';
+  if(p>=40)return '<span class="badge mid">Behind</span>';
+  return '<span class="badge low">Off Track</span>';
+}
+function statusDot(p){
+  if(p>=70)return '<span style="color:#10b981;font-weight:600">On Track</span>';
+  if(p>=40)return '<span style="color:#f59e0b;font-weight:600">Behind</span>';
+  return '<span style="color:#ef4444;font-weight:600">Off Track</span>';
+}
+function gaugeSVG(pct,color){
+  const r=33,circ=2*Math.PI*r,off=circ-(pct/100)*circ;
+  return '<div class="gauge-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="'+r+'"/><circle class="fg" cx="40" cy="40" r="'+r+'" stroke="'+color+'" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'"/><text x="40" y="44" text-anchor="middle" class="pct">'+Math.round(pct)+'%</text></svg></div><label>'+label+'</label></div>';
+}
+
+let sheetData=null;
+
+function switchTab(tab){
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>{
+    t.classList.toggle('active',['armcl','absl','compare'][i]===tab);
+  });
+  document.getElementById('armcl-tab').classList.toggle('hidden',tab!=='armcl');
+  document.getElementById('absl-tab').classList.toggle('hidden',tab!=='absl');
+  document.getElementById('compare-tab').classList.toggle('hidden',tab!=='compare');
+}
+
+function buildDailyBars(data,maxVal,colors){
+  return data.map((d,i)=>{
+    const w=maxVal>0?Math.round(d.val/maxVal*100):0;
+    const bg=colors?colors[i%colors.length]:'#3b82f6';
+    return '<div class="bar"><div class="fill" style="width:'+w+'%;background:'+bg+'"></div><div class="txt"><span class="nm">'+d.date+'</span><span class="n">'+(d.val>0?fm(d.val):'--')+'</span></div></div>';
+  }).join('');
+}
+
+function buildGaugeRow(sbu){
+  const d=sbu.data;
+  const achivPct=d.target>0?(d.total/d.target*100):0;
+  const daysElapsed=d.days.filter(x=>x.val>0).length;
+  const totalDays=d.days.length;
+  const timePct=totalDays>0?(daysElapsed/totalDays*100):0;
+  const dailyTarget=d.target/31;
+  const expectedByNow=dailyTarget*daysElapsed;
+  const expectedPct=expectedByNow>0?(d.total/expectedByNow*100):0;
+  return '<div class="gauge-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="33"/><circle class="fg" cx="40" cy="40" r="33" stroke="'+(achivPct>=70?'#10b981':achivPct>=40?'#f59e0b':'#ef4444')+'" stroke-dasharray="'+207.35+'" stroke-dashoffset="'+(207.35-(achivPct/100)*207.35)+'"/><text x="40" y="44" text-anchor="middle" class="pct">'+Math.round(achivPct)+'%</text></svg></div><label>Achievement</label></div>'+
+  '<div class="gauge-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="33"/><circle class="fg" cx="40" cy="40" r="33" stroke="#3b82f6" stroke-dasharray="207.35" stroke-dashoffset="'+(207.35-(timePct/100)*207.35)+'"/><text x="40" y="44" text-anchor="middle" class="pct">'+Math.round(timePct)+'%</text></svg></div><label>Time Elapsed</label></div>'+
+  '<div class="gauge-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="33"/><circle class="fg" cx="40" cy="40" r="33" stroke="'+(expectedPct>=100?'#10b981':'#ef4444')+'" stroke-dasharray="207.35" stroke-dashoffset="'+(207.35-(Math.min(expectedPct,100)/100)*207.35)+'"/><text x="40" y="44" text-anchor="middle" class="pct">'+Math.round(expectedPct)+'%</text></svg></div><label>vs Expected</label></div>';
+}
+
+function buildTable(sbu,unit){
+  const d=sbu.data;
+  const dailyTarget=d.target/31;
+  let cum=0;
+  return d.days.map(day=>{
+    cum+=day.val;
+    const varVal=day.val>0?(day.val-dailyTarget):0;
+    const hasVal=day.val>0;
+    return '<tr>'+
+    '<td>'+day.date+'</td>'+
+    '<td class="num'+(hasVal?' pos':'')+'">'+(hasVal?fm(day.val):'--')+'</td>'+
+    '<td class="num">'+(hasVal?fm(cum):'--')+'</td>'+
+    '<td class="num">'+fm(dailyTarget)+'</td>'+
+    '<td class="num'+(varVal>=0?' pos':' neg')+'">'+(hasVal?(varVal>=0?'+':'')+fm(varVal):'--')+'</td>'+
+    '<td>'+pctBadge(hasVal?(day.val/dailyTarget*100):0)+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+function renderDashboard(data){
+  document.getElementById('loading').classList.add('hidden');
+  document.getElementById('dashboard').classList.remove('hidden');
+
+  const armcl=data.armcl,absl=data.absl;
+  const now=new Date();
+  document.getElementById('dateLabel').textContent='As of: '+now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  // ARMCL chips
+  const aAchiv=armcl.target>0?(armcl.total/armcl.target*100):0;
+  const aRemain=armcl.target-armcl.total;
+  const aDailyAvg=armcl.days.filter(d=>d.val>0).length>0?(armcl.total/armcl.days.filter(d=>d.val>0).length):0;
+  document.getElementById('armcl-chips').innerHTML=
+  '<div class="chip blue"><label>Monthly Target</label><div class="val">'+fm(armcl.target)+'</div><div class="sub">CFT</div></div>'+
+  '<div class="chip green"><label>Total Achieved</label><div class="val">'+fm(armcl.total)+'</div><div class="sub">CFT</div></div>'+
+  '<div class="chip '+(aAchiv>=70?'green':aAchiv>=40?'orange':'red')+'"><label>Achievement %</label><div class="val">'+aAchiv.toFixed(1)+'%</div><div class="sub">'+pctBadge(aAchiv)+'</div></div>'+
+  '<div class="chip '+(aRemain>0?'orange':'green')+'"><label>Remaining</label><div class="val">'+fm(Math.max(0,aRemain))+'</div><div class="sub">CFT to go</div></div>'+
+  '<div class="chip violet"><label>Daily Average</label><div class="val">'+fm(aDailyAvg)+'</div><div class="sub">CFT / active day</div></div>'+
+  '<div class="chip teal"><label>Active Days</label><div class="val">'+armcl.days.filter(d=>d.val>0).length+'</div><div class="sub">of '+armcl.days.length+' days</div></div>';
+
+  // ABSL chips
+  const bAchiv=absl.target>0?(absl.total/absl.target*100):0;
+  const bRemain=absl.target-absl.total;
+  const bDailyAvg=absl.days.filter(d=>d.val>0).length>0?(absl.total/absl.days.filter(d=>d.val>0).length):0;
+  document.getElementById('absl-chips').innerHTML=
+  '<div class="chip blue"><label>Monthly Target</label><div class="val">'+fm(absl.target)+'</div><div class="sub">MT</div></div>'+
+  '<div class="chip green"><label>Total Achieved</label><div class="val">'+fmd(absl.total)+'</div><div class="sub">MT</div></div>'+
+  '<div class="chip '+(bAchiv>=70?'green':bAchiv>=40?'orange':'red')+'"><label>Achievement %</label><div class="val">'+bAchiv.toFixed(1)+'%</div><div class="sub">'+pctBadge(bAchiv)+'</div></div>'+
+  '<div class="chip '+(bRemain>0?'orange':'green')+'"><label>Remaining</label><div class="val">'+fmd(Math.max(0,bRemain))+'</div><div class="sub">MT to go</div></div>'+
+  '<div class="chip violet"><label>Daily Average</label><div class="val">'+fmd(bDailyAvg)+'</div><div class="sub">MT / active day</div></div>'+
+  '<div class="chip teal"><label>Active Days</label><div class="val">'+absl.days.filter(d=>d.val>0).length+'</div><div class="sub">of '+absl.days.length+' days</div></div>';
+
+  // ARMCL bars
+  const aMax=Math.max(...armcl.days.map(d=>d.val),1);
+  const aColors=['#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6'];
+  document.getElementById('armcl-bars').innerHTML=buildDailyBars(armcl.days,aMax,aColors);
+  document.getElementById('armcl-gauges').innerHTML=buildGaugeRow(armcl);
+  document.getElementById('armcl-table').innerHTML=buildTable(armcl,'CFT');
+
+  // ABSL bars
+  const bMax=Math.max(...absl.days.map(d=>d.val),1);
+  const bColors=['#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981','#6ee7b7','#10b981','#34d399','#10b981'];
+  document.getElementById('absl-bars').innerHTML=buildDailyBars(absl.days,bMax,bColors);
+  document.getElementById('absl-gauges').innerHTML=buildGaugeRow(absl);
+  document.getElementById('absl-table').innerHTML=buildTable(absl,'MT');
+
+  // Comparison
+  document.getElementById('compare-chips').innerHTML=
+  '<div class="chip blue"><label>ARMCL Target</label><div class="val">'+fm(armcl.target)+'</div><div class="sub">CFT</div></div>'+
+  '<div class="chip green"><label>ABSL Target</label><div class="val">'+fm(absl.target)+'</div><div class="sub">MT</div></div>'+
+  '<div class="chip violet"><label>ARMCL Achieved</label><div class="val">'+fm(armcl.total)+'</div><div class="sub">'+aAchiv.toFixed(1)+'%</div></div>'+
+  '<div class="chip teal"><label>ABSL Achieved</label><div class="val">'+fmd(absl.total)+'</div><div class="sub">'+bAchiv.toFixed(1)+'%</div></div>';
+
+  document.getElementById('compare-table').innerHTML=
+  '<tr><td style="font-weight:600">Monthly Target</td><td class="num">'+fm(armcl.target)+' CFT</td><td class="num">'+fm(absl.target)+' MT</td></tr>'+
+  '<tr><td style="font-weight:600">Total Achieved</td><td class="num pos">'+fm(armcl.total)+'</td><td class="num pos">'+fmd(absl.total)+'</td></tr>'+
+  '<tr><td style="font-weight:600">Achievement %</td><td class="num">'+aAchiv.toFixed(1)+'%</td><td class="num">'+bAchiv.toFixed(1)+'%</td></tr>'+
+  '<tr><td style="font-weight:600">Remaining</td><td class="num '+(aRemain>0?'neg':'pos')+'">'+fm(Math.max(0,aRemain))+'</td><td class="num '+(bRemain>0?'neg':'pos')+'">'+fmd(Math.max(0,bRemain))+'</td></tr>'+
+  '<tr><td style="font-weight:600">Daily Average</td><td class="num">'+fm(aDailyAvg)+'</td><td class="num">'+fmd(bDailyAvg)+'</td></tr>'+
+  '<tr><td style="font-weight:600">Active Days</td><td class="num">'+armcl.days.filter(d=>d.val>0).length+'</td><td class="num">'+absl.days.filter(d=>d.val>0).length+'</td></tr>'+
+  '<tr><td style="font-weight:600">Daily Target</td><td class="num">'+fm(armcl.target/31)+'</td><td class="num">'+fmd(absl.target/31)+'</td></tr>';
+
+  document.getElementById('compare-armcl-bars').innerHTML=buildDailyBars(armcl.days,aMax,aColors);
+  document.getElementById('compare-absl-bars').innerHTML=buildDailyBars(absl.days,bMax,bColors);
+}
+
+async function load(){
+  try{
+    const d=await fetch('/api/daywise-sales-aug26').then(r=>r.json());
+    sheetData=d;
+    renderDashboard(d);
+  }catch(e){
+    document.getElementById('loading').innerHTML='<div class="error">Failed to load: '+e.message+'</div>';
+  }
+}
+load();
+</script>
+</body>
+</html>

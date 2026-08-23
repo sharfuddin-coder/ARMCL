@@ -1,0 +1,318 @@
+{
+  "name": "ABSL_SMS_Control_Tower_agent",
+  "company": "Akij Building Solutions Ltd (ABSL)",
+  "business": "Ready Mix Concrete (RMC) - Akij Readymix Concrete Ltd (ARMCL)",
+  "framework": "Akij Resource - Sales Management OS (Sales Digitalization & Performance Management initiative)",
+  "scope": "Sales Management System (SMS) Control Tower for the ARMCL SBU: centralized view of targets, performance, pacing, planning, order book, drivers, territory/product/force breakdowns, coverage, exceptions, recovery, and KPIs",
+  "dwh": {
+    "server": "203.202.241.211",
+    "database": "DWH",
+    "armcl_business_unit_id": 175,
+    "absl_business_unit_id": 220,
+    "schemas": {
+      "oms": "order management (sales orders header/row, manpower targets)",
+      "sms": "sales management (delivery header)",
+      "mes": "manufacturing execution / sales planning (sales plan header/row)",
+      "pms": "performance management (target setup, KPIs, achievements)",
+      "fin": "finance (collections)",
+      "prt": "partner master",
+      "saas": "shared services (policies, grievances, org)"
+    },
+    "key_tables": {
+      "orders": "DWH.oms.tblSalesOrderHeaderArc",
+      "order_rows": "DWH.oms.tblSalesOrderRowArc",
+      "deliveries": "DWH.sms.tblDeliveryHeaderArc",
+      "manpower_target": "DWH.oms.tblManpowerSalesTargetArc",
+      "sales_plan_header": "DWH.mes.tblSalesPlanHeaderArc",
+      "sales_plan_row": "DWH.mes.tblSalesPlanRowArc",
+      "target_setup": "DWH.pms.tblTargetSetupArc",
+      "kpis": "DWH.pms.tblKPIsArc",
+      "partners": "DWH.prt.tblBusinessPartnerArc",
+      "collections": "DWH.fin.tblCollectionPlanArc"
+    }
+  },
+  "management_philosophy": {
+    "diagnostic_loop": "Find the Gap -> Diagnose the Cause -> Quantify the Opportunity -> Decide -> Assign -> Execute -> Verify -> Learn",
+    "growth_model": "Recover Existing Business -> Improve Productivity -> Expand Quality Growth -> Protect Margin, Cash & Inventory",
+    "closed_loop": "PLAN -> EXECUTE -> CONTROL -> ANALYZE -> RECOVER -> DELIVER -> LEARN -> REPLAN",
+    "review_method": "WHAT happened? WHY? SO WHAT? NOW WHAT? WHO? BY WHEN? DID IT WORK?"
+  },
+  "sbum_operating_engine": {
+    "model": "Cement / RMC: Dealer/Territory -> Product/Project (Cash + Credit)",
+    "key_rule": "Manage share + credit/collection",
+    "focus_kpis": ["Dealer Potential", "Share", "Frequency", "Mix", "Price", "Margin", "Credit", "Overdue", "Collection", "OTIF"]
+  },
+  "panels": [
+    {
+      "panel": "P1 - Sales Target vs Achievement",
+      "purpose": "Current month target, actual, achievement % and gap",
+      "source": "DWH.oms.tblSalesOrderHeaderArc (actual) + DWH.pms.tblTargetSetupArc / DWH.oms.tblManpowerSalesTargetArc (target)",
+      "kpi": "Achievement % = Actual / Target x 100",
+      "queries": [
+        {
+          "name": "MTD Actual Sales (Net Value)",
+          "sql": "SELECT SUM(numNetOrderValue) AS mtd_sales, COUNT(*) AS mtd_orders FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0)"
+        },
+        {
+          "name": "MTD Target (Manpower target)",
+          "sql": "SELECT SUM(numTargeAmount) AS mtd_target FROM DWH.oms.tblManpowerSalesTargetArc WHERE intBusinessUnitId=175 AND isActive=1 AND intTargetYearId=(SELECT intId FROM DWH.pms.tblYearArc WHERE intYear = YEAR(GETDATE())) AND intTargetMonthId=MONTH(GETDATE())"
+        },
+        {
+          "name": "MTD Target (Target setup, fallback)",
+          "sql": "SELECT SUM(numTarget) AS mtd_target FROM DWH.pms.tblTargetSetupArc WHERE intBusinessUnitId=175 AND isActive=1 AND strTargetFrequency='Monthly' AND strFrequencyValue = DATENAME(month, GETDATE()) + ', ' + CAST(YEAR(GETDATE()) AS varchar)"
+        }
+      ],
+      "guardrail": "Achievement < 80% = RED, 80-95% = AMBER, >=95% = GREEN"
+    },
+    {
+      "panel": "P2 - Daily / MTD / YTD Performance & Pacing",
+      "purpose": "Pacing vs required run rate (RDT / RADS)",
+      "source": "DWH.oms.tblSalesOrderHeaderArc",
+      "kpis": {
+        "RDT": "Remaining Target / Remaining Working Days",
+        "Pace_RADS": "Actual Run Rate / Required Run Rate",
+        "Projection": "Run Rate x Total Working Days",
+        "Growth": "(Current - Prior) / Prior x 100"
+      },
+      "queries": [
+        {
+          "name": "Daily Sales Trend (MTD by day)",
+          "sql": "SELECT CAST(dteSalesOrderDate AS date) AS sales_date, SUM(numNetOrderValue) AS daily_sales, COUNT(*) AS orders FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0) GROUP BY CAST(dteSalesOrderDate AS date) ORDER BY sales_date"
+        },
+        {
+          "name": "YTD Sales",
+          "sql": "SELECT SUM(numNetOrderValue) AS ytd_sales, COUNT(*) AS ytd_orders FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEFROMPARTS(YEAR(GETDATE()),1,1)"
+        },
+        {
+          "name": "Month-over-Month Growth",
+          "sql": "SELECT SUM(CASE WHEN dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) THEN numNetOrderValue END) AS cur_mtd, SUM(CASE WHEN dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE())-1,0) AND dteSalesOrderDate < DATEADD(month, DATEDIFF(month,0,GETDATE()),0) THEN numNetOrderValue END) AS prev_mtd FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE())-1,0)"
+        }
+      ],
+      "guardrail": "Pace < 1.0 for 3 consecutive days = RED"
+    },
+    {
+      "panel": "P3 - Demand & Sales Planning",
+      "purpose": "Sales plan (target) vs actual by month",
+      "source": "DWH.mes.tblSalesPlanHeaderArc + DWH.mes.tblSalesPlanRowArc",
+      "kpi": "Plan vs Actual variance",
+      "queries": [
+        {
+          "name": "Monthly Sales Plan vs Order",
+          "sql": "SELECT MONTH(dteSalesOrderDate) AS plan_month, SUM(numNetOrderValue) AS actual FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND YEAR(dteSalesOrderDate)=YEAR(GETDATE()) GROUP BY MONTH(dteSalesOrderDate) ORDER BY plan_month"
+        },
+        {
+          "name": "Sales Plan (planned qty by item)",
+          "sql": "SELECT r.strItemName, SUM(r.numItemPlanQty) AS planned_qty FROM DWH.mes.tblSalesPlanRowArc r JOIN DWH.mes.tblSalesPlanHeaderArc h ON r.intSalesPlanId=h.intSalesPlanId WHERE h.intBusinessUnitId=175 AND r.isActive=1 GROUP BY r.strItemName ORDER BY planned_qty DESC"
+        }
+      ],
+      "guardrail": "Plan variance > 20% = AMBER, > 40% = RED"
+    },
+    {
+      "panel": "P4 - Order Book / Lifting Plan",
+      "purpose": "Open orders, undelivered quantity/value, delivery (lifting) progress",
+      "source": "DWH.oms.tblSalesOrderHeaderArc + DWH.oms.tblSalesOrderRowArc + DWH.sms.tblDeliveryHeaderArc",
+      "kpis": ["Order book value", "Undelivered qty", "Lifting % = Delivered / Ordered"],
+      "queries": [
+        {
+          "name": "Open / Undelivered Order Book",
+          "sql": "SELECT SUM(r.numUndeliveryValues) AS open_order_value, SUM(r.numUndeliveryQuantity) AS open_order_qty FROM DWH.oms.tblSalesOrderRowArc r JOIN DWH.oms.tblSalesOrderHeaderArc h ON r.intSalesOrderId=h.intSalesOrderId WHERE r.intBusinessUnitId=175 AND h.isActive=1 AND h.isApproved=1 AND h.isCompleted=0 AND h.isRejected=0"
+        },
+        {
+          "name": "Lifting Progress (Delivery by month)",
+          "sql": "SELECT MONTH(dteDeliveryDate) AS lift_month, SUM(numTotalDeliveryQuantity) AS delivered_qty, SUM(numTotalNetValue) AS delivered_value FROM DWH.sms.tblDeliveryHeaderArc WHERE intBusinessUnitId=175 AND YEAR(dteDeliveryDate)=YEAR(GETDATE()) GROUP BY MONTH(dteDeliveryDate) ORDER BY lift_month"
+        }
+      ],
+      "guardrail": "Lifting % < 60% at month-end = RED"
+    },
+    {
+      "panel": "P5 - Sales Driver & Demand Driver",
+      "purpose": "Decompose sales into drivers (Growth Tree): Active customers x Frequency x Order Value; demand by concrete grade",
+      "source": "DWH.oms.tblSalesOrderHeaderArc + DWH.oms.tblSalesOrderRowArc",
+      "kpi": "Sales Growth Tree = Active x Frequency x Average Order Value",
+      "queries": [
+        {
+          "name": "Active Customers, Frequency, AOV (MTD)",
+          "sql": "SELECT COUNT(DISTINCT intSoldToPartnerId) AS active_customers, COUNT(*) / NULLIF(COUNT(DISTINCT intSoldToPartnerId),0) AS avg_frequency, SUM(numNetOrderValue) / NULLIF(COUNT(*),0) AS avg_order_value FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0)"
+        },
+        {
+          "name": "Product (Grade) Mix MTD",
+          "sql": "SELECT TOP 15 r.strItemName, SUM(r.numOrderQuantity) AS qty, SUM(r.numNetValue) AS value FROM DWH.oms.tblSalesOrderRowArc r JOIN DWH.oms.tblSalesOrderHeaderArc h ON r.intSalesOrderId=h.intSalesOrderId WHERE r.intBusinessUnitId=175 AND h.isActive=1 AND h.dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) GROUP BY r.strItemName ORDER BY value DESC"
+        }
+      ],
+      "guardrail": "AOV or Frequency declining vs prior month = AMBER"
+    },
+    {
+      "panel": "P6 - Territory / Zone / Area-wise Performance",
+      "purpose": "Sales by territory, plant, and sales office",
+      "source": "DWH.oms.tblSalesOrderHeaderArc + DWH.saas.masterBusinessUnitArc + DWH.oms.tblSalesForceTerritoryArc",
+      "kpi": "Share and growth by territory",
+      "queries": [
+        {
+          "name": "Sales by Plant (MTD)",
+          "sql": "SELECT strPlantName, SUM(numNetOrderValue) AS net_value, COUNT(*) AS orders FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) GROUP BY strPlantName ORDER BY net_value DESC"
+        },
+        {
+          "name": "Sales by Sales Office (MTD)",
+          "sql": "SELECT strSalesOfficeName, SUM(numNetOrderValue) AS net_value, COUNT(*) AS orders FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) GROUP BY strSalesOfficeName ORDER BY net_value DESC"
+        },
+        {
+          "name": "Territory Coverage (salesforce-territory map)",
+          "sql": "SELECT strTerritoryName, COUNT(*) AS force_count FROM DWH.oms.tblSalesForceTerritoryArc WHERE intBusinessUnitId=175 GROUP BY strTerritoryName ORDER BY force_count DESC"
+        }
+      ],
+      "guardrail": "Any plant < 70% of its monthly share baseline = AMBER"
+    },
+    {
+      "panel": "P7 - Product-wise Performance",
+      "purpose": "Concrete grade (PSI) performance: volume, value, mix share, margin proxy",
+      "source": "DWH.oms.tblSalesOrderRowArc + DWH.oms.tblSalesOrderHeaderArc",
+      "kpi": "Mix share % per grade",
+      "queries": [
+        {
+          "name": "Grade-wise MTD (Volume & Value)",
+          "sql": "SELECT TOP 20 r.strItemName, SUM(r.numOrderQuantity) AS qty, SUM(r.numNetValue) AS value FROM DWH.oms.tblSalesOrderRowArc r JOIN DWH.oms.tblSalesOrderHeaderArc h ON r.intSalesOrderId=h.intSalesOrderId WHERE r.intBusinessUnitId=175 AND h.isActive=1 AND h.dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) GROUP BY r.strItemName ORDER BY qty DESC"
+        },
+        {
+          "name": "Grade Mix Share",
+          "sql": "SELECT TOP 20 r.strItemName, SUM(r.numOrderQuantity) AS qty, ROUND(100.0*SUM(r.numOrderQuantity)/NULLIF(SUM(SUM(r.numOrderQuantity)) OVER (),0),1) AS mix_share FROM DWH.oms.tblSalesOrderRowArc r JOIN DWH.oms.tblSalesOrderHeaderArc h ON r.intSalesOrderId=h.intSalesOrderId WHERE r.intBusinessUnitId=175 AND h.isActive=1 AND h.dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) GROUP BY r.strItemName ORDER BY qty DESC"
+        }
+      ],
+      "guardrail": "A grade with > 10% qty share and price below base matrix = AMBER"
+    },
+    {
+      "panel": "P8 - Sales Force Productivity",
+      "purpose": "Orders and value per salesperson; coverage of assigned territories",
+      "source": "DWH.oms.tblSalesOrderHeaderArc (intSalesForceEmpId) + DWH.oms.tblManpowerSalesTargetArc + DWH.oms.tblSalesForceTerritoryArc",
+      "kpi": "Orders/rep, Value/rep, Target Achievement per rep",
+      "queries": [
+        {
+          "name": "Salesperson Productivity (MTD)",
+          "sql": "SELECT strSalesForceEmpName, COUNT(*) AS orders, SUM(numNetOrderValue) AS value FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0) AND strSalesForceEmpName IS NOT NULL AND strSalesForceEmpName <> '' GROUP BY strSalesForceEmpName ORDER BY value DESC"
+        },
+        {
+          "name": "Rep Target Achievement (Manpower target)",
+          "sql": "SELECT intEmployeeEnroll, SUM(numTargeAmount) AS target_amt, SUM(numTargeQnt) AS target_qty FROM DWH.oms.tblManpowerSalesTargetArc WHERE intBusinessUnitId=175 AND isActive=1 AND intTargetMonthId=MONTH(GETDATE()) AND intTargetYearId=(SELECT intId FROM DWH.pms.tblYearArc WHERE intYear=YEAR(GETDATE())) GROUP BY intEmployeeEnroll ORDER BY target_amt DESC"
+        }
+      ],
+      "guardrail": "Rep with 0 orders for 5+ working days = RED (inactive)"
+    },
+    {
+      "panel": "P9 - Distribution & Market Coverage",
+      "purpose": "Customer universe, active customers, coverage % by territory",
+      "source": "DWH.prt.tblBusinessPartnerArc + DWH.oms.tblSalesOrderHeaderArc",
+      "kpi": "Coverage % = Active Customers / Customer Universe",
+      "queries": [
+        {
+          "name": "Customer Universe & Active (MTD)",
+          "sql": "SELECT (SELECT COUNT(*) FROM DWH.prt.tblBusinessPartnerArc WHERE intBusinessUnitId=175 AND isActive=1) AS customer_universe, (SELECT COUNT(DISTINCT intSoldToPartnerId) FROM DWH.oms.tblSalesOrderHeaderArc WHERE intBusinessUnitId=175 AND isActive=1 AND dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0)) AS active_customers"
+        },
+        {
+          "name": "Customer Type Mix",
+          "sql": "SELECT strPartnerSalesType, COUNT(*) AS n FROM DWH.prt.tblBusinessPartnerArc WHERE intBusinessUnitId=175 GROUP BY strPartnerSalesType ORDER BY n DESC"
+        }
+      ],
+      "guardrail": "Coverage < 30% of universe transacting in a month = AMBER"
+    },
+    {
+      "panel": "P10 - Exception / Gap Identification",
+      "purpose": "Flag RED/AMBER gaps across guardrails; list offending territories, products, reps",
+      "source": "Derived from P1-P9 results",
+      "kpi": "RAG status per guardrail: SALES | MARGIN | CASH | CREDIT | STOCK | SERVICE | GOVERNANCE | DATA",
+      "queries": [
+        {
+          "name": "Overdue Customers (credit guardrail)",
+          "sql": "SELECT TOP 20 strSoldToPartnerName, SUM(numTotalNetValue) AS delivered_value FROM DWH.sms.tblDeliveryHeaderArc WHERE intBusinessUnitId=175 AND dteDeliveryDate < DATEADD(day, -60, GETDATE()) AND isCommercialInvoice=1 GROUP BY strSoldToPartnerName ORDER BY delivered_value DESC"
+        },
+        {
+          "name": "Zero-Order Customers (MTD)",
+          "sql": "SELECT TOP 20 p.strBusinessPartnerName FROM DWH.prt.tblBusinessPartnerArc p WHERE p.intBusinessUnitId=175 AND p.isActive=1 AND NOT EXISTS (SELECT 1 FROM DWH.oms.tblSalesOrderHeaderArc o WHERE o.intSoldToPartnerId=p.intBusinessPartnerId AND o.intBusinessUnitId=175 AND o.dteSalesOrderDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0))"
+        }
+      ],
+      "guardrail": "A business is not fully GREEN when a critical guardrail is RED"
+    },
+    {
+      "panel": "P11 - Recovery & Action Tracking",
+      "purpose": "Track collection recovery and action plans against gaps",
+      "source": "DWH.sms.tblDeliveryHeaderArc (payment/collection) + action registers",
+      "kpi": "Collection % , Credit release, Action effectiveness = Actual Impact / Expected Impact",
+      "queries": [
+        {
+          "name": "Collection vs Delivery (MTD)",
+          "sql": "SELECT SUM(numTotalNetValue) AS delivered_value, SUM(numPaymentAmount) AS collected, ROUND(100.0*SUM(numPaymentAmount)/NULLIF(SUM(numTotalNetValue),0),1) AS collection_pct FROM DWH.sms.tblDeliveryHeaderArc WHERE intBusinessUnitId=175 AND dteDeliveryDate >= DATEADD(month, DATEDIFF(month,0,GETDATE()),0)"
+        }
+      ],
+      "guardrail": "Collection % < 80% = AMBER, < 60% = RED"
+    },
+    {
+      "panel": "P12 - KPI, Alerts & Management Insights",
+      "purpose": "Roll-up KPI scorecard with RAG, alerts, and narrative insights",
+      "source": "Derived from all panels + DWH.pms.tblKPIsArc",
+      "kpi": "Scorecard: Achievement %, Growth %, DSO, Overdue %, Coverage %, Strike Rate, Lifting %, Collection %",
+      "queries": [
+        {
+          "name": "KPI Register (relevant KPIs)",
+          "sql": "SELECT intKPIsId, strCode, strKPIs FROM DWH.pms.tblKPIsArc WHERE strKPIs LIKE '%sales%' OR strKPIs LIKE '%collect%' OR strKPIs LIKE '%target%' OR strKPIs LIKE '%outstanding%' OR strKPIs LIKE '%conversion%' OR strKPIs LIKE '%growth%'"
+        }
+      ],
+      "guardrail": "Generate RED list with owner + target date + follow-up (Recovery Plan)"
+    }
+  ],
+  "kpi_dictionary": {
+    "achievement_pct": { "formula": "Actual / Target x 100", "source": "P1" },
+    "growth_pct": { "formula": "(Current - Prior) / Prior x 100", "source": "P2" },
+    "rdt": { "formula": "Remaining Target / Remaining Working Days", "source": "P2" },
+    "pace_rads": { "formula": "Actual Run Rate / Required Run Rate", "source": "P2" },
+    "projection": { "formula": "Run Rate x Total Working Days", "source": "P2" },
+    "available_credit": { "formula": "Credit Limit - Outstanding - Open Orders - Unbilled", "source": "SOP Credit Policy" },
+    "credit_utilisation": { "formula": "(Outstanding + Open + Unbilled) / Limit", "source": "SOP Credit Policy" },
+    "overdue_pct": { "formula": "Overdue / Total Outstanding", "source": "SOP Credit Policy" },
+    "dso": { "formula": "Outstanding / (Sales / 30)", "source": "P10/P12" },
+    "strike_rate": { "formula": "Productive Calls / Total Calls", "source": "Sales OS" },
+    "coverage_pct": { "formula": "Active Outlets / Outlet Universe", "source": "P9" },
+    "lifting_pct": { "formula": "Delivered Qty / Ordered Qty", "source": "P4" },
+    "collection_pct": { "formula": "Collected / Delivered", "source": "P11" },
+    "sales_growth_tree": { "formula": "Active x Frequency x Average Order Value", "source": "P5" },
+    "action_effectiveness": { "formula": "Actual Impact / Expected Impact", "source": "P11" }
+  },
+  "rag_guardrails": {
+    "green": "No material guardrail breach",
+    "amber": "Adverse trend requires recovery",
+    "red": "Material performance/cash/credit/governance issue",
+    "blue": "Approved strategic initiative / monitored exception",
+    "guardrail_domains": ["SALES", "MARGIN", "CASH", "CREDIT", "STOCK", "SERVICE", "GOVERNANCE", "DATA"],
+    "rule": "A business is not fully GREEN when a critical guardrail is RED"
+  },
+  "management_operating_rhythm": {
+    "daily_control": { "users": "SO / ZSM / Area", "focus": "RDT, pace, visits, zero-orders, stock-out, collection, approvals", "output": "Same-Day Actions" },
+    "weekly_review": { "users": "ZSM + SO / DSM", "focus": "Gap, opportunity, distribution, productivity, execution, credit, stock", "output": "7-Day Recovery Plan" },
+    "monthly_business_review": { "users": "SBU / NSM / DSM + cross-functional", "focus": "Scorecard, bridge, forecast, margin, partner health, working capital, people, actions", "output": "30-Day Improvement Plan" },
+    "quarterly_strategic_review": { "users": "Business / SBU Head", "focus": "Market, demand, RTM, territory design, channel economics, capability, investments", "output": "Reallocate / Redesign / Expand / Rationalize" }
+  },
+  "roles_and_access": [
+    { "role": "Business / Group Head", "scope": "Group + SBU view" },
+    { "role": "NSM", "scope": "National view" },
+    { "role": "DSM / RM", "scope": "Division / Region view" },
+    { "role": "ZSM / AM", "scope": "Zone / Area / Team view" },
+    { "role": "SO", "scope": "Own territory / route / customer" },
+    { "role": "Finance", "scope": "Credit, receivable, collection, commercial quality" },
+    { "role": "SCM", "scope": "Stock, service, OTIF" },
+    { "role": "Admin", "scope": "Configuration & thresholds" }
+  ],
+  "mcp_gap_analysis": {
+    "available_mcp": ["mssql-test-server (DWH, read-only)", "gmail"],
+    "gaps": [
+      { "id": "G1", "gap": "No Google Drive/Docs/Sheets MCP", "detail": "Policy/SOP documents live in private Google Docs", "impact": "Cannot read policy content through MCP" },
+      { "id": "G2", "gap": "Policies/SOPs not in DWH", "detail": "PolicyHeaderArc = 0 ARMCL rows; empSOPArc = 0 ARMCL rows", "impact": "No programmatic access to rules" },
+      { "id": "G3", "gap": "No iBOS ERP connector", "detail": "Live credit hold, customer statements in iBOS web (login-gated)", "impact": "Available Credit / Credit Utilisation cannot be computed live" },
+      { "id": "G4", "gap": "Incentives missing in DWH", "detail": "sms.tblEmployeeIncentiveArc = 0 ARMCL rows", "impact": "Incentive panels not computable" },
+      { "id": "G5", "gap": "Complaint register thin", "detail": "saas.tblGrievanceArc = 2 ARMCL rows", "impact": "Service guardrail weak" },
+      { "id": "G6", "gap": "Sales force data sparse", "detail": "Only 166/16,559 orders have strSalesForceEmpName populated", "impact": "P8 productivity limited to few reps; needs sales-force mapping" },
+      { "id": "G7", "gap": "Market research unstructured", "detail": "No DWH table; lives in Drive", "impact": "Demand driver external inputs not queryable" }
+    ],
+    "notes": [
+      "Target data (tblTargetSetupArc) has many rows with numTarget=0; use tblManpowerSalesTargetArc (numTargeAmount) as primary MTD target source where populated",
+      "Delivery (sms.tblDeliveryHeaderArc) has numTotalDeliveryQuantity / numTotalNetValue / numPaymentAmount - use for lifting and collection panels",
+      "Sales plan lives in mes schema (tblSalesPlanHeaderArc / tblSalesPlanRowArc); numItemPlanQty is the planned quantity"
+    ]
+  }
+}

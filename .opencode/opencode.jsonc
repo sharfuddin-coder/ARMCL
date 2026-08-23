@@ -1,0 +1,21 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "skill": {
+      "crm": "allow",
+      "deploy-render": "allow",
+      "secure-node-app": "allow",
+      "build-crm-dashboard": "allow",
+      "add-crud-module": "allow",
+      "add-team-management": "allow"
+    }
+  },
+  "skills": {
+    "crm": "enable",
+    "deploy-render": "enable",
+    "secure-node-app": "enable",
+    "build-crm-dashboard": "enable",
+    "add-crud-module": "enable",
+    "add-team-management": "enable"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "name": "armcl_sbu_business_agent",
+  "sbu": {
+    "name": "Akij Readymix Concrete Ltd (ARMCL)",
+    "parent_company": "Akij Building Solutions Ltd (ABSL)",
+    "business": "Ready-mix concrete manufacturing, sales and delivery",
+    "products": ["Ready Mix Concrete (RMC)", "Asphalt"],
+    "head_office": "Akij House, 198, Bir Uttam Mir Shawkat Sarak, Tejgaon, Dhaka-1208",
+    "plants": [
+      { "unit": "ARMCL-01", "location": "Dhour" },
+      { "unit": "ARMCL-02", "location": "Narayangonj" },
+      { "unit": "ARMCL-03", "location": "Rupganj" },
+      { "unit": "ARMCL-04", "location": "Gazipur" },
+      { "unit": "ARMCL-05", "location": "Chittagong" }
+    ]
+  },
+  "business_functions": {
+    "sales_and_marketing": {
+      "purpose": "Sales target achievement, customer acquisition, market visits, pricing and credit proposals",
+      "teams": {
+        "Team-A": [
+          { "name": "Abul Hasnat", "id": "562101", "designation": "Manager" },
+          { "name": "A S M Shahjalal Sakib", "id": "561151", "designation": "Asst. Manager" },
+          { "name": "Rezaul Haq", "id": "558166", "designation": "Asst. Manager" },
+          { "name": "Azijul Islam Sojib", "id": "564980", "designation": "Sr. Officer" },
+          { "name": "MD Mostaq Mahmud", "id": "561188", "designation": "Sr. Officer" },
+          { "name": "Tahmid Sohan", "id": "564989", "designation": "Officer" }
+        ],
+        "Team-B": [
+          { "name": "Md. Sazib Miah", "id": "561315", "designation": "Manager" },
+          { "name": "Anwar Hossan", "id": "561149", "designation": "Dy Manager" },
+          { "name": "Moniruzzaman", "id": "57873", "designation": "Asst. Manager" },
+          { "name": "Md. Hasanur Rahman", "id": "465204", "designation": "Sr. Officer" },
+          { "name": "Jibon Chandra Nath", "id": "568836", "designation": "Sr. Officer" },
+          { "name": "Riyan Khaled Sharif", "id": "564990", "designation": "Officer" }
+        ],
+        "Team-C": [
+          { "name": "Md. Abdul Hakim", "id": "44616", "designation": "Dy Manager" },
+          { "name": "Amanullah", "id": "288345", "designation": "Asst. Manager" },
+          { "name": "Ripon Gazi", "id": "57866", "designation": "Asst. Manager" },
+          { "name": "Md. Azizul Islam", "id": "293075", "designation": "Sr. Officer" },
+          { "name": "Md. Nasir Uddin Homyon", "id": "568833", "designation": "Sr. Officer" }
+        ],
+        "Team-CTG": [
+          { "name": "Md Shahadat Hossan Rifat", "id": "568649", "designation": "Sr. Officer" },
+          { "name": "Raju Dev Nath", "id": "568650", "designation": "Sr. Officer" },
+          { "name": "ARMCL Project 1 (CSI Chittagong)", "id": "NA", "designation": "NA" }
+        ]
+      },
+      "sales_year_2025_26": {
+        "grand_total_target": 12145000,
+        "grand_total_sales": 10865608,
+        "achievement_pct": 89.47,
+        "team_targets": { "Team-A": 3900000, "Team-B": 3695000, "Team-C": 3020000, "Team-CTG": 1530000 }
+      }
+    },
+    "production": {
+      "purpose": "Concrete batching and production per casting schedule with OEE tracking",
+      "shifts": ["Shift A (e.g. DURBAR)", "Shift B (e.g. DURJOY / DURONTO)"],
+      "shift_capacity_example_cum": 1440,
+      "oee_components": ["Availability %", "Performance %", "Quality %", "OEE %"],
+      "tracked_metrics": [
+        "Shift target vs actual output (CUM)", "Ideal cycle time", "Standard vs actual feed rate (CUM/Hr)",
+        "Planned downtime", "Unplanned downtime (NPT)", "Wastage (CUM and %)", "Good production (CUM/CFT)"
+      ],
+      "downtime_categories": [
+        "Mechanical breakdown", "Electrical breakdown", "Utility (Gas)", "Utility (Electricity)",
+        "Raw material shortage", "Logistics capacity shortage", "QCO (Quick change over)",
+        "Warehouse block", "Others"
+      ],
+      "wastage_reasons": ["Mixer wash", "TM placement"],
+      "key_roles": ["Factory Incharge", "Production Engineer", "Batching Plant Operator", "Wheel Loader Operator"]
+    },
+    "quality_control": {
+      "purpose": "Ensure consistent quality of raw materials and ready-mix concrete per approved mix designs",
+      "controls": [
+        "Raw material testing (cement, aggregates, water, admixtures)",
+        "Mix design compliance", "Site/site-visit alignment", "Material rejection protocol with documented proof"
+      ],
+      "policy_note": "Design changes allowed per client demand, weather, road & site conditions subject to QC Head & Operation Head approval"
+    },
+    "logistics_and_distribution": {
+      "purpose": "Delivery scheduling, lifting/casting plans, transit mixing, site delivery",
+      "processes": ["Casting schedule entry", "Lifting plan report", "Transit mixture dispatch", "Site complaint handling (delay, quality, short supply)"]
+    },
+    "finance_and_cost_control": {
+      "purpose": "Budgeting, P&L, balance sheet, cost controlling, diesel/fuel monitoring",
+      "budget_2026_27_modules": ["Income Statement", "Balance Sheet", "Cash Flow", "BEP (Break-even)", "COGS", "Opex", "Working Capital", "VAT", "Depreciation", "Interest", "Source of Fund", "5 Years IS"],
+      "cost_focus_areas": ["Diesel consumption", "Cost controlling by plant", "Credit days & credit limit management"]
+    },
+    "hr_and_admin": {
+      "purpose": "Manpower planning, JDs, organogram, HRBP support, admin/security/office support",
+      "artifacts": ["JD for ARMCL All Employees", "Sales Manpower Organogram"]
+    },
+    "planning_and_business": {
+      "purpose": "Corporate strategy, annual business plans, 5-year roadmap, MIS dashboards, trade marketing",
+      "artifacts": ["Budget 2026-27", "5 Years Plan", "Trend Analysis"]
+    },
+    "sales_kpis": [
+      "Monthly sales target (CUM)", "ADS (Average Daily Sales)", "Achievement %",
+      "Logical sales & logical achievement", "RADS (Remaining ADS)", "Team-wise target vs actual"
+    ]
+  },
+  "reference_documents": [
+    { "sl": 1, "name": "Budget 2026-27", "type": "Google Sheet", "local": "downloads/01_Budget_2026-27.xlsx" },
+    { "sl": 2, "name": "5 Years Plan", "type": "Google Doc", "local": "downloads/02_5_Years_Plan.docx" },
+    { "sl": 3, "name": "Setup Base Achievement", "type": "ERP report", "url": "https://erp.ibos.io/sales-management/report/setupbaseachivement" },
+    { "sl": 4, "name": "Sales Report", "type": "ERP report", "url": "https://erp.ibos.io/sales-management/report/sales_report_vat" },
+    { "sl": 5, "name": "Customer Statement", "type": "ERP report", "url": "https://erp.ibos.io/sales-management/report/customerStatementModified" },
+    { "sl": 6, "name": "Casting Schedule", "type": "ERP module", "url": "https://erp.ibos.io/inventory-management/warehouse-management/liftingplanentry" },
+    { "sl": 7, "name": "Lifting Plan Report", "type": "ERP report", "url": "https://erp.ibos.io/inventory-management/warehouse-management/liftingplanreport" },
+    { "sl": 8, "name": "Income Statement", "type": "ERP report", "url": "https://erp.ibos.io/internal-control/budgetvariancereport/income_statement_new" },
+    { "sl": 9, "name": "Balance Sheet Report", "type": "ERP report", "url": "https://erp.ibos.io/internal-control/budgetvariancereport/balancereport" },
+    { "sl": 10, "name": "SOP and Policy", "type": "Drive folder", "local": "downloads/10_SOP_and_Policy/" },
+    { "sl": 11, "name": "ARMCL Market Visit Format", "type": "Google Sheet", "local": "downloads/11_Market_Visit_Format.xlsx" },
+    { "sl": 12, "name": "ARMCL & ABSL Sales Target Achievement Status - August 2026", "type": "Google Sheet", "local": "downloads/12_Sales_Target_Achievement_Aug2026.xlsx" },
+    { "sl": 13, "name": "JD for ARMCL All Employees", "type": "Google Sheet", "local": "downloads/13_JD_ARMCL_Employees.xlsx" },
+    { "sl": 14, "name": "ARMCL Sales Manpower Organogram", "type": "Google Sheet", "local": "downloads/14_Sales_Manpower_Organogram.xlsx" },
+    { "sl": 15, "name": "Production OEE Report", "type": "ERP report", "url": "https://erp.ibos.io/production-management/mes/productionEntryOee" },
+    { "sl": 16, "name": "Trend Analysis ARMCL - August 2026", "type": "Google Sheet", "local": "downloads/16_Trend_Analysis_Aug2026.xlsx" },
+    { "sl": 17, "name": "ARMCL-03 OEE New Template", "type": "Google Sheet", "local": "downloads/17_ARMCL-03_OEE_New_Template.csv" },
+    { "sl": 18, "name": "Daily Production Report", "type": "Google Sheet", "local": "downloads/18_Daily_Production_Report.xlsx" },
+    { "sl": 19, "name": "Akij Readymix Policy", "type": "Google Doc", "local": "downloads/19_Akij_Readymix_Policy.docx" },
+    { "sl": 20, "name": "SOP Production", "type": "Google Doc", "local": "downloads/20_SOP_Production.docx" },
+    { "sl": 21, "name": "Work Details", "type": "Google Doc", "local": "downloads/21_Work_Details.docx" },
+    { "sl": 22, "name": "Cost Controlling", "type": "Google Sheet", "local": "downloads/22_Cost_Controlling.xlsx" },
+    { "sl": 23, "name": "Diesel Report", "type": "Google Sheet", "local": "downloads/23_Diesel_Report.xlsx" }
+  ],
+  "policies_and_sops": {
+    "production_policy": {
+      "doc_no": "ARL/ARMCL-03/Factory/Dept/03/03",
+      "effective_date": "01-07-2025",
+      "review_date": "01-07-2027",
+      "policy_areas": [
+        "Production Operations Policy", "Personnel & Equipment Safety", "Environmental Responsibility",
+        "Preventive & Running Maintenance", "Training & Supervision", "Design Flexibility",
+        "Material Rejection Protocol", "Site Visit"
+      ],
+      "prepared_by": "Md. Saddam Hossain Tuhin, Plant In-Charge, ARMCL Unit 03",
+      "approved_by": "Md. Anisur Rahman, CEO, Akij Building Solutions"
+    },
+    "sop_documents": [
+      "ARMCL Authority Matrix SOP (Final Draft)",
+      "Sales Department SOP ARMCL (03/06/25 and 19/06/25 versions)",
+      "Policy & SOPs for After-Sales Service, Repeat Sales, and Long-Term Business Relationships",
+      "SOP: Customer Cheque Deposit & Receivable Posting Process",
+      "Approval of Product Price, Credit Days, and Credit Limit for New Customers",
+      "Approval of Cash Incentives & Promotional Gifts for Referral Sales",
+      "SOP Production (batching plant operations)"
+    ]
+  },
+  "approval_delegation": {
+    "product_price_credit_days_credit_limit_new_customers": "Per SOP 'Approval of Product Price, Credit Days, and Credit Limit for New Customers'",
+    "cash_incentives_promotional_gifts_referral_sales": "Per SOP 'Approval of Cash Incentives & Promotional Gifts for Referral Sales'",
+    "material_rejection": "QC + Distribution explanation with documented proof; pre-approval by QC Head, Logistics & Distribution Incharge, Inventory Incharge & Plant Head; final approval by SBU Head",
+    "mix_design_changes": "Approval by QC Head & Operation Head",
+    "authority_matrix": "See ARMCL Authority_Matrix_SOP - Final Draft.docx.pdf in downloads/10_SOP_and_Policy/"
+  },
+  "erp_system": {
+    "name": "iBOS ERP",
+    "base_url": "https://erp.ibos.io",
+    "modules": ["sales-management", "inventory-management (warehouse/lifting plan)", "internal-control (budget variance)", "production-management (MES/OEE)"],
+    "access_note": "Requires iBOS login; reports are dynamic (not downloadable files)"
+  },
+  "generated_on": "2026-08-22",
+  "sources": [
+    "ARMCL Reference Documents and Links (user-provided master list)",
+    "downloads/12_Sales_Target_Achievement_Aug2026.xlsx",
+    "downloads/14_Sales_Manpower_Organogram.xlsx",
+    "downloads/16_Trend_Analysis_Aug2026.xlsx",
+    "downloads/17_ARMCL-03_OEE_New_Template.csv",
+    "downloads/19_Akij_Readymix_Policy.docx",
+    "downloads/01_Budget_2026-27.xlsx (sheet names)"
+  ]
+}

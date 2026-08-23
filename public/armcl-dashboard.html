@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL Sales Dashboard | August 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.container{max-width:1500px;margin:0 auto;padding:24px}
+.title-bar{background:linear-gradient(135deg,#0f172a,#1e3a5f);color:#f8fafc;border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.title-bar h1{font-size:1.2rem;font-weight:700}
+.title-bar .sub{color:#94a3b8;font-size:0.78rem;margin-top:4px}
+.title-bar .date{color:#94a3b8;font-size:0.85rem}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+.chip{background:#fff;border-radius:10px;padding:16px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.chip label{font-size:0.65rem;text-transform:uppercase;color:#64748b;letter-spacing:0.06em;display:block;margin-bottom:6px;font-weight:600}
+.chip .val{font-size:1.5rem;font-weight:800;color:#0f172a}
+.chip .sub{font-size:0.72rem;color:#64748b;margin-top:4px}
+.chip.blue{border-top:3px solid #3b82f6}
+.chip.green{border-top:3px solid #10b981}
+.chip.orange{border-top:3px solid #f59e0b}
+.chip.red{border-top:3px solid #ef4444}
+.chip.violet{border-top:3px solid #8b5cf6}
+.chip.teal{border-top:3px solid #14b8a6}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.box{background:#fff;border-radius:10px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.box h3{font-size:0.85rem;color:#64748b;margin-bottom:16px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.bar-chart{display:flex;flex-direction:column;gap:6px}
+.bar{position:relative;height:32px;background:#f1f5f9;border-radius:6px;overflow:hidden}
+.bar .fill{height:100%;border-radius:6px;transition:width 0.4s}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:0.72rem;font-weight:600;color:#1e293b;z-index:1}
+.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:55%}
+.bar .txt .n{font-size:0.7rem;font-weight:700}
+.bar .txt .n.pos{color:#059669}
+.bar .txt .n.zero{color:#94a3b8}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid #f1f5f9;font-size:0.8rem}
+th{color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.65rem;letter-spacing:0.04em;background:#f8fafc}
+th:first-child,td:first-child{text-align:left}
+tr:hover{background:#f8fafc}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.pos{color:#059669}
+.neg{color:#dc2626}
+.badge{display:inline-block;padding:3px 10px;border-radius:12px;font-size:0.72rem;font-weight:700}
+.badge.high{background:#dcfce7;color:#15803d}
+.badge.mid{background:#fef3c7;color:#b45309}
+.badge.low{background:#fee2e2;color:#b91c1c}
+.rank{display:inline-block;width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;font-size:0.7rem;font-weight:700;color:#fff;margin-right:4px}
+.rank.gold{background:#f59e0b}
+.rank.silver{background:#94a3b8}
+.rank.bronze{background:#d97706}
+.rank.other{background:#cbd5e1;color:#64748b}
+.gauge-row{display:flex;justify-content:space-around;flex-wrap:wrap;gap:16px}
+.gauge-item{text-align:center}
+.gauge-item label{font-size:0.65rem;text-transform:uppercase;color:#64748b;display:block;margin-top:6px;font-weight:600}
+.progress-ring svg{transform:rotate(-90deg)}
+.progress-ring .bg{fill:none;stroke:#e2e8f0;stroke-width:8}
+.progress-ring .fg{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset 0.5s}
+.progress-ring .pct{font-size:0.95rem;font-weight:800;fill:#0f172a}
+.loading{text-align:center;padding:60px;color:#64748b;font-size:0.9rem}
+.error{text-align:center;padding:60px;color:#dc2626}
+.foot-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:16px}
+.foot-item{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 18px}
+.foot-item label{font-size:0.65rem;text-transform:uppercase;color:#64748b;display:block;margin-bottom:6px;font-weight:600}
+.foot-item .val{font-size:1.1rem;font-weight:700;color:#0f172a}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<div>
+<h1>ARMCL Sales Dashboard | August 2026</h1>
+<div class="sub">Akij Ready Mix Concrete Ltd. — Day-wise Sales — Source: iBOS ERP (Live Database)</div>
+</div>
+<div class="date" id="dateLabel"></div>
+</div>
+
+<div id="loading" class="loading">Loading data from database...</div>
+
+<div id="dashboard" style="display:none">
+<div class="chips" id="chips"></div>
+
+<div class="row">
+<div class="box">
+<h3>Daily Sales Trend (CFT)</h3>
+<div class="bar-chart" id="dailyBars"></div>
+</div>
+<div class="box">
+<h3>Target Achievement</h3>
+<div class="gauge-row" id="gauges"></div>
+</div>
+</div>
+
+<div class="box" style="margin-bottom:16px">
+<h3>Daily Sales Table</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Date</th><th>Sales (CFT)</th><th>Invoices</th><th>Cumulative</th><th>Daily Target</th><th>Variance</th><th>Status</th></tr></thead>
+<tbody id="dailyTable"></tbody></table>
+</div>
+</div>
+
+<div class="box">
+<h3>Sales Person Ranking</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Rank</th><th>Sales Person</th><th>Transactions</th><th>Total Sales (CFT)</th><th>Share %</th><th>Avg per Txn</th></tr></thead>
+<tbody id="personTable"></tbody></table>
+</div>
+</div>
+
+<div class="foot-row" id="foot"></div>
+</div>
+</div>
+
+<script>
+function fm(n){return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmd(n){return Number(n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function pctBadge(p){
+  if(p>=70)return '<span class="badge high">On Track</span>';
+  if(p>=40)return '<span class="badge mid">Behind</span>';
+  return '<span class="badge low">Off Track</span>';
+}
+function rankDot(i){
+  if(i===1)return '<span class="rank gold">1</span>';
+  if(i===2)return '<span class="rank silver">2</span>';
+  if(i===3)return '<span class="rank bronze">3</span>';
+  return '<span class="rank other">'+i+'</span>';
+}
+function gaugeSVG(pct,color,label){
+  const r=33,circ=2*Math.PI*r,off=circ-(Math.min(pct,100)/100)*circ;
+  return '<div class="gauge-item"><div class="progress-ring"><svg width="80" height="80"><circle class="bg" cx="40" cy="40" r="'+r+'"/><circle class="fg" cx="40" cy="40" r="'+r+'" stroke="'+color+'" stroke-dasharray="'+circ+'" stroke-dashoffset="'+off+'"/><text x="40" y="44" text-anchor="middle" class="pct">'+Math.round(pct)+'%</text></svg></div><label>'+label+'</label></div>';
+}
+
+async function load(){
+  try{
+    const d=await fetch('/api/armcl-dashboard').then(r=>r.json());
+    document.getElementById('loading').style.display='none';
+    document.getElementById('dashboard').style.display='block';
+    document.getElementById('dateLabel').textContent='As of: '+new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'});
+
+    const achiv=d.achivPct;
+    const remain=d.target-d.totalSales;
+    const c=[];
+    c.push('<div class="chip blue"><label>Monthly Target</label><div class="val">'+fm(d.target)+'</div><div class="sub">CFT (August 2026)</div></div>');
+    c.push('<div class="chip green"><label>Total Sales</label><div class="val">'+fm(d.totalSales)+'</div><div class="sub">CFT</div></div>');
+    c.push('<div class="chip '+(achiv>=70?'green':achiv>=40?'orange':'red')+'"><label>Achievement</label><div class="val">'+achiv.toFixed(1)+'%</div><div class="sub">'+pctBadge(achiv)+'</div></div>');
+    c.push('<div class="chip '+(remain>0?'orange':'green')+'"><label>Remaining</label><div class="val">'+fm(Math.max(0,remain))+'</div><div class="sub">CFT to target</div></div>');
+    c.push('<div class="chip violet"><label>Daily Average</label><div class="val">'+fm(d.dailyAvg)+'</div><div class="sub">CFT / active day</div></div>');
+    c.push('<div class="chip teal"><label>Transactions</label><div class="val">'+fm(d.totalTxns)+'</div><div class="sub">Invoices · '+d.activeDays+' active days</div></div>');
+    document.getElementById('chips').innerHTML=c.join('');
+
+    const maxD=Math.max(...d.days.map(x=>x.qty),1);
+    const colors=['#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6','#93c5fd','#3b82f6','#60a5fa','#3b82f6'];
+    document.getElementById('dailyBars').innerHTML=d.days.map((day,i)=>{
+      const w=Math.round(day.qty/maxD*100);
+      const hasVal=day.qty>0;
+      return '<div class="bar"><div class="fill" style="width:'+(hasVal?w:0)+'%;background:'+(hasVal?colors[i]:'#e2e8f0')+'"></div><div class="txt"><span class="nm">'+day.date+'</span><span class="n '+(hasVal?'pos':'zero')+'">'+(hasVal?fm(day.qty):'--')+'</span></div></div>';
+    }).join('');
+
+    const timePct=d.totalDays>0?(d.activeDays/d.totalDays*100):0;
+    const expectedByNow=d.dailyTarget*d.activeDays;
+    const expectedPct=expectedByNow>0?(d.totalSales/expectedByNow*100):0;
+    document.getElementById('gauges').innerHTML=
+      gaugeSVG(achiv,achiv>=70?'#10b981':achiv>=40?'#f59e0b':'#ef4444','Achievement')+
+      gaugeSVG(timePct,'#3b82f6','Days Passed')+
+      gaugeSVG(expectedPct,expectedPct>=100?'#10b981':'#ef4444','vs Expected');
+
+    let cum=0;
+    document.getElementById('dailyTable').innerHTML=d.days.map(day=>{
+      cum+=day.qty;
+      const hasVal=day.qty>0;
+      const varVal=hasVal?(day.qty-d.dailyTarget):0;
+      return '<tr>'+
+        '<td>'+day.date+'</td>'+
+        '<td class="num'+(hasVal?' pos':'')+'">'+(hasVal?fm(day.qty):'--')+'</td>'+
+        '<td class="num">'+(hasVal?day.count:'--')+'</td>'+
+        '<td class="num">'+(hasVal?fm(cum):'--')+'</td>'+
+        '<td class="num">'+fm(d.dailyTarget)+'</td>'+
+        '<td class="num'+(hasVal?(varVal>=0?' pos':' neg'):'')+'">'+(hasVal?(varVal>=0?'+':'')+fm(varVal):'--')+'</td>'+
+        '<td>'+(hasVal?pctBadge(day.qty/d.dailyTarget*100):'--')+'</td>'+
+      '</tr>';
+    }).join('');
+
+    document.getElementById('personTable').innerHTML=d.persons.map(p=>
+      '<tr>'+
+      '<td>'+rankDot(p.rank)+'</td>'+
+      '<td style="font-weight:600">'+p.name+'</td>'+
+      '<td class="num">'+p.txns+'</td>'+
+      '<td class="num pos">'+fm(p.sales)+'</td>'+
+      '<td class="num">'+p.share.toFixed(1)+'%</td>'+
+      '<td class="num">'+fm(p.avg)+'</td>'+
+      '</tr>'
+    ).join('');
+
+    document.getElementById('foot').innerHTML=
+      '<div class="foot-item"><label>Total Sales</label><div class="val">'+fm(d.totalSales)+' CFT</div></div>'+
+      '<div class="foot-item"><label>Target</label><div class="val">'+fm(d.target)+' CFT</div></div>'+
+      '<div class="foot-item"><label>Daily Target</label><div class="val">'+fm(d.dailyTarget)+' CFT</div></div>'+
+      '<div class="foot-item"><label>Active Days</label><div class="val">'+d.activeDays+' / '+d.totalDays+'</div></div>'+
+      '<div class="foot-item"><label>Sales Persons</label><div class="val">'+d.salesPersons+'</div></div>'+
+      '<div class="foot-item"><label>Data Source</label><div class="val" style="font-size:0.8rem">iBOS ERP (DWH)</div></div>';
+  }catch(e){
+    document.getElementById('loading').innerHTML='<div class="error">Failed to load: '+e.message+'</div>';
+  }
+}
+load();
+</script>
+</body>
+</html>

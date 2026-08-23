@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL Sales Dashboard | August 2026</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:#f1f5f9;color:#1e293b;min-height:100vh}
+.container{max-width:1500px;margin:0 auto;padding:24px}
+.title-bar{background:#0f172a;color:#f8fafc;border-radius:12px;padding:20px 24px;margin-bottom:20px}
+.title-bar h1{font-size:1.2rem;font-weight:700;margin-bottom:4px}
+.title-bar .sub{color:#94a3b8;font-size:0.8rem}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.chip{background:#fff;border-radius:10px;padding:16px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.chip label{font-size:0.65rem;text-transform:uppercase;color:#64748b;letter-spacing:0.05em;margin-bottom:6px;font-weight:600}
+.chip .val{font-size:1.5rem;font-weight:800;color:#0f172a}
+.chip .sub{font-size:0.72rem;color:#64748b;margin-top:3px}
+.chip.blue{border-top:3px solid #3b82f6}
+.chip.green{border-top:3px solid #10b981}
+.chip.orange{border-top:3px solid #f59e0b}
+.chip.violet{border-top:3px solid #8b5cf6}
+.row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:16px}
+.box{background:#fff;border-radius:10px;padding:20px;border:1px solid #e2e8f0;box-shadow:0 1px 2px rgba(0,0,0,0.05)}
+.box h3{font-size:0.85rem;color:#64748b;margin-bottom:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.bar{position:relative;height:28px;background:#f1f5f9;border-radius:6px;margin-bottom:7px;overflow:hidden}
+.bar .fill{height:100%;border-radius:6px;transition:width 0.4s}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:0.75rem;font-weight:600;color:#1e293b;z-index:1}
+.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60%}
+.bar .txt .n{color:#3b82f6;font-size:0.7rem;margin-right:4px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid #f1f5f9;font-size:0.8rem}
+th{color:#64748b;font-weight:600;text-transform:uppercase;font-size:0.65rem;letter-spacing:0.04em;background:#f8fafc}
+th:first-child,td:first-child{text-align:left}
+tr:hover{background:#f8fafc}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.rank{display:inline-block;width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;font-size:0.7rem;font-weight:700;color:#fff;margin-right:4px}
+.rank.gold{background:#f59e0b}
+.rank.silver{background:#94a3b8}
+.rank.bronze{background:#d97706}
+.rank.other{background:#cbd5e1;color:#64748b}
+.pos{color:#059669}
+.empty{color:#64748b;text-align:center;padding:40px}
+.foot-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:16px}
+.loading{text-align:center;padding:60px;color:#64748b}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="title-bar">
+<h1>ARMCL Sales Dashboard | August 2026</h1>
+<div class="sub">Akij Ready Mix Concrete Ltd. — Month to Date (Aug 1-11, 2026) — Source: iBOS ERP</div>
+</div>
+
+<div class="chips" id="chips"></div>
+
+<div class="row">
+<div class="box">
+<h3>Daily Sales Trend (MTD)</h3>
+<div id="dailyBars"></div>
+</div>
+<div class="box">
+<h3>Top 5 Sales Persons</h3>
+<div id="top5"></div>
+</div>
+</div>
+
+<div class="box">
+<h3>All Sales Persons Ranking</h3>
+<div style="overflow-x:auto">
+<table><thead><tr><th>Rank</th><th>Sales Person</th><th>Transactions</th><th>Total Sales</th><th>Share %</th><th>Avg per Txn</th></tr></thead>
+<tbody id="personTable"></tbody></table>
+</div>
+</div>
+
+<div class="foot-row" id="foot"></div>
+</div>
+
+<script>
+function fm(n){return (n||0).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0})}
+function fmd(n){return (n||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+
+function rankDot(i){
+  if(i===1)return '<span class="rank gold">1</span>';
+  if(i===2)return '<span class="rank silver">2</span>';
+  if(i===3)return '<span class="rank bronze">3</span>';
+  return '<span class="rank other">'+i+'</span>';
+}
+
+async function load(){
+  const d=await fetch('/api/armcl-august-2026').then(r=>r.json());
+  document.title='ARMCL Sales | August 2026 | '+fm(d.totalSales);
+
+  const c=[]
+  c.push('<div class="chip blue"><label>Total Sales (MTD)</label><div class="val">'+fm(d.totalSales)+'</div><div class="sub">Sales persons: '+d.salesPersons+'</div></div>');
+  c.push('<div class="chip green"><label>Total Transactions</label><div class="val">'+fm(d.totalTxns)+'</div><div class="sub">Period: Aug 1-11, 2026</div></div>');
+  const avgDay=d.daily.length>0?(d.totalSales/d.daily.length):0;
+  c.push('<div class="chip orange"><label>Avg Daily Sales</label><div class="val">'+fm(avgDay)+'</div><div class="sub">Daily avg across 11 days</div></div>');
+  const topP=d.persons[0];
+  c.push('<div class="chip violet"><label>Top Performer</label><div class="val" style="font-size:1rem">'+topP.name+'</div><div class="sub">'+fm(topP.sales)+' / '+topP.txns+' txns</div></div>');
+  document.getElementById('chips').innerHTML=c.join('');
+
+  const maxD=Math.max(...d.daily.map(x=>x.total));
+  document.getElementById('dailyBars').innerHTML=d.daily.map(day=>{
+    const w=Math.round(day.total/maxD*100);
+    return '<div class="bar"><div class="fill" style="width:'+w+'%;background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div><div class="txt"><span>'+day.date.substring(5)+'</span><span>'+fm(day.total)+'</span></div></div>';
+  }).join('');
+
+  document.getElementById('top5').innerHTML=d.persons.slice(0,5).map((p,i)=>{
+    const w=Math.round(p.sales/d.persons[0].sales*100);
+    const cols=['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ef4444'];
+    return '<div class="bar"><div class="fill" style="width:'+w+'%;background:'+cols[i]+'"></div><div class="txt"><span><span class="n">'+(i+1)+'.</span> '+p.name+'</span><span>'+fm(p.sales)+'</span></div></div>';
+  }).join('');
+
+  document.getElementById('personTable').innerHTML=d.persons.map(p=>
+    '<tr>'+
+    '<td>'+rankDot(p.rank)+'</td>'+
+    '<td style="font-weight:600">'+p.name+'</td>'+
+    '<td class="num">'+p.txns+'</td>'+
+    '<td class="num pos">'+fm(p.sales)+'</td>'+
+    '<td class="num">'+((p.sales/d.totalSales)*100).toFixed(1)+'%</td>'+
+    '<td class="num">'+fm(p.txns>0?p.sales/p.txns:0)+'</td>'+
+    '</tr>'
+  ).join('');
+
+  document.getElementById('foot').innerHTML=
+  '<div class="box"><label>Total Sales</label><div class="val">'+fm(d.totalSales)+'</div></div>'+
+  '<div class="box"><label>Persons</label><div class="val">'+d.salesPersons+'</div></div>'+
+  '<div class="box"><label>Transactions</label><div class="val">'+fm(d.totalTxns)+'</div></div>'+
+  '<div class="box"><label>Avg Per Txn</label><div class="val">'+fm(d.totalTxns>0?d.totalSales/d.totalTxns:0)+'</div></div>'+
+  '<div class="box"><label>Data Source</label><div class="val" style="font-size:0.8rem">iBOS ERP</div></div>';
+}
+
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+{
+  "name": "ARMCL_Dept_Business_agent",
+  "company": "Akij Readymix Concrete Ltd (ARMCL)",
+  "parent_company": "Akij Building Solutions Ltd (ABSL)",
+  "business": "Ready Mix Concrete (RMC) manufacturing, sales and delivery; Asphalt",
+  "scope": "Department-based view of ARMCL: which department owns what, their people/roles, activities, rules, KPIs, systems, and data sources",
+  "source": "downloads/13_JD_ARMCL_Employees.xlsx; downloads/19_Akij_Readymix_Policy.docx (Doc ARL/ARMCL-03/Factory/Dept/03/03); downloads/14_Sales_Manpower_Organogram.xlsx; downloads/10_SOP_and_Policy/; ARMCL Reference Documents master list",
+  "generated_on": "2026-08-22",
+  "departments": [
+    {
+      "department": "CEO Office / Top Management",
+      "role_in_business": "Overall SBU leadership: strategy, P&L accountability, cross-functional alignment",
+      "head": "CEO, ARMCL (reports to Cluster CEO, Akij Building Solutions)",
+      "key_roles": ["CEO"],
+      "key_activities": [
+        "Oversee sales, marketing, operations, finance, HR, SCM and support functions",
+        "Approve strategy, budget, and high-value/high-risk decisions",
+        "Final approval authority as SBU Head (e.g. material rejection)"
+      ],
+      "rules_owned": [
+        "Material rejection final approval rests with SBU Head",
+        "Discount >10% or below breakeven, credit >60 days / >BDT 5 crore require CEO/MD + Finance Head"
+      ],
+      "systems": ["Management dashboards", "iBOS internal-control reports"],
+      "kpis": ["Profitability", "Market share", "Strategic plan execution"],
+      "data_sources": ["downloads/01_Budget_2026-27.xlsx", "downloads/02_5_Years_Plan.docx"]
+    },
+    {
+      "department": "Planning & Business Operations",
+      "role_in_business": "Corporate strategy, annual business plans, MIS dashboards, trade marketing, target tracking",
+      "head": "Manager - Planning & Business Operations",
+      "key_roles": ["Manager - Planning & Business Operations"],
+      "key_activities": [
+        "Annual business plan and budget alignment",
+        "5-year strategy plan maintenance",
+        "MIS reports, CEO briefing decks, performance reviews for EXCOM/ManCom/Board",
+        "Track SBU KPIs and balanced scorecards; highlight gaps",
+        "Trade marketing: lifting incentives, RADS achievement offers, tour programs"
+      ],
+      "rules_owned": [
+        "100% sales target is mandatory baseline; collection qualifying minimum 90%",
+        "Trade monetization programs require CEO approval"
+      ],
+      "systems": ["Google Sheets/Slides/Drive", "iBOS budget variance reports"],
+      "kpis": ["Target vs actual variance", "Reporting timeliness", "Trade program ROI"],
+      "data_sources": ["downloads/01_Budget_2026-27.xlsx", "downloads/02_5_Years_Plan.docx", "downloads/16_Trend_Analysis_Aug2026.xlsx", "downloads/12_Sales_Target_Achievement_Aug2026.xlsx"]
+    },
+    {
+      "department": "Sales & Marketing Department",
+      "role_in_business": "Front-line owner of sales: targets, customer acquisition, market visits, collection follow-up",
+      "head": "Head of Sales (reports to CEO; next level: Cluster CEO ABSL; 5 direct report positions)",
+      "key_roles": ["Head of Sales", "Manager", "Dy Manager", "Asst. Manager", "Sr. Officer", "Officer"],
+      "teams": {
+        "Team-A": ["Abul Hasnat (Manager)", "A S M Shahjalal Sakib (Asst. Manager)", "Rezaul Haq (Asst. Manager)", "Azijul Islam Sojib (Sr. Officer)", "MD Mostaq Mahmud (Sr. Officer)", "Tahmid Sohan (Officer)"],
+        "Team-B": ["Md. Sazib Miah (Manager)", "Anwar Hossan (Dy Manager)", "Moniruzzaman (Asst. Manager)", "Md. Hasanur Rahman (Sr. Officer)", "Jibon Chandra Nath (Sr. Officer)", "Riyan Khaled Sharif (Officer)"],
+        "Team-C": ["Md. Abdul Hakim (Dy Manager)", "Amanullah (Asst. Manager)", "Ripon Gazi (Asst. Manager)", "Md. Azizul Islam (Sr. Officer)", "Md. Nasir Uddin Homyon (Sr. Officer)"],
+        "Team-CTG": ["Md Shahadat Hossan Rifat (Sr. Officer)", "Raju Dev Nath (Sr. Officer)", "ARMCL Project 1 (CSI Chittagong)"]
+      },
+      "key_activities": [
+        "Monthly target execution and ADS/RADS tracking",
+        "Market visits per ARMCL Market Visit Format",
+        "Quotations, order follow-up, contract finalization support",
+        "Collection follow-up (0-30 days) and customer relationship management"
+      ],
+      "rules_owned": [
+        "Detailed sales process rules (KYC, pricing/credit delegation, incentives, complaints TAT, bad debt) are owned at ABSL level - see ABSL_Function_Business_agent.json",
+        "FY 2025-26 team targets: A 3,900,000 | B 3,695,000 | C 3,020,000 | CTG 1,530,000 CUM"
+      ],
+      "systems": ["iBOS sales-management reports", "CRM", "Market visit format"],
+      "kpis": ["Sales volume (CUM)", "Achievement %", "ADS vs Target ADS", "Collection %"],
+      "data_sources": ["downloads/12_Sales_Target_Achievement_Aug2026.xlsx", "downloads/14_Sales_Manpower_Organogram.xlsx", "downloads/11_Market_Visit_Format.xlsx"]
+    },
+    {
+      "department": "Production Department",
+      "role_in_business": "Safe, efficient, cost-effective plant operation delivering quality concrete on time",
+      "head": "Factory Incharge (Plant In-Charge); direct reports: Production Head, Quality Head, Maintenance Head",
+      "key_roles": ["Factory Incharge", "Production Engineer", "Batching Plant Operator", "Wheel Loader Operator"],
+      "key_activities": [
+        "Daily production operations, shift supervision, documentation (Production Engineer)",
+        "Machine operation, routine inspection, housekeeping (Batching Plant Operator)",
+        "Loading raw materials, stockyard maintenance, safety checks (Wheel Loader Operator)",
+        "Casting schedule execution and OEE tracking",
+        "Daily production reporting (CUM/CFT)"
+      ],
+      "rules_owned": [
+        "Only authorized, trained personnel may operate or adjust the batching system",
+        "Operations stop immediately on unsafe conditions",
+        "All operational, quality, and maintenance records archived for audits",
+        "Policy doc ARL/ARMCL-03/Factory/Dept/03/03 (effective 01-07-2025, review 01-07-27)"
+      ],
+      "systems": ["iBOS production-management (MES/OEE)", "iBOS lifting plan entry"],
+      "kpis": ["OEE %", "Shift target achievement %", "NPT %", "Wastage %", "Good production (CUM/CFT)"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv", "downloads/18_Daily_Production_Report.xlsx", "downloads/19_Akij_Readymix_Policy.docx", "downloads/20_SOP_Production.docx"]
+    },
+    {
+      "department": "Quality Control Department",
+      "role_in_business": "Ensures consistent quality of raw materials and ready-mix concrete per mix designs and project specs",
+      "head": "Quality Head / Quality Control Engineer",
+      "key_roles": ["Quality Control Engineer", "Sub Assistant Engineer", "Quality Supervisor", "Quality Technician"],
+      "key_activities": [
+        "Raw material testing before use (cement, aggregates, water, admixtures)",
+        "Slump/cube testing and mix design compliance during batching",
+        "Quality records, test reports, inspection logs; daily/weekly/monthly QC reports",
+        "QMS procedure implementation",
+        "Liaison with production, procurement, and site teams; site visits as needed"
+      ],
+      "rules_owned": [
+        "Design changes per client demand/weather/road/site conditions require QC Head & Operation Head approval",
+        "Material rejection requires documented proof; pre-approval by QC Head, Logistics & Distribution Incharge, Inventory Incharge & Plant Head; final approval by SBU Head"
+      ],
+      "systems": ["QMS records", "OEE quality tracking"],
+      "kpis": ["Quality % (OEE)", "Concrete quality compliance", "Raw material quality control", "Non-conformance reduction"],
+      "data_sources": ["downloads/19_Akij_Readymix_Policy.docx", "downloads/17_ARMCL-03_OEE_New_Template.csv (Quality %)"]
+    },
+    {
+      "department": "Maintenance Department",
+      "role_in_business": "Keeps plant and equipment available via preventive and running maintenance",
+      "head": "Maintenance Head",
+      "key_roles": ["Maintenance Head", "Maintenance team"],
+      "key_activities": [
+        "Preventive maintenance per schedule",
+        "Running maintenance; inform production team of issues during running production",
+        "Equipment inspection support for operators"
+      ],
+      "rules_owned": [
+        "Equipment must follow scheduled preventive maintenance",
+        "Operations stop immediately on unsafe conditions"
+      ],
+      "systems": ["Maintenance logs", "OEE downtime tracking"],
+      "kpis": ["Mechanical breakdown downtime (min)", "Electrical breakdown downtime (min)", "Availability %"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv (breakdown columns)", "downloads/19_Akij_Readymix_Policy.docx"]
+    },
+    {
+      "department": "Logistics & Distribution Department",
+      "role_in_business": "Delivers right quantity and quality concrete to site on time; manages lifting plans and transit fleet",
+      "head": "Logistics & Distribution Incharge / Logistic Supervisor",
+      "key_roles": ["Logistic Supervisor", "Transit Mixture Driver"],
+      "key_activities": [
+        "Lifting plan entry and casting schedule alignment",
+        "TM dispatch, in-transit quality preservation, site delivery confirmation",
+        "Handle site complaints: delay, quality issue, short supply",
+        "Ensure correct quantity & quality delivery at site"
+      ],
+      "rules_owned": [
+        "Site complaints (delay/quality/short supply) handled per Logistic Supervisor SOP",
+        "Concrete quality preservation during transit is a department KPI"
+      ],
+      "systems": ["iBOS liftingplanentry / liftingplanreport", "Diesel tracking"],
+      "kpis": ["On-time delivery", "Logistics capacity shortage downtime", "TM placement wastage", "Complaint count"],
+      "data_sources": ["ERP lifting plan reports", "downloads/23_Diesel_Report.xlsx", "downloads/17_ARMCL-03_OEE_New_Template.csv"]
+    },
+    {
+      "department": "Finance & Accounts Department",
+      "role_in_business": "Financial control: P&L, balance sheet, receivables, VAT, working capital, cost controlling",
+      "head": "Finance Head / Finance Officer",
+      "key_roles": ["Finance Officer"],
+      "key_activities": [
+        "Income statement and balance sheet with budget variance",
+        "Customer statement reconciliation",
+        "Cheque deposit & receivable posting per SOP",
+        "Cost controlling by plant and diesel/fuel monitoring",
+        "VAT, depreciation, working capital and cash flow tracking"
+      ],
+      "rules_owned": [
+        "Cheque deposit & receivable posting must follow SOP_Customer Cheque Deposit & Receivable Posting Process",
+        "Overdue beyond 60 days triggers automatic credit hold (per Sales SOP)",
+        "Adjustments/write-offs require documented approval per authority matrix"
+      ],
+      "systems": ["iBOS internal-control (income_statement_new, balancereport)", "iBOS customerStatementModified"],
+      "kpis": ["Collection achievement %", "Bad debt ratio", "Average collection period", "Budget variance %", "Cost per CUM"],
+      "data_sources": ["downloads/01_Budget_2026-27.xlsx (IS, BS, CF, VAT, Working Capital)", "downloads/22_Cost_Controlling.xlsx", "downloads/23_Diesel_Report.xlsx", "downloads/10_SOP_and_Policy/Copy of SOP_Customer Cheque Deposit & Receivable Posting Process (1).pdf"]
+    },
+    {
+      "department": "HR & Admin Department",
+      "role_in_business": "Manpower planning, JDs, HRBP support, administration, security and office support",
+      "head": "HRBP / Admin Officer",
+      "key_roles": ["Officer/Sr. Officer/Asst. Manager (HRBP)", "Admin Officer", "Office Support", "Security Guard"],
+      "key_activities": [
+        "JD maintenance for all ARMCL employees (15 role templates)",
+        "Sales manpower organogram and team structuring",
+        "HRBP: align HR strategies with business objectives across units",
+        "Training and supervision compliance",
+        "Office administration, security, housekeeping"
+      ],
+      "rules_owned": [
+        "Only trained personnel may operate equipment; regular training mandatory",
+        "PPE mandatory for all staff; safety protocols must be followed",
+        "All key roles require documented JDs and organogram alignment"
+      ],
+      "systems": ["JD workbook", "Organogram"],
+      "kpis": ["Manpower fill rate", "Training completion", "JD coverage %"],
+      "data_sources": ["downloads/13_JD_ARMCL_Employees.xlsx", "downloads/14_Sales_Manpower_Organogram.xlsx"]
+    }
+  ],
+  "dept_to_document_map": {
+    "CEO Office": ["01_Budget_2026-27.xlsx", "02_5_Years_Plan.docx"],
+    "Planning & Business Operations": ["01_Budget_2026-27.xlsx", "02_5_Years_Plan.docx", "16_Trend_Analysis_Aug2026.xlsx"],
+    "Sales & Marketing": ["12_Sales_Target_Achievement_Aug2026.xlsx", "14_Sales_Manpower_Organogram.xlsx", "11_Market_Visit_Format.xlsx"],
+    "Production": ["17_ARMCL-03_OEE_New_Template.csv", "18_Daily_Production_Report.xlsx", "19_Akij_Readymix_Policy.docx", "20_SOP_Production.docx"],
+    "Quality Control": ["19_Akij_Readymix_Policy.docx", "17_ARMCL-03_OEE_New_Template.csv"],
+    "Maintenance": ["19_Akij_Readymix_Policy.docx", "17_ARMCL-03_OEE_New_Template.csv"],
+    "Logistics & Distribution": ["ERP liftingplanentry/liftingplanreport", "23_Diesel_Report.xlsx"],
+    "Finance & Accounts": ["01_Budget_2026-27.xlsx", "22_Cost_Controlling.xlsx", "23_Diesel_Report.xlsx"],
+    "HR & Admin": ["13_JD_ARMCL_Employees.xlsx", "14_Sales_Manpower_Organogram.xlsx"]
+  },
+  "related_agents": {
+    "roles_and_jds": "armcl-role-based-agent (armcl_role_based_agent.json)",
+    "sbu_overview": "armcl-sbu-business-agent (armcl_sbu_business_agent.json)",
+    "function_view": "armcl-function-business-agent (ARMCL_Function_Business_agent.json)",
+    "sales_process_detail": "absl-dept-business-agent / absl-function-business-agent (ABSL own the detailed sales & marketing department/process rules)"
+  }
+}

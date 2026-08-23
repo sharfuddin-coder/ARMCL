@@ -1,0 +1,340 @@
+{
+  "name": "ABSL_Dept_Business_agent",
+  "company": "Akij Building Solutions Ltd (ABSL)",
+  "business": "Ready Mix Concrete (RMC) - Akij Readymix Concrete Ltd (ARMCL)",
+  "scope": "Department-based view of the Sales & Marketing business: which department owns what, their activities, rules, KPIs, systems, and data sources",
+  "source": "Google Sheet 'all file ABSL' > tab 'Sales & Marketing' (gid=13336618); SOP ARMCL-SLS-001 (SALES DEPARTMENT-SOP-ARMCL-190625.pdf); DWH database (business unit 175)",
+  "generated_on": "2026-08-20",
+  "departments": [
+    {
+      "department": "Sales Department",
+      "role_in_sales_process": "Front-line owner of the end-to-end sales process: prospecting, lead engagement, negotiation, quoting, order booking, after-sales follow-up, and collection",
+      "key_activities": [
+        "Prospect new clients, engage leads, conduct site visits, initiate onboarding",
+        "Collect order details and book orders in IBOS",
+        "Negotiate pricing, credit terms, and delivery terms",
+        "Prepare and send quotations and terms letters",
+        "Post-delivery follow-up within 24 hours",
+        "Track aging and follow up collections for 0-30 days",
+        "Re-engage dormant customers (>90 days inactive)",
+        "Submit referral proposals and incentive documentation"
+      ],
+      "rules_owned": [
+        "Discount up to 3% (Area Sales Manager) and 3-7% (Head of Sales)",
+        "Credit days up to 45 (Area Sales Manager)",
+        "First 30 days of collection follow-up is sales responsibility",
+        "All orders must be booked in IBOS; verbal orders invalid"
+      ],
+      "systems": ["IBOS (order booking)", "CRM", "DWH.oms.tblSalesOrderHeaderArc", "DWH.pms.tblTargetSetupArc"],
+      "kpis": ["Sales volume and revenue", "Collection target achievement", "Customer retention", "Lead conversion"],
+      "data_sources": ["DWH.oms.tblSalesOrderHeaderArc (16,559 ARMCL rows)", "DWH.pms.tblTargetSetupArc (8,252)", "downloads/14_Sales_Manpower_Organogram.xlsx"]
+    },
+    {
+      "department": "Marketing Department",
+      "role_in_sales_process": "Generates demand and brand awareness; qualifies target markets and runs campaigns",
+      "key_activities": [
+        "Generate leads via campaigns and promotions",
+        "Build awareness and qualify target markets",
+        "Trade marketing and promotional activities",
+        "Support product positioning and branding",
+        "Customer satisfaction surveys (quarterly)"
+      ],
+      "rules_owned": [
+        "Marketing policy (currently missing link in register)",
+        "Campaign spending follows budget allocation"
+      ],
+      "systems": ["Google Drive (campaign materials)", "Market visit formats"],
+      "kpis": ["Lead volume generated", "Brand awareness", "Campaign ROI", "Customer satisfaction score"],
+      "data_sources": ["downloads/11_Market_Visit_Format.xlsx", "GAP G7: market research unstructured"]
+    },
+    {
+      "department": "Research Department",
+      "role_in_sales_process": "Supports market intelligence, competitor mapping, and lead profiling",
+      "key_activities": [
+        "Conduct market research and competitor analysis",
+        "Profile leads shared by sales",
+        "Maintain market research reports",
+        "Analyze industry trends and pricing dynamics"
+      ],
+      "rules_owned": [],
+      "systems": ["Google Drive (research reports)", "Spreadsheets"],
+      "kpis": ["Market intelligence accuracy", "Report timeliness"],
+      "data_sources": ["GAP G7: no structured research data in DWH"]
+    },
+    {
+      "department": "Credit Control Department",
+      "role_in_sales_process": "Assesses credit risk, verifies documentation, and approves credit limits for non-cash customers",
+      "key_activities": [
+        "Conduct KYC and credit evaluation (trade license, TIN, bank statement, solvency, NID, references)",
+        "Verify documentation and approve credit limits",
+        "Perform site verification if necessary",
+        "Recommend credit limit and credit days",
+        "Request bank guarantee or additional security"
+      ],
+      "rules_owned": [
+        "No credit customer activated without documented approval and bank guarantee/security",
+        "KYC set: trade license, TIN, bank statement, solvency certificate, NID, references",
+        "Credit limits reviewed every 3 months",
+        "Overdue beyond 60 days triggers automatic credit hold"
+      ],
+      "systems": ["DWH.prt.tblBusinessPartnerArc (3,640 ARMCL rows)", "Credit Approval Checklist"],
+      "kpis": ["Credit risk assessment accuracy", "Credit file completeness", "Bad debt ratio"],
+      "data_sources": ["DWH.prt.tblBusinessPartnerArc", "downloads/10_SOP_and_Policy/Approval of Product Price, Credit Days, and Credit Limit for New Customers.pdf"]
+    },
+    {
+      "department": "Finance & Accounts",
+      "role_in_sales_process": "Owns financial control: credit risk concurrence, pricing approval, invoicing, collections (31-60 days), incentive disbursement, and bad debt adjustments",
+      "key_activities": [
+        "Assess credit risk and approve financial terms",
+        "Concur on discount/credit decisions with Head of Sales",
+        "Create customer code in ERP and set price/credit terms",
+        "Generate invoice after delivery (linked with IBOS order)",
+        "Follow up collections for 31-60 days",
+        "Disburse approved incentives via payroll/transfer",
+        "Post credit notes, partial settlements, bad debt provisions",
+        "Monitor bad debt ratio, aging, average collection period"
+      ],
+      "rules_owned": [
+        "Approval matrix: discount 7-10% and credit 45-60 days / 50 lac-5 crore require Finance concurrence",
+        "Collection follow-up 31-60 days is accounts responsibility",
+        "Adjustments approved by Head of Sales + Head of Accounts, validated by Internal Audit",
+        "Write-off sign-off: CFO + Audit + CEO (above threshold)",
+        "TDS/AIT: 3 reminders; ledger adjusted after 90 days",
+        "Incentives processed after full validation by Sales, Finance, HR"
+      ],
+      "systems": ["DWH.oms.tblSalesInvoiceArc (248,499 rows)", "DWH.fin.tblCollectionPlanArc (0 rows - empty)", "IBOS ERP"],
+      "kpis": ["Average collection period", "Bad debt ratio", "Aging of outstanding dues", "Dispute resolution rate"],
+      "data_sources": ["DWH.oms.tblSalesInvoiceArc", "DWH.fin.tblCollectionPlanArc (GAP: empty)"]
+    },
+    {
+      "department": "Compliance & Legal",
+      "role_in_sales_process": "Reviews agreements, ensures due diligence and KYC verification, and pursues recovery of bad debts",
+      "key_activities": [
+        "Review agreements and ensure due diligence",
+        "Verify KYC documentation",
+        "Ensure ethical compliance of incentives (distinguish from bribes)",
+        "Pursue recovery from bankrupt or unwilling customers",
+        "Escalate arbitrary deductions to management/legal"
+      ],
+      "rules_owned": [
+        "All incentive payments transparent, auditable, tax-compliant",
+        "Records retained for at least 3 years",
+        "Ledger write-off requires legal opinion for bankruptcies"
+      ],
+      "systems": ["DWH.saas.TblLegalNoticeArc", "Legal recovery templates"],
+      "kpis": ["Recovery rate", "Compliance adherence"],
+      "data_sources": ["DWH.saas.TblLegalNoticeArc"]
+    },
+    {
+      "department": "CRM / IBOS Admin / IT",
+      "role_in_sales_process": "Maintains customer master data and system integrity across IBOS and CRM",
+      "key_activities": [
+        "Create and maintain customer profile in system",
+        "Track orders and send customer confirmations",
+        "Log complaints with unique Complaint ID",
+        "Ensure system uptime, data integrity, user training",
+        "Manage user credentials and access"
+      ],
+      "rules_owned": [
+        "No unauthorized edits/deletions/offline entries; changes timestamped",
+        "All users log in with authorized credentials",
+        "Complaints logged with customer, site, contact, type, description, time/date"
+      ],
+      "systems": ["DWH.saas.tblGrievanceArc (2 ARMCL rows)", "CRM", "IBOS"],
+      "kpis": ["System uptime", "Complaint logging accuracy"],
+      "data_sources": ["DWH.saas.tblGrievanceArc (GAP G5: under-captured)"]
+    },
+    {
+      "department": "Customer Service",
+      "role_in_sales_process": "Receives, logs, categorizes, and resolves customer complaints; provides first response and closure feedback",
+      "key_activities": [
+        "Receive complaints via call, WhatsApp, email, or verbal",
+        "Acknowledge within 1 hour",
+        "Classify complaints A/B/C/D and assign responsible department",
+        "Track resolution times and escalate when TAT missed",
+        "Collect satisfaction rating and close with CRM note"
+      ],
+      "rules_owned": [
+        "Acknowledge within 1 hour of receipt",
+        "Resolution TAT: A quality 48-72h, B delivery/pump 24h, C billing 48h, D behavior 72h",
+        "Escalate to Sales Head if TAT missed; CEO if unresolved after 3 days",
+        "Every resolved complaint closed with customer confirmation + CRM note"
+      ],
+      "systems": ["DWH.saas.tblGrievanceArc", "CRM Complaint Register"],
+      "kpis": ["Complaint resolution rate", "Average resolution time", "Customer satisfaction rating"],
+      "data_sources": ["DWH.saas.tblGrievanceArc (GAP G5)"]
+    },
+    {
+      "department": "Technical / QA / QC",
+      "role_in_sales_process": "Ensures concrete quality, verifies production and delivery quality, and resolves quality-related complaints",
+      "key_activities": [
+        "Monitor concrete quality per mix design and project specs",
+        "QC checks before batching (slump, cube samples, mix ratio)",
+        "Investigate and resolve quality-related complaints",
+        "Support site visits and post-delivery technical guidance",
+        "Prepare Dispute Assessment Reports for technical disputes"
+      ],
+      "rules_owned": [
+        "Only confirmed, IBOS-approved orders can be batched",
+        "QC team informed of each order before production",
+        "Technical disputes verified via QC before credit note"
+      ],
+      "systems": ["DWH.oms (production-linked)", "Download 17_ARMCL-03_OEE_New_Template.csv"],
+      "kpis": ["Concrete quality compliance", "Reduction in non-conformance", "Testing accuracy"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv", "downloads/18_Daily_Production_Report.xlsx"]
+    },
+    {
+      "department": "Logistics & Dispatch",
+      "role_in_sales_process": "Schedules and executes concrete delivery from plant to site, manages fleet, and handles delivery exceptions",
+      "key_activities": [
+        "Prepare delivery schedule based on orders",
+        "Allocate transit mixers, pumps, drivers; route optimization",
+        "Dispatch from nearest plant/ghat/depot",
+        "Monitor in-transit via GPS/IBOS; capture site confirmation",
+        "Handle rescheduling and emergency exceptions",
+        "Document delivery delays for adjustment claims"
+      ],
+      "rules_owned": [
+        "Same-day delivery cutoff: at least 3 hours before batching",
+        "Priority to time-bound project pours, government/large sites, strategic repeat customers",
+        "Delivery exceptions approved by Plant Manager or Sales Head and logged",
+        "Delivery complies with approved work orders/delivery schedules"
+      ],
+      "systems": ["DWH.oms (delivery)", "IBOS", "Download 23_Diesel_Report.xlsx"],
+      "kpis": ["On-time delivery %", "Trips per truck per day", "Trip cycle time", "Truck utilization", "Vehicle downtime"],
+      "data_sources": ["DWH.oms.tblSalesOrderHeaderArc", "downloads/23_Diesel_Report.xlsx"]
+    },
+    {
+      "department": "Production / Plant Operations",
+      "role_in_sales_process": "Produces concrete per IBOS schedule with quality compliance and cost efficiency",
+      "key_activities": [
+        "Monitor IBOS production plan and batch per schedule/grade",
+        "Prepare raw materials based on order grade",
+        "Ensure optimal plant capacity utilization",
+        "Control production costs and wastage",
+        "Coordinate with QC for quality adjustments"
+      ],
+      "rules_owned": [
+        "Batching sequence follows IBOS schedule",
+        "Only confirmed and IBOS-approved orders batched",
+        "QC informed before production"
+      ],
+      "systems": ["DWH.oms (production)", "Download 17_ARMCL-03_OEE_New_Template.csv", "18_Daily_Production_Report.xlsx", "20_SOP_Production.docx"],
+      "kpis": ["Production efficiency", "Product quality compliance", "Plant downtime reduction", "Cost control"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv", "downloads/18_Daily_Production_Report.xlsx", "downloads/19_Akij_Readymix_Policy.docx"]
+    },
+    {
+      "department": "HR",
+      "role_in_sales_process": "Manages sales force administration and processes incentive disbursements",
+      "key_activities": [
+        "Verify incentive eligibility",
+        "Process incentive amounts into monthly payroll",
+        "Compile monthly list of eligible referrals with sales confirmation",
+        "Support workforce planning for sales team",
+        "Handle employee relations for sales staff"
+      ],
+      "rules_owned": [
+        "Incentives disbursed monthly, subject to TDS",
+        "Self-referrals/family/fictitious entries disqualified",
+        "Eligibility excludes Sales/BD/Pricing staff and temp/contract/intern"
+      ],
+      "systems": ["DWH.sms.tblEmployeeIncentiveArc (0 ARMCL rows - GAP G4)"],
+      "kpis": ["Incentive processing accuracy", "Timely payroll"],
+      "data_sources": ["DWH.sms.tblEmployeeIncentiveArc (GAP G4)"]
+    },
+    {
+      "department": "Sales Admin",
+      "role_in_sales_process": "Handles sales documentation, customer code creation, and non-cash gift disbursement",
+      "key_activities": [
+        "Collect and verify final customer documents",
+        "Send for compliance check",
+        "Generate customer code in CRM/IBOS",
+        "Confirm onboarding to operations and logistics",
+        "Disburse non-cash gift items via store challan"
+      ],
+      "rules_owned": [
+        "Customer code only after compliance approval",
+        "Gift items issued through store challan with recipient signature/photo"
+      ],
+      "systems": ["CRM/IBOS", "Gift disbursement request format"],
+      "kpis": ["Onboarding cycle time", "Documentation accuracy"],
+      "data_sources": ["DWH.prt.tblBusinessPartnerArc"]
+    },
+    {
+      "department": "SBU Head / CEO / MD",
+      "role_in_sales_process": "Final approval authority for high-value, high-risk, or exception cases",
+      "key_activities": [
+        "Approve exceptional pricing and high-value discount proposals",
+        "Approve credit above 60 days and above BDT 5 crore",
+        "Approve loyalty incentives, long-term contracts, or MoUs",
+        "Approve service recovery compensation for high-impact complaints",
+        "Approve bad debt write-offs (above threshold)",
+        "Review monthly incentive and bad debt reports"
+      ],
+      "rules_owned": [
+        "Discount >10% or below breakeven requires CEO/MD approval with justification",
+        "Credit days 60-70 require CEO/MD + Finance Head",
+        "Credit limit above BDT 5 crore requires CEO/MD + Finance Head",
+        "Write-off sign-off: CFO + Audit + CEO"
+      ],
+      "systems": ["Management dashboards", "DWH.pms.tblTargetSetupArc"],
+      "kpis": ["Profitability", "Market share", "Strategic plan execution"],
+      "data_sources": ["DWH.pms.tblTargetSetupArc", "DWH.oms.tblSalesOrderHeaderArc"]
+    },
+    {
+      "department": "Internal Audit",
+      "role_in_sales_process": "Verifies pricing compliance, incentive ethics, and bad debt adjustments",
+      "key_activities": [
+        "Review sample transactions monthly for pricing compliance",
+        "Flag unauthorized discounting or margin loss",
+        "Verify incentive payments and gift disbursements (annual audit)",
+        "Validate ledger adjustments",
+        "Submit compliance reports to CEO quarterly"
+      ],
+      "rules_owned": [
+        "All adjustments validated by Internal Audit",
+        "Yearly audit of incentives and gifts",
+        "Incentives must be documented and approved - no 'speed money'"
+      ],
+      "systems": ["DWH.oms.tblSalesOrderRowDiscountArc"],
+      "kpis": ["Audit findings", "Compliance closure rate"],
+      "data_sources": ["DWH.oms.tblSalesOrderRowDiscountArc"]
+    }
+  ],
+  "dept_to_dwh_map": {
+    "Sales": ["oms.tblSalesOrderHeaderArc", "pms.tblTargetSetupArc"],
+    "Marketing": [],
+    "Research": [],
+    "Credit Control": ["prt.tblBusinessPartnerArc"],
+    "Finance & Accounts": ["oms.tblSalesInvoiceArc", "fin.tblCollectionPlanArc"],
+    "Compliance & Legal": ["saas.TblLegalNoticeArc"],
+    "CRM / IBOS Admin / IT": ["saas.tblGrievanceArc"],
+    "Customer Service": ["saas.tblGrievanceArc"],
+    "Technical / QA / QC": [],
+    "Logistics & Dispatch": ["oms.tblSalesOrderHeaderArc"],
+    "Production / Plant": [],
+    "HR": ["sms.tblEmployeeIncentiveArc"],
+    "Sales Admin": ["prt.tblBusinessPartnerArc"],
+    "SBU Head / CEO / MD": ["pms.tblTargetSetupArc", "oms.tblSalesOrderHeaderArc"],
+    "Internal Audit": ["oms.tblSalesOrderRowDiscountArc"]
+  },
+  "mcp_gap_analysis": {
+    "available_mcp": ["mssql-test-server (DWH, read-only)", "gmail"],
+    "gaps": [
+      { "id": "G1", "gap": "No Google Drive/Docs/Sheets MCP", "detail": "Policy/SOP documents live in private Google Docs (shared doc 401)", "impact": "Cannot verify or read policy content through MCP" },
+      { "id": "G2", "gap": "Policies/SOPs not in DWH", "detail": "PolicyHeaderArc = 0 ARMCL rows; empSOPArc = 0 ARMCL rows", "impact": "No programmatic access to authoritative rules" },
+      { "id": "G3", "gap": "No iBOS ERP connector", "detail": "Live orders, credit hold, customer statements in iBOS web (login-gated)", "impact": "DWH is archival; no live ERP access" },
+      { "id": "G4", "gap": "Incentives missing in DWH", "detail": "sms.tblEmployeeIncentiveArc = 0 ARMCL rows", "impact": "Cannot audit incentive rules or payouts" },
+      { "id": "G5", "gap": "Complaint register thin", "detail": "saas.tblGrievanceArc = 2 ARMCL rows", "impact": "Complaint data not captured" },
+      { "id": "G6", "gap": "Meeting minutes not stored", "detail": "Weekly minutes flagged 'Need to Attach Support File'", "impact": "Governance trail incomplete" },
+      { "id": "G7", "gap": "Market research unstructured", "detail": "No DWH table; lives in Drive", "impact": "No trend/competitor data queryable" }
+    ],
+    "recommendations": [
+      "Add a Google Drive/Docs/Sheets MCP server (project has OAuth token.json + @googleapis/sheets)",
+      "Ingest Sales SOP + policies into saas.empSOPArc / saas.PolicyHeaderArc",
+      "Build an iBOS REST connector for live orders, credit hold, and customer statements",
+      "Seed sms.tblEmployeeIncentiveArc for ARMCL; enforce grievance logging",
+      "Attach weekly meeting minutes to Drive and link them in the register"
+    ]
+  }
+}

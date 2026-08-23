@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARMCL SMS Control Tower | Live</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',-apple-system,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
+.topbar{background:#020617;border-bottom:1px solid #1e293b;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.topbar h1{font-size:1.15rem;font-weight:800;color:#f8fafc}
+.topbar .sub{font-size:0.75rem;color:#94a3b8;margin-top:2px}
+.badge{background:#1e293b;border:1px solid #334155;color:#cbd5e1;border-radius:999px;padding:4px 12px;font-size:0.72rem}
+.badge.live{background:#052e16;border-color:#166534;color:#4ade80}
+.container{max-width:1600px;margin:0 auto;padding:20px 24px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px}
+.kpi .lbl{font-size:0.62rem;text-transform:uppercase;color:#94a3b8;letter-spacing:0.05em;font-weight:600}
+.kpi .val{font-size:1.15rem;font-weight:800;color:#f1f5f9;margin-top:5px;font-variant-numeric:tabular-nums}
+.kpi .val small{font-size:0.65rem;font-weight:600;color:#64748b}
+.kpi.green{border-top:3px solid #10b981}
+.kpi.amber{border-top:3px solid #f59e0b}
+.kpi.red{border-top:3px solid #ef4444}
+.kpi.blue{border-top:3px solid #3b82f6}
+.row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:16px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.box{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:18px}
+.box h3{font-size:0.72rem;color:#94a3b8;margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
+.box h3 .rag{float:right;font-size:0.62rem;border-radius:4px;padding:2px 8px}
+.rag.green{background:#052e16;color:#4ade80}
+.rag.amber{background:#451a03;color:#fbbf24}
+.rag.red{background:#450a0a;color:#f87171}
+.bar{position:relative;height:26px;background:#0f172a;border-radius:5px;margin-bottom:6px;overflow:hidden}
+.bar .fill{height:100%;border-radius:5px}
+.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:0.7rem;font-weight:600;color:#e2e8f0}
+.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%}
+.fc.green{background:#10b981}.fc.amber{background:#f59e0b}.fc.red{background:#ef4444}.fc.blue{background:#3b82f6}.fc.slate{background:#475569}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid #0f172a;font-size:0.78rem}
+th{color:#94a3b8;font-weight:600;text-transform:uppercase;font-size:0.62rem;letter-spacing:0.04em;background:#0f172a}
+th:first-child,td:first-child{text-align:left}
+tr:hover{background:#0f172a}
+.num{font-variant-numeric:tabular-nums;font-weight:600}
+.overdue{color:#f87171}
+.zero{color:#fbbf24}
+.daily{display:flex;align-items:flex-end;gap:3px;height:140px;padding-top:6px}
+.day{flex:1;background:#1e293b;border-radius:4px 4px 0 0;position:relative;min-width:0}
+.day .fill{position:absolute;bottom:0;left:0;right:0;border-radius:4px 4px 0 0}
+.day .tt{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:0.58rem;color:#94a3b8;white-space:nowrap}
+.day .dl{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#475569}
+.chart{display:flex;flex-direction:column;gap:6px}
+.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:0.7rem;color:#94a3b8}
+.legend span i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}
+.guard{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:20px}
+.g{background:#1e293b;border:1px solid #334155;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem}
+.g .d{font-weight:700;letter-spacing:0.05em}
+.dot{width:10px;height:10px;border-radius:50%}
+.dot.green{background:#10b981}.dot.amber{background:#f59e0b}.dot.red{background:#ef4444}.dot.blue{background:#3b82f6}
+.note{font-size:0.68rem;color:#64748b;margin-top:10px;line-height:1.5}
+.error{background:#450a0a;border:1px solid #7f1d1d;color:#fca5a5;padding:20px;border-radius:10px;margin:20px}
+footer{color:#475569;font-size:0.68rem;text-align:center;padding:20px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div>
+    <h1>ARMCL Sales Management System — Control Tower</h1>
+    <div class="sub" id="subtitle">Akij Ready Mix Concrete Ltd · Loading…</div>
+  </div>
+  <span class="badge live">● LIVE — DWH</span>
+</div>
+<div class="container" id="root">
+  <div class="error" id="err" style="display:none"></div>
+</div>
+<footer>Source: DWH (iBOS ERP archive) · Framework: Akij Resource — Sales Management OS · ARMCL = BU 175</footer>
+
+<script>
+function fmt(n, f) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  if (f === 'pct') return (n).toFixed(1) + '%';
+  return Math.round(n).toLocaleString('en-US');
+}
+function pctOf(v, t) { return t > 0 ? (v / t * 100) : 0; }
+
+function render(d) {
+  const root = document.getElementById('root');
+  const err = document.getElementById('err');
+  if (d.error) { err.style.display = 'block'; err.textContent = 'ERROR: ' + d.error; return; }
+  root.innerHTML = '';
+
+  document.getElementById('subtitle').textContent =
+    d.meta.name + ' · ' + d.meta.period + ' · ' + d.meta.source;
+
+  // ---- KPI cards ----
+  const kpiHtml = d.kpi_cards.map(k => {
+    const cls = k.rag || 'blue';
+    const v = k.fmt === 'pct' ? fmt(k.value, 'pct') : fmt(k.value);
+    return `<div class="kpi ${cls}"><div class="lbl">${k.label}</div><div class="val">${v}${k.unit||''}</div></div>`;
+  }).join('');
+  const kpiSec = document.createElement('div');
+  kpiSec.className = 'kpi-grid';
+  kpiSec.innerHTML = kpiHtml;
+  root.appendChild(kpiSec);
+
+  // ---- Guardrails ----
+  const g = d.guardrails;
+  const guardHtml = Object.entries(g).map(([k, v]) =>
+    `<div class="g"><span>${k.toUpperCase()}</span><span class="dot ${v}"></span></div>`).join('');
+  const guardSec = document.createElement('div');
+  guardSec.className = 'guard';
+  guardSec.innerHTML = guardHtml;
+  root.appendChild(guardSec);
+
+  // ---- Row: P2 daily trend + P1 target ----
+  const row1 = document.createElement('div'); row1.className = 'row'; root.appendChild(row1);
+  const boxDaily = document.createElement('div'); boxDaily.className = 'box'; row1.appendChild(boxDaily);
+  boxDaily.innerHTML = `<h3>Daily Sales Trend (CFT, MTD)</h3>`;
+  const maxD = Math.max(...d.panels.p2.daily.map(x => x.qty), 1);
+  const days = d.panels.p2.daily.map(x => {
+    const h = Math.max(2, x.qty / maxD * 100);
+    return `<div class="day" title="${x.date}"><div class="fill" style="height:${h}%;background:${x.qty>0?'#3b82f6':'#1e293b'}"></div><div class="tt">${fmt(x.qty/1000,0)}k</div><div class="dl">${x.date.slice(8,10)}</div></div>`;
+  }).join('');
+  boxDaily.innerHTML += `<div class="daily">${days}</div>`;
+  boxDaily.innerHTML += `<div class="note">Total MTD: ${fmt(d.panels.p2.total)} CFT / Target ${fmt(d.panels.p2.target)} CFT · Days consumed: ${d.panels.p2.workDays} · Remaining: ${d.panels.p2.daysRemaining}</div>`;
+
+  const boxTgt = document.createElement('div'); boxTgt.className = 'box'; row1.appendChild(boxTgt);
+  const ach = d.panels.p1.achPct;
+  boxTgt.innerHTML = `<h3>Target vs Achievement <span class="rag ${ach>=95?'green':ach>=80?'amber':'red'}">${fmt(ach,'pct')}</span></h3>
+    <div class="bar"><div class="fill fc ${ach>=95?'green':ach>=80?'amber':'red'}" style="width:${Math.min(100,ach)}%"></div><div class="txt"><span class="nm">Sales Till Date</span><span>${fmt(d.panels.p1.actual)} / ${fmt(d.panels.p1.target)} CFT</span></div></div>
+    <div class="bar"><div class="fill fc slate" style="width:${Math.min(100,100-ach)}%"></div><div class="txt"><span class="nm">Gap (Remaining)</span><span>${fmt(d.panels.p1.gap)} CFT</span></div></div>
+    <div class="bar"><div class="fill fc green" style="width:${Math.min(100,d.panels.p1.logicalAchPct)}%"></div><div class="txt"><span class="nm">Logical Sales</span><span>${fmt(d.panels.p1.logical)} CFT (${fmt(d.panels.p1.logicalAchPct,'pct')})</span></div></div>
+    <div class="note">Target ADS ${fmt(d.panels.p1.targetADS)} · Present ADS ${fmt(d.panels.p1.presentADS)} · RADS ${fmt(d.panels.p1.rads)} CFT/day · Days ${d.panels.p1.daysConsumed}/${d.panels.p1.daysConsumed+d.panels.p1.daysRemaining}<br>Source: Official Target Achievement Sheet (gid 990537426).</div>`;
+
+  // ---- Row: P6 plants + P5 grade mix ----
+  const row2 = document.createElement('div'); row2.className = 'row'; root.appendChild(row2);
+  const boxPlant = document.createElement('div'); boxPlant.className = 'box'; row2.appendChild(boxPlant);
+  const maxP = Math.max(...d.panels.p6.byPlant.map(x => x.qty), 1);
+  const plants = d.panels.p6.byPlant.map(x => {
+    const w = Math.max(3, x.qty / maxP * 100);
+    return `<div class="bar"><div class="fill fc blue" style="width:${w}%"></div><div class="txt"><span class="nm">${x.name.trim()}</span><span>${fmt(x.qty)} CFT</span></div></div>`;
+  }).join('');
+  boxPlant.innerHTML = `<h3>Plant-wise Delivery (CFT, MTD)</h3>${plants}<div class="note">Source: DWH sms.tblDeliveryHeaderArc (delivered CFT).</div>`;
+
+  const boxMix = document.createElement('div'); boxMix.className = 'box'; row2.appendChild(boxMix);
+  const maxM = Math.max(...d.panels.p5.gradeMix.map(x => x.qty), 1);
+  const mix = d.panels.p5.gradeMix.map(x => {
+    const w = Math.max(3, x.qty / maxM * 100);
+    return `<div class="bar"><div class="fill fc ${w>=50?'blue':w>=25?'amber':'slate'}" style="width:${w}%"></div><div class="txt"><span class="nm">${x.item}</span><span>${fmt(x.qty)} CFT</span></div></div>`;
+  }).join('');
+  boxMix.innerHTML = `<h3>Product / Grade Mix (CFT, MTD)</h3>${mix}`;
+
+  // ---- Row2: P4 lifting + P8 force ----
+  const row3 = document.createElement('div'); row3.className = 'row2'; root.appendChild(row3);
+  const boxLift = document.createElement('div'); boxLift.className = 'box'; row3.appendChild(boxLift);
+  const lift = d.panels.p4.liftingPct;
+  boxLift.innerHTML = `<h3>Order Book & Lifting <span class="rag ${lift>=80?'green':lift>=60?'amber':'red'}">${fmt(lift,'pct')}</span></h3>
+    <div class="bar"><div class="fill fc ${lift>=80?'green':lift>=60?'amber':'red'}" style="width:${Math.min(100,lift)}%"></div><div class="txt"><span class="nm">Lifting</span><span>${fmt(d.panels.p4.deliveredQty)} / ${fmt(d.panels.p4.orderQty)} CFT</span></div></div>
+    <div class="note">Approved open orders: delivered vs ordered quantity (CFT). Source: DWH oms order rows.</div>`;
+
+  const boxForce = document.createElement('div'); boxForce.className = 'box'; row3.appendChild(boxForce);
+  if (d.panels.p8.force.length) {
+    const rows = d.panels.p8.force.slice(0, 8).map(x => {
+      return `<div class="bar"><div class="fill fc violet" style="width:60%"></div><div class="txt"><span class="nm">${x.name}</span><span>${x.orders} orders</span></div></div>`;
+    }).join('');
+    boxForce.innerHTML = `<h3>Sales Force Productivity</h3>${rows}<div class="note">${d.panels.p8.limitation}</div>`;
+  } else {
+    boxForce.innerHTML = `<h3>Sales Force Productivity</h3><div class="note">No sales-force-attributed orders this month (GAP G6).</div>`;
+  }
+
+  // ---- Row: P9 coverage + P10 exceptions + P11 collection ----
+  const row4 = document.createElement('div'); row4.className = 'row'; root.appendChild(row4);
+  const boxCov = document.createElement('div'); boxCov.className = 'box'; row4.appendChild(boxCov);
+  const cov = d.panels.p9.coveragePct;
+  boxCov.innerHTML = `<h3>Distribution & Market Coverage <span class="rag ${cov>=50?'green':cov>=30?'amber':'red'}">${fmt(cov,'pct')}</span></h3>
+    <div class="bar"><div class="fill fc ${cov>=50?'green':cov>=30?'amber':'red'}" style="width:${Math.min(100,cov)}%"></div><div class="txt"><span class="nm">Active / Universe</span><span>${d.panels.p9.active} / ${fmt(d.panels.p9.universe)}</span></div></div>
+    <div class="note">Active Customers (MTD): ${d.panels.p5.activeCustomers} · Frequency: ${d.panels.p5.frequency} · Total orders: ${fmt(d.panels.p5.totalOrders)}</div>`;
+
+  const boxExc = document.createElement('div'); boxExc.className = 'box'; row4.appendChild(boxExc);
+  if (d.panels.p10.overdue.length) {
+    const rows = d.panels.p10.overdue.map(x => `<div class="bar"><div class="fill fc red" style="width:90%"></div><div class="txt"><span class="nm">${x.name}</span><span class="overdue">${fmt(x.value)} BDT</span></div></div>`).join('');
+    boxExc.innerHTML = `<h3>Credit Exceptions — Overdue 60d+ <span class="rag red">RED</span></h3>${rows}<div class="note">Top 10 overdue customers by delivered value. Action: Sales → Finance → Recovery Cell per SOP.</div>`;
+  } else {
+    boxExc.innerHTML = `<h3>Credit Exceptions — Overdue 60d+ <span class="rag green">GREEN</span></h3><div class="note">No overdue >60d customers detected from delivery data.</div>`;
+  }
+
+  const boxColl = document.createElement('div'); boxColl.className = 'box'; row4.appendChild(boxColl);
+  const coll = d.panels.p11.collectionPct;
+  boxColl.innerHTML = `<h3>Collection vs Sales Value <span class="rag ${coll>=80?'green':coll>=60?'amber':'red'}">${fmt(coll,'pct')}</span></h3>
+    <div class="bar"><div class="fill fc ${coll>=80?'green':coll>=60?'amber':'red'}" style="width:${Math.min(100,coll)}%"></div><div class="txt"><span class="nm">Collection</span><span>${fmt(d.panels.p11.collected)} BDT</span></div></div>
+    <div class="note">Collected (Trade Receivable journal) vs MTD Sales value ${fmt(d.panels.p11.salesValue)} BDT · ${d.panels.p11.source}</div>`;
+}
+
+(async function load() {
+  try {
+    const d = await (await fetch('/api/sms-tower')).json();
+    render(d);
+  } catch (e) {
+    document.getElementById('err').style.display = 'block';
+    document.getElementById('err').textContent = 'Failed to load Control Tower: ' + e.message;
+  }
+})();
+</script>
+</body>
+</html>

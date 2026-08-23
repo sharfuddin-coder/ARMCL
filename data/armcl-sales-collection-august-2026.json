@@ -1,0 +1,41 @@
+{
+  "title":"ARMCL Sales & Collection Dashboard - August 2026",
+  "company":"Akij Ready Mix Concrete Ltd.",
+  "source":"iBOS ERP (Sales Orders + Trade Receivable)",
+  "period":"August 1-12, 2026 (MTD)",
+  "sales":{
+    "totalOrders":202,"totalValue":212739492,"totalQty":502807,
+    "daily":[
+      {"date":"2026-08-01","orders":23,"value":56862907,"qty":23900},
+      {"date":"2026-08-02","orders":15,"value":14947770,"qty":393925},
+      {"date":"2026-08-03","orders":18,"value":32836209,"qty":5450},
+      {"date":"2026-08-04","orders":23,"value":19054123,"qty":2956},
+      {"date":"2026-08-05","orders":5,"value":2395872,"qty":0},
+      {"date":"2026-08-06","orders":39,"value":26116767,"qty":2067},
+      {"date":"2026-08-07","orders":12,"value":7500565,"qty":0},
+      {"date":"2026-08-08","orders":15,"value":7250585,"qty":0},
+      {"date":"2026-08-09","orders":11,"value":12184917,"qty":1309},
+      {"date":"2026-08-10","orders":21,"value":14994506,"qty":15686},
+      {"date":"2026-08-11","orders":19,"value":18329271,"qty":47819},
+      {"date":"2026-08-12","orders":1,"value":266000,"qty":9694}
+    ],
+    "note":"Sales persons from invoice tblSalesInvoiceArc.strSoldByName (17 persons). Sales orders have only Moniruzzaman in strSalesForceEmpName field."
+  },
+  "collection":{
+    "totalCollection":132340509,"totalTxns":1628,
+    "daily":[
+      {"date":"2026-08-01","txns":173,"amount":14246765},
+      {"date":"2026-08-02","txns":125,"amount":10171791},
+      {"date":"2026-08-03","txns":151,"amount":11970421},
+      {"date":"2026-08-04","txns":151,"amount":13385974},
+      {"date":"2026-08-05","txns":119,"amount":9507176},
+      {"date":"2026-08-06","txns":127,"amount":10452476},
+      {"date":"2026-08-07","txns":153,"amount":12579932},
+      {"date":"2026-08-08","txns":162,"amount":12941443},
+      {"date":"2026-08-09","txns":130,"amount":10155359},
+      {"date":"2026-08-10","txns":112,"amount":8527196},
+      {"date":"2026-08-11","txns":159,"amount":13161500},
+      {"date":"2026-08-12","txns":66,"amount":5240476}
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "title": "ABSL Asphalt Sales Dashboard - August 2026",
+  "company": "Akij Building Solutions Limited",
+  "source": "iBOS ERP (Sales Invoices)",
+  "period": "2026-08-01 to 2026-08-11 (MTD)",
+  "totalInvoices": 224,
+  "totalQty": 54682.6,
+  "salesPersons": 5,
+  "daily": [
+    {"date":"2026-08-01","cnt":1,"qty":1040},
+    {"date":"2026-08-02","cnt":3,"qty":1684},
+    {"date":"2026-08-03","cnt":9,"qty":2560},
+    {"date":"2026-08-04","cnt":2,"qty":1844},
+    {"date":"2026-08-05","cnt":3,"qty":1843},
+    {"date":"2026-08-06","cnt":194,"qty":38786},
+    {"date":"2026-08-09","cnt":2,"qty":280},
+    {"date":"2026-08-10","cnt":8,"qty":6046},
+    {"date":"2026-08-11","cnt":2,"qty":600}
+  ],
+  "persons": [
+    {"rank":1,"name":"Mohammad Moazzam Hossain Chowdhury","role":"Asst. Manager, Marketing","txns":167,"qty":32322},
+    {"rank":2,"name":"Al Shamim","role":"Deputy Manager, Marketing","txns":24,"qty":5853},
+    {"rank":3,"name":"Md. Afar Rabbi","role":"Asst. Manager, Marketing","txns":18,"qty":7779},
+    {"rank":4,"name":"Md. Naimul Islam","role":"Asst. Manager, Marketing","txns":14,"qty":8572},
+    {"rank":5,"name":"Md. Shohidul Islam","role":"Regional Manager, Marketing","txns":1,"qty":156}
+  ],
+  "note": "Mizan did not appear in ABSL asphalt invoice data for August 2026. Data sourced from tblSalesInvoiceArc (strSoldByName)."
+}

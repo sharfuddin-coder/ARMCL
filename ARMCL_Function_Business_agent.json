@@ -1,0 +1,241 @@
+{
+  "name": "ARMCL_Function_Business_agent",
+  "company": "Akij Readymix Concrete Ltd (ARMCL)",
+  "parent_company": "Akij Building Solutions Ltd (ABSL)",
+  "business": "Ready Mix Concrete (RMC) manufacturing, sales and delivery; Asphalt",
+  "scope": "Function-based view of ARMCL operations: business functions, activities, owners, rules, KPIs, and data sources across the full value chain",
+  "source": "downloads/19_Akij_Readymix_Policy.docx (Doc ARL/ARMCL-03/Factory/Dept/03/03); downloads/20_SOP_Production.docx; downloads/13_JD_ARMCL_Employees.xlsx; downloads/17_ARMCL-03_OEE_New_Template.csv; downloads/01_Budget_2026-27.xlsx; ARMCL Reference Documents master list",
+  "generated_on": "2026-08-22",
+  "plants": [
+    { "unit": "ARMCL-01", "location": "Dhour" },
+    { "unit": "ARMCL-02", "location": "Narayangonj" },
+    { "unit": "ARMCL-03", "location": "Rupganj" },
+    { "unit": "ARMCL-04", "location": "Gazipur" },
+    { "unit": "ARMCL-05", "location": "Chittagong" }
+  ],
+  "functions": [
+    {
+      "function": "Planning & Strategy",
+      "purpose": "Set annual budget, 5-year roadmap, monthly targets and track SBU performance",
+      "activities": [
+        "Annual budget preparation (IS, BS, Cash Flow, BEP, COGS, Opex, Working Capital, VAT, Depreciation)",
+        "5-year strategy plan maintenance",
+        "Monthly sales and production target setting by plant and team",
+        "Trend analysis: daily actual delivery vs target with deviation tracking",
+        "MIS dashboards and performance reviews for EXCOM/ManCom/Board"
+      ],
+      "owner": "CEO, Manager - Planning & Business Operations, Head of Sales",
+      "rules": [
+        "100% sales target is the mandatory baseline",
+        "Collection target minimum qualifying level: 90%",
+        "Budget variance reviewed via iBOS internal-control reports"
+      ],
+      "kpis": ["Sales target achievement %", "Delivery vs target deviation (CUM)", "Budget variance %"],
+      "data_sources": ["downloads/01_Budget_2026-27.xlsx", "downloads/02_5_Years_Plan.docx", "downloads/16_Trend_Analysis_Aug2026.xlsx", "downloads/12_Sales_Target_Achievement_Aug2026.xlsx", "ERP: internal-control/budgetvariancereport"]
+    },
+    {
+      "function": "Sales & Marketing",
+      "purpose": "Achieve sales targets through teams A/B/C/CTG, market visits, pricing and credit proposals",
+      "activities": [
+        "Customer acquisition, order booking and target tracking (employee-level ADS/RADS)",
+        "Market visits per standard format",
+        "Pricing, discount, credit days and credit limit proposals per delegation matrix",
+        "Collection follow-up and customer statement reconciliation"
+      ],
+      "owner": "Head of Sales, Managers, Dy/Asst Managers, Sr. Officers, Officers (Teams A/B/C/CTG)",
+      "rules": [
+        "Detailed sales process rules (KYC, pricing/credit delegation, incentives, complaints, bad debt) are owned by the ABSL Function Business agent - see ABSL_Function_Business_agent.json",
+        "FY 2025-26: grand target 12,145,000 CUM, sales 10,865,608 CUM, achievement 89.47%",
+        "Team targets: A 3,900,000 | B 3,695,000 | C 3,020,000 | CTG 1,530,000"
+      ],
+      "kpis": ["Monthly sales (CUM)", "ADS vs Target ADS", "Achievement %", "Logical achievement %", "Collection %"],
+      "data_sources": ["downloads/12_Sales_Target_Achievement_Aug2026.xlsx", "downloads/14_Sales_Manpower_Organogram.xlsx", "downloads/11_Market_Visit_Format.xlsx", "ERP: sales-management reports"]
+    },
+    {
+      "function": "Production Operations",
+      "purpose": "Plan and execute concrete batching per casting schedule with maximum efficiency and mix consistency",
+      "activities": [
+        "Casting schedule / lifting plan entry and execution",
+        "Shift-wise batching (Shift A/B, 720 min shift time, capacity ~1,440 CUM/shift at ARMCL-03 HZS-120)",
+        "OEE tracking: availability, performance, quality",
+        "Downtime logging (planned vs unplanned/NPT) and wastage tracking",
+        "Daily production reporting (CUM and CFT)"
+      ],
+      "owner": "Factory Incharge, Production Engineer, Batching Plant Operator, Wheel Loader Operator",
+      "rules": [
+        "Only authorized personnel may operate or adjust the batching system",
+        "Only trained personnel may operate equipment; regular training and supervision mandatory",
+        "Operations must stop immediately if unsafe conditions are identified",
+        "All operational, quality, and maintenance records must be maintained and archived for audits",
+        "Production team must be informed by maintenance team when problems arise during running production"
+      ],
+      "kpis": ["OEE % (Availability x Performance x Quality)", "Shift target achievement %", "NPT %", "Wastage % (target 0.25 CUM)", "Good production (CUM/CFT)"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv", "downloads/18_Daily_Production_Report.xlsx", "ERP: production-management/mes/productionEntryOee", "ERP: inventory-management liftingplanentry/liftingplanreport"]
+    },
+    {
+      "function": "Quality Control",
+      "purpose": "Ensure consistent quality of raw materials and ready-mix concrete per approved mix designs and project requirements",
+      "activities": [
+        "Raw material testing before use (cement, aggregates, water, admixtures)",
+        "Slump and cube testing during production",
+        "Monitoring plant operations for quality consistency during batching",
+        "Quality adjustments coordination with plant operator and plant in-charge",
+        "Daily/weekly/monthly quality reports and QMS procedures",
+        "Liaison with production, procurement, and site teams",
+        "Site visits by Production Engineer to align production with ground requirements"
+      ],
+      "owner": "Quality Control Engineer (reports to Quality Head; team: Sub Assistant Engineer, Quality Supervisor, Quality Technician)",
+      "rules": [
+        "Design changes may be implemented per client demand, weather, road & site conditions subject to approval by QC Head & Operation Head",
+        "Material rejection: QC and Distribution Team must provide documented proof and corrective solution; pre-approval by QC Head, Logistics & Distribution Incharge, Inventory Incharge & Plant Head; final approval by SBU Head"
+      ],
+      "kpis": ["Quality % (OEE quality component)", "Concrete quality compliance", "Raw material quality control", "Quality consistency"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv (Quality %, wastage reasons)", "downloads/19_Akij_Readymix_Policy.docx", "downloads/20_SOP_Production.docx"]
+    },
+    {
+      "function": "Maintenance",
+      "purpose": "Keep batching plant and equipment available through preventive and running maintenance",
+      "activities": [
+        "Preventive maintenance per schedule",
+        "Running maintenance coordination with production team",
+        "Equipment inspection and housekeeping by operators",
+        "Reporting equipment issues promptly (wheel loader, batching plant)"
+      ],
+      "owner": "Maintenance Head / Maintenance team, Factory Incharge",
+      "rules": [
+        "Equipment must follow scheduled preventive maintenance",
+        "Operations must stop immediately if unsafe conditions are identified",
+        "Maintenance team informs production team of issues created during running production"
+      ],
+      "kpis": ["Mechanical breakdown downtime (min)", "Electrical breakdown downtime (min)", "Availability %"],
+      "data_sources": ["downloads/17_ARMCL-03_OEE_New_Template.csv (Mechanical/Electrical Breakdown columns)", "downloads/19_Akij_Readymix_Policy.docx"]
+    },
+    {
+      "function": "Logistics & Distribution",
+      "purpose": "Deliver the right quantity and quality of concrete to site on time via lifting plans and transit mixers",
+      "activities": [
+        "Lifting plan entry and casting schedule alignment",
+        "Transit mixture (TM) dispatch and in-transit quality preservation",
+        "Site delivery and confirmation",
+        "Handling site complaints: delay, quality issue, short supply"
+      ],
+      "owner": "Logistic Supervisor, Transit Mixture Drivers, Distribution Team",
+      "rules": [
+        "Ensure correct quantity & quality delivery at site",
+        "Site complaints (delay, quality, short supply) handled per Logistic Supervisor SOP",
+        "Concrete quality preservation during transit is a KPI of the logistics function"
+      ],
+      "kpis": ["On-time delivery", "Logistics capacity shortage downtime (min)", "Wastage from TM placement (CUM)", "Complaint count (delay/quality/short supply)"],
+      "data_sources": ["ERP: inventory-management/warehouse-management/liftingplanentry", "ERP: liftingplanreport", "downloads/17_ARMCL-03_OEE_New_Template.csv (Logistic Capacity Shortage, TM placement wastage)"]
+    },
+    {
+      "function": "Finance & Accounts",
+      "purpose": "Manage P&L, balance sheet, receivables, VAT and working capital for the SBU",
+      "activities": [
+        "Income statement and balance sheet preparation with budget variance",
+        "Customer statement reconciliation",
+        "Collection follow-up and receivable posting (incl. customer cheque deposit process)",
+        "VAT, depreciation, interest and source-of-fund tracking",
+        "Working capital and cash flow monitoring"
+      ],
+      "owner": "Finance Officer, Finance & Accounts Head, CFO (ABSL)",
+      "rules": [
+        "Cheque deposit & receivable posting must follow SOP_Customer Cheque Deposit & Receivable Posting Process",
+        "Overdue beyond 60 days triggers automatic credit hold (per Sales SOP)",
+        "Adjustments/write-offs require documented approval per authority matrix"
+      ],
+      "kpis": ["Collection achievement %", "Bad debt ratio", "Average collection period", "Budget variance %"],
+      "data_sources": ["ERP: internal-control/budgetvariancereport (income_statement_new, balancereport)", "ERP: sales-management/report/customerStatementModified", "downloads/01_Budget_2026-27.xlsx (IS, BS, CF, Working Capital, VAT)", "downloads/10_SOP_and_Policy/Copy of SOP_Customer Cheque Deposit & Receivable Posting Process (1).pdf"]
+    },
+    {
+      "function": "Cost Controlling",
+      "purpose": "Monitor and reduce production and operating costs, including fuel (diesel) consumption",
+      "activities": [
+        "Cost controlling analysis by plant/cost head",
+        "Diesel consumption tracking for fleet and equipment",
+        "Opex monitoring against budget (GL-level)",
+        "Break-even (BEP) and COGS analysis"
+      ],
+      "owner": "Factory Incharge, Finance & Accounts, Manager - Planning & Business Operations",
+      "rules": [
+        "Cost efficiency is a core competency for all plant roles",
+        "Opex tracked at GL level against budget in the BEP module"
+      ],
+      "kpis": ["Cost per CUM", "Diesel consumption vs norm", "Opex vs budget variance", "BEP utilization"],
+      "data_sources": ["downloads/22_Cost_Controlling.xlsx", "downloads/23_Diesel_Report.xlsx", "downloads/01_Budget_2026-27.xlsx (COGS, Opex, BEP, GL)"]
+    },
+    {
+      "function": "HR & Admin",
+      "purpose": "Manpower planning, job descriptions, performance management, and administrative support",
+      "activities": [
+        "JD maintenance for all ARMCL employees (15 role templates)",
+        "Sales manpower organogram and team structuring (A/B/C/CTG)",
+        "HRBP support to business units: strategy alignment, training, supervision",
+        "Office administration, security, and housekeeping"
+      ],
+      "owner": "HRBP (Officer/Sr. Officer/Asst. Manager), Admin Officer, Security Guard, CEO",
+      "rules": [
+        "Only trained personnel may operate equipment; regular training mandatory for all key roles",
+        "PPE is mandatory for all staff; safety protocols must be followed",
+        "All key roles require documented JDs and organogram alignment"
+      ],
+      "kpis": ["Manpower vs organogram fill rate", "Training completion", "JD coverage %"],
+      "data_sources": ["downloads/13_JD_ARMCL_Employees.xlsx", "downloads/14_Sales_Manpower_Organogram.xlsx", "armcl_role_based_agent data"]
+    },
+    {
+      "function": "Health, Safety & Environment (HSE)",
+      "purpose": "Ensure personnel and equipment safety and minimize environmental impact of plant operations",
+      "activities": [
+        "PPE enforcement and safety protocol compliance",
+        "Dust and emissions control",
+        "Safety checks by wheel loader and plant operators",
+        "Immediate stop of operations on unsafe conditions"
+      ],
+      "owner": "Factory Incharge, Plant In-Charge, all operational staff",
+      "rules": [
+        "PPE is mandatory for all staff",
+        "Environmental controls (dust, emissions) must be actively managed",
+        "Operations must stop immediately if unsafe conditions are identified"
+      ],
+      "kpis": ["Safety incidents", "PPE compliance", "Emissions control compliance"],
+      "data_sources": ["downloads/19_Akij_Readymix_Policy.docx (Terms & Conditions)"]
+    },
+    {
+      "function": "Governance & Compliance",
+      "purpose": "Maintain SOPs, policies, authority delegation, and audit trail across the SBU",
+      "activities": [
+        "SOP & policy maintenance (production policy doc ARL/ARMCL-03/Factory/Dept/03/03, effective 01-07-2025, review 01-07-27)",
+        "Authority matrix enforcement for approvals",
+        "Price, credit days, credit limit approvals for new customers",
+        "Cash incentives & promotional gifts approvals for referral sales",
+        "Documentation and record keeping for audits"
+      ],
+      "owner": "CEO, SBU Head, Internal Audit, Department Heads",
+      "rules": [
+        "All operational, quality, and maintenance records must be archived and available for audits",
+        "Approvals follow ARMCL Authority_Matrix_SOP (Final Draft)",
+        "Production policy prepared by Md. Saddam Hossain Tuhin (Plant In-Charge, Unit 03), approved by Md. Anisur Rahman (CEO, ABSL)"
+      ],
+      "kpis": ["Audit finding closure rate", "SOP compliance rate", "Policy review timeliness"],
+      "data_sources": ["downloads/10_SOP_and_Policy/ (7 SOP documents)", "downloads/19_Akij_Readymix_Policy.docx", "downloads/21_Work_Details.docx"]
+    }
+  ],
+  "function_to_document_map": {
+    "Planning & Strategy": ["01_Budget_2026-27.xlsx", "02_5_Years_Plan.docx", "16_Trend_Analysis_Aug2026.xlsx"],
+    "Sales & Marketing": ["12_Sales_Target_Achievement_Aug2026.xlsx", "14_Sales_Manpower_Organogram.xlsx", "11_Market_Visit_Format.xlsx"],
+    "Production Operations": ["17_ARMCL-03_OEE_New_Template.csv", "18_Daily_Production_Report.xlsx", "20_SOP_Production.docx"],
+    "Quality Control": ["19_Akij_Readymix_Policy.docx", "20_SOP_Production.docx"],
+    "Maintenance": ["19_Akij_Readymix_Policy.docx", "17_ARMCL-03_OEE_New_Template.csv"],
+    "Logistics & Distribution": ["17_ARMCL-03_OEE_New_Template.csv", "ERP liftingplanentry/liftingplanreport"],
+    "Finance & Accounts": ["01_Budget_2026-27.xlsx", "ERP income_statement_new/balancereport/customerStatementModified"],
+    "Cost Controlling": ["22_Cost_Controlling.xlsx", "23_Diesel_Report.xlsx"],
+    "HR & Admin": ["13_JD_ARMCL_Employees.xlsx", "14_Sales_Manpower_Organogram.xlsx"],
+    "HSE": ["19_Akij_Readymix_Policy.docx"],
+    "Governance & Compliance": ["10_SOP_and_Policy/", "19_Akij_Readymix_Policy.docx", "21_Work_Details.docx"]
+  },
+  "related_agents": {
+    "roles_and_jds": "armcl-role-based-agent (armcl_role_based_agent.json)",
+    "sbu_overview": "armcl-sbu-business-agent (armcl_sbu_business_agent.json)",
+    "sales_process_detail": "absl-function-business-agent (ABSL_Function_Business_agent.json) - owns detailed sales & marketing process rules, delegation matrix, incentive slabs"
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "name": "ABSL_Function_Business_agent",
+  "company": "Akij Building Solutions Ltd (ABSL)",
+  "business": "Ready Mix Concrete (RMC) - Akij Readymix Concrete Ltd (ARMCL)",
+  "scope": "Function-based view of the Sales & Marketing business: business functions, sub-functions, activities, rules, KPIs, and data sources",
+  "source": "Google Sheet 'all file ABSL' > tab 'Sales & Marketing' (gid=13336618); SOP ARMCL-SLS-001 (SALES DEPARTMENT-SOP-ARMCL-190625.pdf); DWH database (business unit 175)",
+  "generated_on": "2026-08-20",
+  "functions": [
+    {
+      "function": "Planning & Strategy",
+      "purpose": "Set annual business plan, sales strategy, monthly targets and KPIs by role and region",
+      "activities": [
+        "Annual Business Plan preparation and budget alignment",
+        "Sales Strategy development (market, segment, pricing approach)",
+        "Monthly sales and collection target setting by designation and region",
+        "KPI definition and tracking",
+        "5-year strategy plan (02_5_Years_Plan.docx) and annual budget (01_Budget_2026-27.xlsx)"
+      ],
+      "owner": "Head of Sales, Manager Planning & Business, CEO",
+      "rules": ["100% sales target is mandatory baseline", "Collection target minimum qualifying level: 90%"],
+      "kpis": ["Sales target achievement %", "Collection target achievement %"],
+      "data_sources": ["DWH.pms.tblTargetSetupArc (8,252 ARMCL rows)", "DWH.pms.tblKPIsArc (7,307)", "downloads/01_Budget_2026-27.xlsx", "downloads/12_Sales_Target_Achievement_Aug2026.xlsx"]
+    },
+    {
+      "function": "Market Research & Lead Generation",
+      "purpose": "Identify target markets and generate qualified leads for the sales pipeline",
+      "activities": [
+        "Market research reports (competitor, segment, demand)",
+        "Lead generation via field visits, digital campaigns, references, construction sites",
+        "Inter-departmental referral program (Akij Resource employees)",
+        "Log leads in New Customer Search Format and share with research for profiling"
+      ],
+      "owner": "Marketing Team, Sales Team, Research Department",
+      "rules": [
+        "Referral leads must be submitted via standard form/portal; verbal referrals not accepted",
+        "First employee to submit a valid lead is eligible; validation within 48 working hours",
+        "Referrals leading to fully paid orders only; excludes Sales/BD/Pricing staff and temp/contract/intern"
+      ],
+      "kpis": ["Lead volume", "Lead-to-order conversion rate", "Referral source tracking"],
+      "data_sources": ["downloads/11_Market_Visit_Format.xlsx", "DWH.prt.tblBusinessPartnerArc (3,640 ARMCL)", "GAP G7: market research unstructured - not in DWH"]
+    },
+    {
+      "function": "Customer Acquisition & Onboarding",
+      "purpose": "Onboard new cash and credit customers through a gated, documented process",
+      "activities": [
+        "Lead engagement: site visit, project details, volume forecast",
+        "Creditworthiness evaluation for credit customers (KYC, financials, site verification)",
+        "Negotiation of terms (credit amount/days, pricing, delivery)",
+        "Documentation and customer code creation in IBOS/CRM",
+        "Product delivery initiation"
+      ],
+      "owner": "Sales Team, Credit Control, Compliance/Legal, CRM/IBOS Admin",
+      "rules": [
+        "No credit customer activated without documented approval and bank guarantee/security",
+        "No sale without: application form, verified bank guarantee (if applicable), signed agreement, approved customer code in IBOS/CRM",
+        "KYC documents: trade license, TIN, bank statement, solvency certificate, NID, references",
+        "Customer records digitized and retained for at least 3 years"
+      ],
+      "kpis": ["New customer activation count", "Onboarding cycle time", "Credit file completeness"],
+      "data_sources": ["DWH.prt.tblBusinessPartnerArc", "DWH.oms.tblSalesOrderHeaderArc"]
+    },
+    {
+      "function": "Pricing & Credit Approval",
+      "purpose": "Approve product pricing, discounts, credit days, and credit limits within delegated authority",
+      "activities": [
+        "Price quotation from approved pricing matrix (by grade, distance, volume)",
+        "Discount justification and approval",
+        "Credit days and credit limit determination",
+        "Final approval communication and ERP system setup with alerts"
+      ],
+      "owner": "Sales Executive, Team Leader, Head of Sales, Finance & Accounts, SBU Head/CEO",
+      "rules": [
+        {
+          "matrix": "Approval Delegation",
+          "rows": [
+            { "rule": "Discount", "asm": "<=3%", "head_of_sales": "3-7%", "hos_plus_finance": "7-10%", "ceo_md": ">10% or below breakeven" },
+            { "rule": "Credit days", "asm": "<=45 days", "head_of_sales": "-", "hos_plus_finance": "45-60 days", "ceo_md": "60-70 days" },
+            { "rule": "Credit limit", "asm": "<=BDT 50 lac", "head_of_sales": "-", "hos_plus_finance": "50 lac - 5 crore", "ceo_md": ">BDT 5 crore" }
+          ]
+        },
+        "No discount given verbally or informally - all documented and approved",
+        "Overdue beyond 60 days triggers automatic credit hold",
+        "Credit limits reviewed every 3 months",
+        "Standard and customer-specific prices are confidential"
+      ],
+      "kpis": ["Discount leakage (unauthorized discounting)", "Average credit days granted", "Credit limit utilization"],
+      "data_sources": ["DWH.oms.tblSalesOrderRowDiscountArc", "DWH.oms.tblSalesOrderRowPricingDetailArc", "GAP G2: policies not in DWH"]
+    },
+    {
+      "function": "Order-to-Cash (B2B & B2C)",
+      "purpose": "Execute order booking, production planning, delivery scheduling, invoicing, and collection through IBOS",
+      "activities": [
+        "Order booking in IBOS (Order ID generation)",
+        "Delivery scheduling: batching time slots, TM/pump allocation, route optimization",
+        "Production execution: batching per grade, QC checks (slump, cubes)",
+        "Delivery: dispatch, in-transit tracking, site confirmation, Delivered status",
+        "Invoicing and collection follow-up"
+      ],
+      "owner": "Sales Team, Distribution Officer, Production In-Charge, QC, Dispatch/Logistics, Finance",
+      "rules": [
+        "All orders booked in IBOS; verbal/manual orders invalid",
+        "Same-day delivery cutoff: at least 3 hours before batching",
+        "Only confirmed, IBOS-approved orders can be batched",
+        "No unauthorized edits/deletions/offline entries; changes timestamped",
+        "Exceptions require Plant Manager or Sales Head approval and logged as 'exception entry'"
+      ],
+      "kpis": ["On-time delivery %", "Order-to-delivery cycle time", "Order cancellation rate", "Invoice accuracy"],
+      "data_sources": ["DWH.oms.tblSalesOrderHeaderArc (16,559 ARMCL rows)", "DWH.oms.tblSalesInvoiceArc", "DWH.prt.tblBusinessPartnerArc", "GAP G3: no iBOS live connector"]
+    },
+    {
+      "function": "After-Sales Service & Retention",
+      "purpose": "Drive customer satisfaction, complaint resolution, repeat sales, and long-term relationships",
+      "activities": [
+        "Post-delivery follow-up call within 24 hours",
+        "Complaint logging, classification, assignment, and resolution",
+        "Service recovery and compensation",
+        "Key Account Management for strategic customers",
+        "Dormant customer re-engagement (inactive >90 days)"
+      ],
+      "owner": "Sales Executive, Customer Service/CRM, QA/QC, Logistics, Sales Head/KAM",
+      "rules": [
+        "Acknowledge complaints within 1 hour",
+        "Resolution TAT: Class A quality 48-72h, Class B delivery/pump 24h, Class C billing 48h, Class D behavior 72h",
+        "Escalate to Sales Head if TAT missed; to CEO if unresolved after 3 days",
+        "Compensation (replacement, pump refund, credit note, gift) requires Sales Head/CEO approval",
+        "Top 20% customers by revenue = Strategic Accounts; quarterly business reviews"
+      ],
+      "kpis": ["Complaint resolution rate", "Repeat purchase rate", "Customer retention rate", "Customer satisfaction score"],
+      "data_sources": ["DWH.saas.tblGrievanceArc (2 ARMCL rows - under-captured)", "GAP G5", "GAP G6: meeting minutes not stored"]
+    },
+    {
+      "function": "Collection & Bad Debt Management",
+      "purpose": "Recover outstanding receivables and manage bad debt adjustment/write-off with governance",
+      "activities": [
+        "Tiered collection follow-up by aging",
+        "Dispute categorization (technical, logistics, behavioral, administrative, situational, financial)",
+        "Ledger adjustment and credit note posting",
+        "Bad debt provisioning and write-off",
+        "Legal recovery for bankrupt/unwilling customers"
+      ],
+      "owner": "Sales Team, Accounts & Finance, Audit, QC, Legal & Recovery Cell",
+      "rules": [
+        "Follow-up ladder: 0-30d Sales -> 31-60d Accounts -> 61d+ Recovery Cell (MIS flagged)",
+        "Sales incentives held or reversed for amounts pending beyond 60 days",
+        "Adjustments only post-dispute-resolution, documented, approved by Head of Sales + Head of Accounts, validated by Internal Audit",
+        "Write-off sign-off: CFO + Audit + CEO (if above threshold)",
+        "TDS/AIT delay: 3 reminders; ledger adjusted after 90 days with tax implications noted"
+      ],
+      "kpis": ["Bad debt ratio", "Average collection period", "Aging of outstanding dues", "Dispute resolution rate"],
+      "data_sources": ["DWH.fin.tblCollectionPlanArc (0 rows - empty)", "DWH.oms.tblSalesInvoiceArc", "GAP G4: incentives not in DWH"]
+    },
+    {
+      "function": "Sales Incentives & Rewards",
+      "purpose": "Motivate sales performance and inter-departmental/external referrals through structured incentives",
+      "activities": [
+        "Monthly sales target achievement incentive",
+        "Inter-departmental referral incentive program",
+        "External referral incentives (engineers, consultants, procurement)",
+        "Incentive validation, disbursement, and audit"
+      ],
+      "owner": "Sales Head, HR, Finance, Audit & Compliance",
+      "rules": {
+        "sales_achievement": [
+          "Mandatory 100% sales target; minimum qualifying collection 90%",
+          "Monthly slab by designation (100% / 90-99%): AGM-GM 14,000/12,000 | Mgr-Sr.Mgr 13,000/12,000 | Dy.Mgr 12,000/9,000 | Asst.Mgr 11,000/8,500 | Officer 8,000/6,000",
+          "Bonus: +2,000 if collection >110%; 10,000 quarterly consistency; 5,000 monthly best performer per region",
+          "Disqualified if dues unresolved >60 days or documentation incomplete"
+        ],
+        "inner_referral": [
+          "Slabs by volume: <=2,000 CFT BDT 2,000 | 2,001-4,000 BDT 3,000 | 4,001-6,000 BDT 5,000 | 6,001-8,000 BDT 7,000 | 8,001-10,000 BDT 8,500 | >10,000 BDT 10,000",
+          "No prorated/partial payouts; paid only after full delivery + full payment; TDS deducted"
+        ],
+        "external_referral": [
+          "All incentives pre-approved by Sales Head and documented",
+          "Post-paid: per CFT (BDT 1-4) or fixed lump sum after full payment",
+          "Pre-paid: written justification + customer details before disbursement",
+          "Non-cash gifts: against budget, store challan + recipient signature/photo",
+          "Records retained >=3 years; monthly report to CEO/CFO; annual audit"
+        ]
+      },
+      "kpis": ["Incentive ROI", "Referral conversion rate", "Collection-linked payout accuracy"],
+      "data_sources": ["DWH.sms.tblEmployeeIncentiveArc (0 ARMCL rows - empty)", "GAP G4"]
+    },
+    {
+      "function": "Governance & Reporting",
+      "purpose": "Monitor performance, maintain governance trail, and enable management decisions",
+      "activities": [
+        "Weekly sales meetings and minutes",
+        "Sales reports via iBOS (customer statement, aging)",
+        "Weekly aging review",
+        "Monthly/quarterly pricing review",
+        "Monthly incentive and bad debt reporting to CEO/CFO",
+        "Internal audit and compliance"
+      ],
+      "owner": "Sales Head, Finance, Internal Audit, Management Committee",
+      "rules": [
+        "Weekly aging report tracking; further supplies held if dues exceed credit terms",
+        "Monthly bad debt review to Sales Head and CFO",
+        "Quarterly write-off committee for unresolved cases over 90 days",
+        "Yearly audit of all incentive payments and gift disbursements"
+      ],
+      "kpis": ["Reporting timeliness", "Audit finding closure rate"],
+      "data_sources": ["DWH.saas.tblMeetingAgendaArc (239 rows)", "iBOS ERP sales report link", "GAP G1: no Google Drive/Docs MCP"]
+    }
+  ],
+  "approval_delegation_matrix": {
+    "discount": { "up_to_3_pct": "Area Sales Manager", "3_to_7_pct": "Head of Sales", "7_to_10_pct": "Head of Sales + Finance", "above_10_or_below_breakeven": "CEO/MD" },
+    "credit_days": { "up_to_45_days": "Area Sales Manager", "45_to_60_days": "Head of Sales + Finance Head", "60_to_70_days": "CEO/MD + Finance Head" },
+    "credit_limit": { "up_to_50_lac": "Area Sales Manager", "50_lac_to_5_crore": "Head of Sales + Finance Head", "above_5_crore": "CEO/MD + Finance Head" }
+  },
+  "function_to_dwh_map": {
+    "Planning & Strategy": ["pms.tblTargetSetupArc", "pms.tblKPIsArc"],
+    "Market Research & Lead Generation": ["prt.tblBusinessPartnerArc"],
+    "Customer Acquisition & Onboarding": ["prt.tblBusinessPartnerArc", "oms.tblSalesOrderHeaderArc"],
+    "Pricing & Credit Approval": ["oms.tblSalesOrderRowDiscountArc", "oms.tblSalesOrderRowPricingDetailArc"],
+    "Order-to-Cash": ["oms.tblSalesOrderHeaderArc", "oms.tblSalesInvoiceArc", "oms.tblDeliveryHeaderArc"],
+    "After-Sales & Retention": ["saas.tblGrievanceArc", "saas.tblMeetingAgendaArc"],
+    "Collection & Bad Debt": ["fin.tblCollectionPlanArc", "oms.tblSalesInvoiceArc"],
+    "Sales Incentives & Rewards": ["sms.tblEmployeeIncentiveArc"],
+    "Governance & Reporting": ["saas.tblMeetingAgendaArc"]
+  },
+  "mcp_gap_analysis": {
+    "available_mcp": ["mssql-test-server (DWH, read-only)", "gmail"],
+    "gaps": [
+      { "id": "G1", "gap": "No Google Drive/Docs/Sheets MCP", "detail": "Policy/SOP documents live in private Google Docs (shared doc 401)", "impact": "Cannot verify or read policy content through MCP" },
+      { "id": "G2", "gap": "Policies/SOPs not in DWH", "detail": "PolicyHeaderArc = 0 ARMCL rows; empSOPArc = 0 ARMCL rows", "impact": "No programmatic access to authoritative rules" },
+      { "id": "G3", "gap": "No iBOS ERP connector", "detail": "Live orders, credit hold, customer statements in iBOS web (login-gated)", "impact": "DWH is archival; no live ERP access" },
+      { "id": "G4", "gap": "Incentives missing in DWH", "detail": "sms.tblEmployeeIncentiveArc = 0 ARMCL rows", "impact": "Cannot audit incentive rules or payouts" },
+      { "id": "G5", "gap": "Complaint register thin", "detail": "saas.tblGrievanceArc = 2 ARMCL rows", "impact": "Complaint data not captured" },
+      { "id": "G6", "gap": "Meeting minutes not stored", "detail": "Weekly minutes flagged 'Need to Attach Support File'", "impact": "Governance trail incomplete" },
+      { "id": "G7", "gap": "Market research unstructured", "detail": "No DWH table; lives in Drive", "impact": "No trend/competitor data queryable" }
+    ],
+    "recommendations": [
+      "Add a Google Drive/Docs/Sheets MCP server (project has OAuth token.json + @googleapis/sheets)",
+      "Ingest Sales SOP + policies into saas.empSOPArc / saas.PolicyHeaderArc",
+      "Build an iBOS REST connector for live orders, credit hold, and customer statements",
+      "Seed sms.tblEmployeeIncentiveArc for ARMCL; enforce grievance logging",
+      "Attach weekly meeting minutes to Drive and link them in the register"
+    ]
+  },
+  "audit_findings": [
+    "12 knowledge items registered; 8 links point to the SAME private Google Doc",
+    "2 items have no link/status: Market Research Reports, Marketing Policy",
+    "1 item pending: ARMCL Weekly meeting minutes ('Need to Attach Support File')",
+    "SL numbers duplicated; typo 'Mmarketing Policy'; owner column concatenation bug",
+    "Sales Report links to iBOS ERP (login-gated)"
+  ]
+}

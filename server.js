@@ -223,6 +223,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // SMS Control Tower (mounted for Vercel single-app deployment)
 app.use(require('./sms-tower'));
+// iBOS ERP Live SMS Control Tower
+app.use(require('./sms-tower-ibos'));
 
 app.get('/api/report', async (req, res) => {
   try { res.json(await getReport()); } catch (e) { res.status(500).json({ error: e.message }); }

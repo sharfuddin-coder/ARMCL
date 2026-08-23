@@ -4,25 +4,25 @@
     "company": "Akij Ready Mix Concrete Ltd (ARMCL)",
     "source": "iBOS ERP archive (DWH) · ARMCL = BU 175",
     "period": "August 1–31, 2026",
-    "collected": "2026-08-23T11:31:53.907Z"
+    "collected": "2026-08-23T12:39:02.898Z"
   },
   "kpi": {
-    "salesOrders": 375,
-    "salesOrderValue": 415904434,
+    "salesOrders": 376,
+    "salesOrderValue": 415962354,
     "invoices": 2567,
     "invoiceQty": 567375,
-    "deliveries": 3574,
-    "deliveryQty": 784041,
-    "deliveryValue": 289555055,
-    "collection": 305575056,
+    "deliveries": 3582,
+    "deliveryQty": 785781,
+    "deliveryValue": 290176240,
+    "collection": 306196241,
     "collectionPct": 105.5,
     "activeCustomers": 172,
     "universe": 3622,
     "coveragePct": 4.7,
-    "orderQty": 20678143,
-    "deliveredQty": 14334939,
+    "orderQty": 20678303,
+    "deliveredQty": 14336680,
     "liftingPct": 69.3,
-    "avgOrderValue": 1109078,
+    "avgOrderValue": 1106283,
     "gradeCount": 12,
     "plantCount": 5,
     "salesForce": 17
@@ -118,24 +118,24 @@
     },
     {
       "date": "2026-08-23",
-      "qty": 18634.4
+      "qty": 20375.08
     }
   ],
   "byPlant": [
     {
       "name": "ARMCL Dhour Plant",
-      "qty": 406065.7,
-      "value": 149415448.74
+      "qty": 407054.52,
+      "value": 149760546.94
     },
     {
       "name": "ARMCL Rupgonj Plant",
-      "qty": 228386.9,
-      "value": 84563802.07
+      "qty": 228838.58,
+      "value": 84730923.67
     },
     {
       "name": "ARMCL Gazipur Plant\t",
-      "qty": 106544.36,
-      "value": 39394364.53
+      "qty": 106844.54,
+      "value": 39503329.87
     },
     {
       "name": "ARMCL Narayanganj Plant",

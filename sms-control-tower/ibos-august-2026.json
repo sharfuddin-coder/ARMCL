@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "title": "ARMCL Sales Management System — August 2026 Control Tower",
+    "company": "Akij Ready Mix Concrete Ltd (ARMCL)",
+    "source": "iBOS ERP archive (DWH) · ARMCL = BU 175",
+    "period": "August 1–31, 2026",
+    "collected": "2026-08-23T11:21:40.326Z"
+  },
+  "kpi": {
+    "salesOrders": 375,
+    "salesOrderValue": 415904434,
+    "invoices": 2567,
+    "invoiceQty": 567375,
+    "deliveries": 3574,
+    "deliveryQty": 784041,
+    "deliveryValue": 289555055,
+    "collection": 305575056,
+    "collectionPct": 105.5,
+    "activeCustomers": 172,
+    "universe": 3622,
+    "coveragePct": 4.7,
+    "orderQty": 20678143,
+    "deliveredQty": 14334939,
+    "liftingPct": 69.3,
+    "avgOrderValue": 1109078,
+    "gradeCount": 12,
+    "plantCount": 5,
+    "salesForce": 17
+  },
+  "daily": [
+    {
+      "date": "2026-08-01",
+      "qty": 16739.74
+    },
+    {
+      "date": "2026-08-02",
+      "qty": 36232.87
+    },
+    {
+      "date": "2026-08-03",
+      "qty": 34618.38
+    },
+    {
+      "date": "2026-08-04",
+      "qty": 22573.79
+    },
+    {
+      "date": "2026-08-05",
+      "qty": 31802.18
+    },
+    {
+      "date": "2026-08-06",
+      "qty": 20556.89
+    },
+    {
+      "date": "2026-08-07",
+      "qty": 34216.92
+    },
+    {
+      "date": "2026-08-08",
+      "qty": 35561.82
+    },
+    {
+      "date": "2026-08-09",
+      "qty": 26960.33
+    },
+    {
+      "date": "2026-08-10",
+      "qty": 24737.6
+    },
+    {
+      "date": "2026-08-11",
+      "qty": 39474.54
+    },
+    {
+      "date": "2026-08-12",
+      "qty": 28589.79
+    },
+    {
+      "date": "2026-08-13",
+      "qty": 37696.71
+    },
+    {
+      "date": "2026-08-14",
+      "qty": 53671.77
+    },
+    {
+      "date": "2026-08-15",
+      "qty": 39157.97
+    },
+    {
+      "date": "2026-08-16",
+      "qty": 43121.02
+    },
+    {
+      "date": "2026-08-17",
+      "qty": 45553.48
+    },
+    {
+      "date": "2026-08-18",
+      "qty": 41446.99
+    },
+    {
+      "date": "2026-08-19",
+      "qty": 34034.37
+    },
+    {
+      "date": "2026-08-20",
+      "qty": 46657.03
+    },
+    {
+      "date": "2026-08-21",
+      "qty": 38561.15
+    },
+    {
+      "date": "2026-08-22",
+      "qty": 33440.83
+    },
+    {
+      "date": "2026-08-23",
+      "qty": 18634.4
+    }
+  ],
+  "byPlant": [
+    {
+      "name": "ARMCL Dhour Plant",
+      "qty": 406065.7,
+      "value": 149415448.74
+    },
+    {
+      "name": "ARMCL Rupgonj Plant",
+      "qty": 228386.9,
+      "value": 84563802.07
+    },
+    {
+      "name": "ARMCL Gazipur Plant\t",
+      "qty": 106544.36,
+      "value": 39394364.53
+    },
+    {
+      "name": "ARMCL Narayanganj Plant",
+      "qty": 24484.45,
+      "value": 9060326.8
+    },
+    {
+      "name": "ARMCL Chittagong Plant",
+      "qty": 18559.16,
+      "value": 7121113
+    }
+  ],
+  "gradeMix": [
+    {
+      "item": "RM 4000 PSI(PCC) - D",
+      "qty": 176723.34,
+      "value": 64375275.99
+    },
+    {
+      "item": "RM 4500 PSI(PCC) - D",
+      "qty": 104239.22,
+      "value": 38672831.96
+    },
+    {
+      "item": "RM 3500 PSI(PCC) - D",
+      "qty": 82089.22,
+      "value": 29083392.1
+    },
+    {
+      "item": "RM 4000 PSI(PCC)-R",
+      "qty": 79011.9,
+      "value": 28988033.5
+    },
+    {
+      "item": "RM 3500 PSI(PCC)-R",
+      "qty": 77968.4,
+      "value": 28301335
+    },
+    {
+      "item": "RM 4000 PSI(PCC) - N",
+      "qty": 63700,
+      "value": 24206000
+    },
+    {
+      "item": "RM 5000 PSI(PCC) - D",
+      "qty": 56512,
+      "value": 21330733
+    },
+    {
+      "item": "RM 3625 PSI(PCC)-R",
+      "qty": 52642,
+      "value": 18658990
+    },
+    {
+      "item": "RM 4500 PSI(PCC)-R",
+      "qty": 48624.8,
+      "value": 18641482.4
+    },
+    {
+      "item": "RM 4000 PSI(PCC) - G",
+      "qty": 48215,
+      "value": 17551721
+    },
+    {
+      "item": "RM 5000 PSI(PCC) - G",
+      "qty": 44500,
+      "value": 15628500
+    },
+    {
+      "item": "RM 2500 PSI(PCC) - N",
+      "qty": 36499,
+      "value": 13257145
+    }
+  ],
+  "salesForce": [
+    {
+      "name": "Azijul Islam Sojib [Senior Officer] [Marketing]",
+      "txns": 391,
+      "qty": 86271.25
+    },
+    {
+      "name": "Md. Abdul Hakim [Deputy Manager] [Marketing]",
+      "txns": 348,
+      "qty": 83209.28
+    },
+    {
+      "name": "Md. Abul Hasnat [Manager] [Marketing]",
+      "txns": 232,
+      "qty": 53642.77
+    },
+    {
+      "name": "Md. Azizul Islam [Senior Officer] [Marketing]",
+      "txns": 315,
+      "qty": 52489.57
+    },
+    {
+      "name": "Md. Amanullah [Assistant Manager] [Marketing]",
+      "txns": 163,
+      "qty": 39108.22
+    },
+    {
+      "name": "A.S.M Shah Jalal [Assistant Manager] [Marketing]",
+      "txns": 143,
+      "qty": 34384.46
+    },
+    {
+      "name": "Md. Anwar Hossan [Deputy Manager] [Marketing]",
+      "txns": 133,
+      "qty": 30969.93
+    },
+    {
+      "name": "Md. Mostaq Mahmud [Senior Officer] [Marketing]",
+      "txns": 145,
+      "qty": 30719.05
+    },
+    {
+      "name": "Md. Sazib Miah [Manager] [Marketing]",
+      "txns": 128,
+      "qty": 28251.9
+    },
+    {
+      "name": "Md. Hasanur Rahman [Senior Officer] [Marketing]",
+      "txns": 123,
+      "qty": 27527.06
+    },
+    {
+      "name": "Rezaul Haq [Assistant Manager] [Marketing]",
+      "txns": 123,
+      "qty": 27051.57
+    },
+    {
+      "name": "Jibon Chandra Nath\t [Senior Officer] [Marketing]",
+      "txns": 92,
+      "qty": 19616.25
+    },
+    {
+      "name": "Moniruzzaman [Assistant Manager] [Marketing]",
+      "txns": 90,
+      "qty": 19377.39
+    },
+    {
+      "name": "Mohammad Shahadat Hossan Rifat [Senior Officer] [Marketing]",
+      "txns": 60,
+      "qty": 15660.480002
+    },
+    {
+      "name": "Md. Ripon Gazi [Assistant Manager] [Marketing]",
+      "txns": 46,
+      "qty": 9448.96
+    },
+    {
+      "name": "Riyan Khaled Sharif  [Officer] [Marketing]",
+      "txns": 30,
+      "qty": 6685.21
+    },
+    {
+      "name": "Tahmidul Islam Sohan [Officer] [Marketing]",
+      "txns": 4,
+      "qty": 861.65
+    }
+  ]
+}

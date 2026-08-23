@@ -3,331 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ARMCL SMS Control Tower | Dynamic Live</title>
+<title>ARMCL Sales Management System — Control Towers</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Segoe UI',-apple-system,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}
-.topbar{background:#020617;border-bottom:1px solid #1e293b;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.topbar h1{font-size:1.15rem;font-weight:800;color:#f8fafc}
-.topbar .sub{font-size:0.75rem;color:#94a3b8;margin-top:2px}
-.badge{background:#1e293b;border:1px solid #334155;color:#cbd5e1;border-radius:999px;padding:4px 12px;font-size:0.72rem}
-.badge.live{background:#052e16;border-color:#166534;color:#4ade80}
-.container{max-width:1600px;margin:0 auto;padding:20px 24px}
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px}
-.kpi{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:14px}
-.kpi .lbl{font-size:0.62rem;text-transform:uppercase;color:#94a3b8;letter-spacing:0.05em;font-weight:600}
-.kpi .val{font-size:1.1rem;font-weight:800;color:#f1f5f9;margin-top:5px;font-variant-numeric:tabular-nums}
-.kpi .val small{font-size:0.62rem;font-weight:600;color:#64748b}
-.kpi.green{border-top:3px solid #10b981}
-.kpi.amber{border-top:3px solid #f59e0b}
-.kpi.red{border-top:3px solid #ef4444}
-.kpi.blue{border-top:3px solid #3b82f6}
-.row{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:16px}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
-.box{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:18px}
-.box h3{font-size:0.72rem;color:#94a3b8;margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em}
-.box h3 .rag{float:right;font-size:0.62rem;border-radius:4px;padding:2px 8px}
-.rag.green{background:#052e16;color:#4ade80}
-.rag.amber{background:#451a03;color:#fbbf24}
-.rag.red{background:#450a0a;color:#f87171}
-.bar{position:relative;height:26px;background:#0f172a;border-radius:5px;margin-bottom:6px;overflow:hidden}
-.bar .fill{height:100%;border-radius:5px}
-.bar .txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 9px;font-size:0.7rem;font-weight:600;color:#e2e8f0}
-.bar .txt .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:62%}
-.fc.green{background:#10b981}.fc.amber{background:#f59e0b}.fc.red{background:#ef4444}.fc.blue{background:#3b82f6}.fc.slate{background:#475569}.fc.violet{background:#8b5cf6}
-table{width:100%;border-collapse:collapse}
-th,td{padding:8px 10px;text-align:right;border-bottom:1px solid #0f172a;font-size:0.78rem}
-th{color:#94a3b8;font-weight:600;text-transform:uppercase;font-size:0.62rem;letter-spacing:0.04em;background:#0f172a}
-th:first-child,td:first-child{text-align:left}
-tr:hover{background:#0f172a}
-.num{font-variant-numeric:tabular-nums;font-weight:600}
-.daily{display:flex;align-items:flex-end;gap:3px;height:140px;padding-top:6px}
-.day{flex:1;background:#1e293b;border-radius:4px 4px 0 0;position:relative;min-width:0}
-.day .fill{position:absolute;bottom:0;left:0;right:0;border-radius:4px 4px 0 0}
-.day .tt{position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:0.58rem;color:#94a3b8;white-space:nowrap}
-.day .dl{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:0.55rem;color:#475569}
-.guard{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:20px}
-.g{background:#1e293b;border:1px solid #334155;border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;font-size:0.75rem}
-.g .d{font-weight:700;letter-spacing:0.05em}
-.dot{width:10px;height:10px;border-radius:50%}
-.dot.green{background:#10b981}.dot.amber{background:#f59e0b}.dot.red{background:#ef4444}.dot.blue{background:#3b82f6}
-.note{font-size:0.68rem;color:#64748b;margin-top:10px;line-height:1.5}
-.error{background:#450a0a;border:1px solid #7f1d1d;color:#fca5a5;padding:20px;border-radius:10px;margin:20px}
-.warn{background:#451a03;border:1px solid #92400e;color:#fcd34d;padding:10px 16px;border-radius:8px;font-size:0.75rem;margin-bottom:16px}
-footer{color:#475569;font-size:0.68rem;text-align:center;padding:20px}
-.controls{display:flex;gap:8px;flex-wrap:wrap}
-.controls button{background:#1e293b;border:1px solid #334155;color:#cbd5e1;border-radius:6px;padding:6px 14px;font-size:0.72rem;cursor:pointer}
-.controls button:hover{background:#334155}
+.container{max-width:900px;margin:0 auto;padding:40px 24px}
+h1{font-size:1.4rem;font-weight:800;color:#f8fafc;margin-bottom:6px}
+.sub{color:#94a3b8;font-size:0.85rem;margin-bottom:30px}
+.card{background:#1e293b;border:1px solid #334155;border-radius:12px;padding:22px;margin-bottom:16px;display:block;text-decoration:none;color:#e2e8f0;transition:border-color .15s}
+.card:hover{border-color:#3b82f6}
+.card h2{font-size:1.05rem;font-weight:700;color:#f1f5f9;margin-bottom:6px}
+.card p{font-size:0.78rem;color:#94a3b8;line-height:1.5}
+.card .badge{display:inline-block;margin-top:10px;background:#052e16;border:1px solid #166534;color:#4ade80;border-radius:999px;padding:3px 10px;font-size:0.68rem}
+.card .badge.ibos{background:#0c4a6e;border-color:#075985;color:#7dd3fc}
 </style>
 </head>
 <body>
-<div class="topbar">
-  <div>
-    <h1>ARMCL Sales Management System — Control Tower</h1>
-    <div class="sub" id="subtitle">Loading live data…</div>
-  </div>
-  <div class="controls">
-    <span class="badge live">● LIVE — Google Sheet</span>
-    <button onclick="load()">Refresh</button>
-  </div>
+<div class="container">
+  <h1>ARMCL Sales Management System — Control Towers</h1>
+  <div class="sub">Akij Ready Mix Concrete Ltd · Framework: Akij Resource — Sales Management OS</div>
+
+  <a class="card" href="index-ibos-august.html">
+    <h2>August 2026 Control Tower — iBOS ERP</h2>
+    <p>Data collected directly from the iBOS ERP archive (DWH): sales orders, invoices, deliveries, plant-wise, grade mix, sales force, collection, coverage, lifting.</p>
+    <span class="badge ibos">● iBOS ERP Data</span>
+  </a>
+
+  <a class="card" href="index-live.html">
+    <h2>Live Control Tower — Official Tracker + DWH</h2>
+    <p>Live target vs achievement, day-wise sales trend, sales force table from the official Google Sheet (CFT) + DWH panels.</p>
+    <span class="badge">● Live Google Sheet + DWH</span>
+  </a>
 </div>
-<div class="container" id="root">
-  <div class="error" id="err" style="display:none"></div>
-</div>
-<footer>ARMCL = BU 175 · Framework: Akij Resource — Sales Management OS · Data: live Google Sheet (CFT) + optional DWH API</footer>
-
-<script>
-// ============ Config ============
-var SPREADSHEET_ID = '1vPlcijsZkj4p6ZHmzg7jEAutNrW5l2YKlbNUtgXkNbI';
-var GID_TARGET = '990537426';   // Sales Target Achievement (CFT)
-var GID_DAYWISE = '2096727161'; // Day wise Sales (CFT)
-var DWH_API = '/api/sms-tower'; // optional backend for live DWH panels
-var DWH_SNAPSHOT = 'dwh-snapshot.json'; // static fallback (deployed with the site)
-
-// ============ Helpers ============
-function num(v){ return (v === null || v === undefined || isNaN(parseFloat(v))) ? 0 : parseFloat(v); }
-function cleanNum(s){ return parseFloat(String(s).replace(/[^0-9.\-]/g,'')) || 0; }
-function fmt(n){ return Math.round(num(n)).toLocaleString('en-US'); }
-function pct(n){ return num(n).toFixed(0) + '%'; }
-
-// ============ Google Sheets JSONP loader ============
-function loadSheet(gid, cb){
-  var cbName = 'cb_' + gid + '_' + Date.now();
-  window[cbName] = function(resp){
-    delete window[cbName];
-    var script = document.getElementById('gs_' + gid);
-    if (script) script.remove();
-    cb(resp.table);
-  };
-  var s = document.createElement('script');
-  s.id = 'gs_' + gid;
-  // responseHandler (not callback) is what the gviz endpoint honors for JSONP
-  s.src = 'https://docs.google.com/spreadsheets/d/' + SPREADSHEET_ID + '/gviz/tq?tqx=out:json;responseHandler:' + cbName + '&gid=' + gid;
-  s.onerror = function(){ delete window[cbName]; document.getElementById('err').style.display='block'; document.getElementById('err').textContent='Failed to load sheet gid '+gid; };
-  document.body.appendChild(s);
-}
-
-function tableToArrays(table){
-  var cols = (table.cols||[]).map(function(c){ return c.label||''; });
-  var rows = (table.rows||[]).map(function(r){
-    return (r.c||[]).map(function(c){ return c ? (c.f !== undefined ? c.f : (c.v !== undefined ? c.v : '')) : ''; });
-  });
-  return { cols: cols, rows: rows };
-}
-
-// ============ Parse Target Report ============
-function parseTargetReport(t){
-  var d = tableToArrays(t);
-  var employees = [];
-  var glance = {};
-  d.rows.forEach(function(row, i){
-    if (i < 3) return;
-    var name = String(row[1]||'').trim();
-    var dg = String(row[2]||'').trim();
-    var gKey = String(row[15]||'').trim();
-    if (gKey) { var gVal = String(row[16]||'').trim(); if (gVal) glance[gKey] = gVal; }
-    if (name && dg && /^\d+$/.test(String(row[0]).trim())) {
-      employees.push({
-        name: name, designation: dg,
-        monthlyTarget: cleanNum(row[3]), targetADS: cleanNum(row[4]),
-        salesTillDate: cleanNum(row[5]), presentADS: cleanNum(row[6]),
-        achivPct: cleanNum(row[7]), logicalSales: cleanNum(row[8]),
-        logicalAchivPct: cleanNum(row[9]), salesTrend: cleanNum(row[10]),
-        remainingSales: cleanNum(row[11]), rads: cleanNum(row[12])
-      });
-    }
-  });
-  return { employees: employees, glance: glance };
-}
-
-// ============ Parse Daywise ============
-function parseDaywise(t){
-  var d = tableToArrays(t);
-  var header = d.rows[1] || [];
-  var armclRow = null;
-  for (var i = 0; i < d.rows.length; i++) if (String(d.rows[i][0]).indexOf('ARMCL') >= 0) armclRow = d.rows[i];
-  if (!armclRow) return { days: [], target: 1230000, total: 0 };
-  var target = cleanNum(String(armclRow[1]).replace(/[^0-9.]/g,'')) || 1230000;
-  var days = [];
-  var now = new Date();
-  var year = now.getFullYear();
-  var dayNum = 0;
-  for (var c = 2; c <= 23 && c < armclRow.length; c++) {
-    dayNum++;
-    var h = String(header[c]||'').trim();
-    var dd, mm;
-    var m = h.match(/^(\d{2})-(\d{2})-\d{4}$/);
-    if (m) { dd = m[1]; mm = m[2]; }
-    else { dd = ('0'+dayNum).slice(-2); mm = ('0'+(now.getMonth()+1)).slice(-2); }
-    days.push({ date: year + '-' + mm + '-' + dd, qty: cleanNum(armclRow[c]) });
-  }
-  var total = days.reduce(function(s,x){ return s + x.qty; }, 0);
-  return { days: days, target: target, total: total };
-}
-
-// ============ Render ============
-function rag(v, amber, red){ return v >= amber ? 'green' : v >= red ? 'amber' : 'red'; }
-
-function bar(label, val, total, cls, showVal){
-  var w = total > 0 ? Math.min(100, val/total*100) : 0;
-  return '<div class="bar"><div class="fill fc ' + cls + '" style="width:' + Math.max(2,w) + '%"></div><div class="txt"><span class="nm">' + label + '</span><span>' + (showVal||'') + '</span></div></div>';
-}
-
-function render(rep, dw, daywise){
-  var root = document.getElementById('root');
-  root.innerHTML = '';
-  var g = rep.glance;
-  var target = cleanNum(g['Monthly Target']) || 1230000;
-  var sales = cleanNum(g['Sales Till Date']);
-  var ach = cleanNum(g['Achiv % till date']);
-  var logical = cleanNum(g['Logical Sales till date']);
-  var logicalAch = cleanNum(g['Logical Achiv % till date']);
-  var targetADS = cleanNum(g['Target ADS']);
-  var presentADS = cleanNum(g['Present ADS']);
-  var rads = cleanNum(g['RADS']);
-  var trend = cleanNum(g['Sales Trend']);
-  var remaining = cleanNum(g['Remaining Sales']);
-  var daysConsumed = cleanNum(g["Day's consumed"]);
-  var daysRemaining = cleanNum(g['Days Remaining']);
-
-  document.getElementById('subtitle').textContent =
-    'Akij Ready Mix Concrete Ltd (ARMCL) · August 2026 MTD · ' + g['Day\'s consumed'] + ' days consumed · Source: Official Target Achievement Sheet (CFT)';
-
-  var cards = [
-    { l:'Monthly Target', v: fmt(target)+' CFT', c:'blue' },
-    { l:'Sales Till Date', v: fmt(sales)+' CFT', c: rag(ach,95,80) },
-    { l:'Achievement %', v: pct(ach), c: rag(ach,95,80) },
-    { l:'Logical Sales', v: fmt(logical)+' CFT', c:'blue' },
-    { l:'Logical Achiv %', v: pct(logicalAch), c: rag(logicalAch,95,80) },
-    { l:'Sales Trend', v: fmt(trend)+' CFT', c:'blue' },
-    { l:'Remaining Sales', v: fmt(remaining)+' CFT', c:'blue' },
-    { l:'RADS (CFT/day)', v: fmt(rads), c: rads>=targetADS?'green':rads>=targetADS*0.85?'amber':'red' },
-    { l:'Target ADS', v: fmt(targetADS), c:'blue' },
-    { l:'Present ADS', v: fmt(presentADS), c:'blue' },
-    { l:'Days', v: daysConsumed + '/' + (daysConsumed+daysRemaining), c:'blue' }
-  ];
-
-  // KPI cards
-  var kpiSec = document.createElement('div');
-  kpiSec.className = 'kpi-grid';
-  kpiSec.innerHTML = cards.map(function(k){
-    return '<div class="kpi ' + k.c + '"><div class="lbl">' + k.l + '</div><div class="val">' + k.v + '</div></div>';
-  }).join('');
-  root.appendChild(kpiSec);
-
-  // Guardrails
-  var guardSec = document.createElement('div');
-  guardSec.className = 'guard';
-  guardSec.innerHTML = [
-    ['SALES', rag(ach,95,80)], ['COVERAGE', 'amber'], ['SERVICE','amber'],
-    ['CASH','amber'], ['CREDIT','amber'], ['DATA','blue'], ['GROWTH','blue'], ['OVERALL', rag(ach,80,60)]
-  ].map(function(x){
-    return '<div class="g"><span>' + x[0] + '</span><span class="dot ' + x[1] + '"></span></div>';
-  }).join('');
-  root.appendChild(guardSec);
-
-  // Row 1: daily trend + target
-  var row1 = document.createElement('div'); row1.className='row'; root.appendChild(row1);
-  var boxDaily = document.createElement('div'); boxDaily.className='box'; row1.appendChild(boxDaily);
-  var maxD = 1;
-  daywise.days.forEach(function(x){ if (x.qty > maxD) maxD = x.qty; });
-  boxDaily.innerHTML = '<h3>Daily Sales Trend (CFT, MTD)</h3><div class="daily">' +
-    daywise.days.map(function(x){
-      var h = Math.max(2, x.qty/maxD*100);
-      return '<div class="day" title="'+x.date+'"><div class="fill" style="height:'+h+'%;background:'+(x.qty>0?'#3b82f6':'#1e293b')+'"></div><div class="tt">'+fmt(x.qty/1000)+'k</div><div class="dl">'+x.date.slice(8,10)+'</div></div>';
-    }).join('') + '</div>' +
-    '<div class="note">MTD Total: ' + fmt(daywise.total) + ' CFT / Target ' + fmt(target) + ' CFT · Days consumed ' + daysConsumed + '</div>';
-
-  var boxTgt = document.createElement('div'); boxTgt.className='box'; row1.appendChild(boxTgt);
-  boxTgt.innerHTML = '<h3>Target vs Achievement <span class="rag '+rag(ach,95,80)+'">'+pct(ach)+'</span></h3>' +
-    bar('Sales Till Date', sales, target, rag(ach,95,80), fmt(sales)+' / '+fmt(target)+' CFT') +
-    bar('Gap (Remaining)', remaining, target, 'slate', fmt(remaining)+' CFT') +
-    bar('Logical Sales', logical, target, 'green', fmt(logical)+' CFT ('+pct(logicalAch)+')') +
-    '<div class="note">Target ADS '+fmt(targetADS)+' · Present ADS '+fmt(presentADS)+' · RADS '+fmt(rads)+' CFT/day<br>Source: Official Target Achievement Sheet (gid '+GID_TARGET+').</div>';
-
-  // Row 2: employees table + top performers
-  var row2 = document.createElement('div'); row2.className='row'; root.appendChild(row2);
-  var boxEmp = document.createElement('div'); boxEmp.className='box'; row2.appendChild(boxEmp);
-  var sorted = rep.employees.slice().sort(function(a,b){ return b.salesTillDate - a.salesTillDate; });
-  var rows = sorted.map(function(e){
-    return '<tr><td>'+e.name+'</td><td>'+e.designation+'</td><td class="num">'+fmt(e.monthlyTarget)+'</td><td class="num">'+fmt(e.salesTillDate)+'</td><td class="num">'+e.achivPct.toFixed(0)+'%</td></tr>';
-  }).join('');
-  boxEmp.innerHTML = '<h3>Sales Force — Target vs Achievement</h3><div style="overflow-x:auto"><table><thead><tr><th>Employee</th><th>Designation</th><th>Target</th><th>Sales Till Date</th><th>Achiv %</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
-
-  var boxTop = document.createElement('div'); boxTop.className='box'; row2.appendChild(boxTop);
-  var top = sorted.slice(0,5);
-  boxTop.innerHTML = '<h3>Top 5 Performers</h3>' + top.map(function(e){
-    var w = top[0].salesTillDate > 0 ? Math.max(3, e.salesTillDate/top[0].salesTillDate*100) : 0;
-    return '<div class="bar"><div class="fill fc blue" style="width:'+w+'%"></div><div class="txt"><span class="nm">'+e.name+'</span><span>'+fmt(e.salesTillDate)+' CFT ('+e.achivPct.toFixed(0)+'%)</span></div></div>';
-  }).join('') + '<div class="note">' + rep.employees.length + ' sales team members tracked.</div>';
-
-  // DWH panels (optional)
-  if (dw && dw.panels) {
-    var p = dw.panels;
-    var row3 = document.createElement('div'); row3.className='row2'; root.appendChild(row3);
-
-    var boxPlant = document.createElement('div'); boxPlant.className='box'; row3.appendChild(boxPlant);
-    var maxP = 1;
-    (p.p6.byPlant||[]).forEach(function(x){ if (x.qty > maxP) maxP = x.qty; });
-    boxPlant.innerHTML = '<h3>Plant-wise Delivery (CFT, DWH)</h3>' +
-      (p.p6.byPlant||[]).map(function(x){
-        return bar(x.name.trim(), x.qty, maxP, 'blue', fmt(x.qty)+' CFT');
-      }).join('') + '<div class="note">Source: DWH sms.tblDeliveryHeaderArc.</div>';
-
-    var boxMix = document.createElement('div'); boxMix.className='box'; row3.appendChild(boxMix);
-    var maxM = 1;
-    (p.p5.gradeMix||[]).forEach(function(x){ if (x.qty > maxM) maxM = x.qty; });
-    boxMix.innerHTML = '<h3>Product / Grade Mix (CFT, DWH)</h3>' +
-      (p.p5.gradeMix||[]).map(function(x){
-        return bar(x.item, x.qty, maxM, 'slate', fmt(x.qty)+' CFT');
-      }).join('') + '<div class="note">Source: DWH oms order rows.</div>';
-
-    var row4 = document.createElement('div'); row4.className='row2'; root.appendChild(row4);
-    var boxColl = document.createElement('div'); boxColl.className='box'; row4.appendChild(boxColl);
-    var coll = p.p11 ? p.p11.collectionPct : 0;
-    boxColl.innerHTML = '<h3>Collection vs Sales Value <span class="rag '+rag(coll,80,60)+'">'+pct(coll)+'</span></h3>' +
-      bar('Collection', p.p11.collected, p.p11.salesValue, rag(coll,80,60), fmt(p.p11.collected)+' BDT') +
-      '<div class="note">'+ (p.p11.source||'') +'</div>';
-
-    var boxCov = document.createElement('div'); boxCov.className='box'; row4.appendChild(boxCov);
-    var cov = p.p9 ? p.p9.coveragePct : 0;
-    boxCov.innerHTML = '<h3>Market Coverage <span class="rag '+rag(cov,50,30)+'">'+pct(cov)+'</span></h3>' +
-      bar('Active/Universe', p.p9.active, p.p9.universe, rag(cov,50,30), p.p9.active+' / '+fmt(p.p9.universe)) +
-      '<div class="note">Active customers '+p.p5.activeCustomers+' · Frequency '+p.p5.frequency.toFixed(1)+' · Orders '+fmt(p.p5.totalOrders)+'</div>';
-  } else {
-    var warn = document.createElement('div');
-    warn.className = 'warn';
-    warn.innerHTML = 'DWH panels (plants, grades, collection, coverage) not loaded — no snapshot or API available. Target/achievement + day-wise are live from Google Sheets.</b>';
-    root.appendChild(warn);
-  }
-}
-
-// ============ Load ============
-function load(){
-  document.getElementById('err').style.display = 'none';
-  loadSheet(GID_TARGET, function(targetTable){
-    var rep = parseTargetReport(targetTable);
-    loadSheet(GID_DAYWISE, function(daywiseTable){
-      var daywise = parseDaywise(daywiseTable);
-      if (DWH_API) {
-        fetch(DWH_API).then(function(r){ return r.json(); }).then(function(dw){
-          render(rep, dw, daywise);
-        }).catch(function(){ loadDwhSnapshot(rep, daywise); });
-      } else {
-        loadDwhSnapshot(rep, daywise);
-      }
-    });
-  });
-}
-
-function loadDwhSnapshot(rep, daywise){
-  fetch(DWH_SNAPSHOT).then(function(r){ return r.json(); }).then(function(dw){
-    render(rep, dw, daywise);
-  }).catch(function(){
-    render(rep, null, daywise);
-  });
-}
-load();
-</script>
 </body>
 </html>

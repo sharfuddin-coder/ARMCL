@@ -1,0 +1,101 @@
+{
+  "generated": "2026-08-23T10:42:59.402Z",
+  "meta": {
+    "unit": 175,
+    "name": "Akij Ready Mix Concrete Ltd (ARMCL)",
+    "period": "2026-08-01 to 2026-08-23"
+  },
+  "panels": {
+    "p5": {
+      "activeCustomers": 171,
+      "totalOrders": 374,
+      "frequency": 2.19,
+      "gradeMix": [
+        {
+          "item": "RM 4000 PSI(PCC) - D",
+          "qty": 176723.34
+        },
+        {
+          "item": "RM 4500 PSI(PCC) - D",
+          "qty": 102339.22
+        },
+        {
+          "item": "RM 3500 PSI(PCC) - D",
+          "qty": 82089.22
+        },
+        {
+          "item": "RM 4000 PSI(PCC)-R",
+          "qty": 79011.9
+        },
+        {
+          "item": "RM 3500 PSI(PCC)-R",
+          "qty": 77968.4
+        },
+        {
+          "item": "RM 4000 PSI(PCC) - N",
+          "qty": 63700
+        },
+        {
+          "item": "RM 5000 PSI(PCC) - D",
+          "qty": 56512
+        },
+        {
+          "item": "RM 3625 PSI(PCC)-R",
+          "qty": 52642
+        },
+        {
+          "item": "RM 4500 PSI(PCC)-R",
+          "qty": 48624.8
+        },
+        {
+          "item": "RM 4000 PSI(PCC) - G",
+          "qty": 48215
+        },
+        {
+          "item": "RM 5000 PSI(PCC) - G",
+          "qty": 44500
+        },
+        {
+          "item": "RM 2500 PSI(PCC) - N",
+          "qty": 36499
+        }
+      ]
+    },
+    "p6": {
+      "byPlant": [
+        {
+          "name": "ARMCL Dhour Plant",
+          "qty": 405571.29
+        },
+        {
+          "name": "ARMCL Rupgonj Plant",
+          "qty": 228386.9
+        },
+        {
+          "name": "ARMCL Gazipur Plant\t",
+          "qty": 106544.36
+        },
+        {
+          "name": "ARMCL Narayanganj Plant",
+          "qty": 24484.45
+        },
+        {
+          "name": "ARMCL Chittagong Plant",
+          "qty": 18559.16
+        }
+      ],
+      "byOffice": []
+    },
+    "p9": {
+      "universe": 3622,
+      "active": 171,
+      "coveragePct": 4.7
+    },
+    "p11": {
+      "salesValue": 415210934.168333,
+      "collected": 305299457.51,
+      "collectionPct": 73.5,
+      "source": "DWH snapshot (generated offline)"
+    }
+  }
+}

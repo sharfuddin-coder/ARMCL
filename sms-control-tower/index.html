@@ -81,7 +81,8 @@ footer{color:#475569;font-size:0.68rem;text-align:center;padding:20px}
 var SPREADSHEET_ID = '1vPlcijsZkj4p6ZHmzg7jEAutNrW5l2YKlbNUtgXkNbI';
 var GID_TARGET = '990537426';   // Sales Target Achievement (CFT)
 var GID_DAYWISE = '2096727161'; // Day wise Sales (CFT)
-var DWH_API = '/api/sms-tower'; // optional backend for DWH panels ('' to disable)
+var DWH_API = '/api/sms-tower'; // optional backend for live DWH panels
+var DWH_SNAPSHOT = 'dwh-snapshot.json'; // static fallback (deployed with the site)
 
 // ============ Helpers ============
 function num(v){ return (v === null || v === undefined || isNaN(parseFloat(v))) ? 0 : parseFloat(v); }
@@ -295,7 +296,7 @@ function render(rep, dw, daywise){
   } else {
     var warn = document.createElement('div');
     warn.className = 'warn';
-    warn.innerHTML = 'DWH panels (plants, grades, collection, coverage) not loaded — no backend at <b>/api/sms-tower</b>. Target/achievement + day-wise are live from Google Sheets. Deploy with the Node backend or set DWH_API to your API URL.';
+    warn.innerHTML = 'DWH panels (plants, grades, collection, coverage) not loaded — no snapshot or API available. Target/achievement + day-wise are live from Google Sheets.</b>';
     root.appendChild(warn);
   }
 }
@@ -310,11 +311,19 @@ function load(){
       if (DWH_API) {
         fetch(DWH_API).then(function(r){ return r.json(); }).then(function(dw){
           render(rep, dw, daywise);
-        }).catch(function(){ render(rep, null, daywise); });
+        }).catch(function(){ loadDwhSnapshot(rep, daywise); });
       } else {
-        render(rep, null, daywise);
+        loadDwhSnapshot(rep, daywise);
       }
     });
+  });
+}
+
+function loadDwhSnapshot(rep, daywise){
+  fetch(DWH_SNAPSHOT).then(function(r){ return r.json(); }).then(function(dw){
+    render(rep, dw, daywise);
+  }).catch(function(){
+    render(rep, null, daywise);
   });
 }
 load();

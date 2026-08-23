@@ -1,28 +1,298 @@
 {
   "meta": {
-    "title": "ARMCL Sales Management System — August 2026 Control Tower",
+    "title": "ARMCL SMS Control Tower — August 2026",
     "company": "Akij Ready Mix Concrete Ltd (ARMCL)",
-    "source": "iBOS ERP archive (DWH) · ARMCL = BU 175",
+    "source": "iBOS ERP (DWH) + Official Target Achievement Sheet (Google)",
     "period": "August 1–31, 2026",
-    "collected": "2026-08-23T12:39:02.898Z"
+    "collected": "2026-08-23T12:49:02.914Z",
+    "targetSource": "Official Google Sheet (CFT) · gid 990537426",
+    "ibosSource": "iBOS ERP archive (DWH) · ARMCL = BU 175"
+  },
+  "official": {
+    "monthlyTarget": 1230000,
+    "salesTillDate": 784895,
+    "achivPct": 64,
+    "logicalSales": 872903,
+    "logicalAchivPct": 71,
+    "rads": 49456,
+    "targetADS": 39677,
+    "presentADS": 35677.02,
+    "salesTrend": 1105988,
+    "remainingSales": 445105,
+    "daysConsumed": 0,
+    "daysRemaining": 9,
+    "employees": [
+      {
+        "name": "Abul Hasnat",
+        "designation": "Manager",
+        "monthlyTarget": 90000,
+        "targetADS": 2903,
+        "salesTillDate": 41949,
+        "presentADS": 1907,
+        "achivPct": 47,
+        "logicalSales": 63871,
+        "logicalAchivPct": 71,
+        "salesTrend": 59110,
+        "remainingSales": 48051,
+        "rads": 5339
+      },
+      {
+        "name": "Md. Sazib Miah",
+        "designation": "Manager",
+        "monthlyTarget": 90000,
+        "targetADS": 2903,
+        "salesTillDate": 44468,
+        "presentADS": 2021,
+        "achivPct": 49,
+        "logicalSales": 63871,
+        "logicalAchivPct": 71,
+        "salesTrend": 62660,
+        "remainingSales": 45532,
+        "rads": 5059
+      },
+      {
+        "name": "Abdul Hakim",
+        "designation": "Deputy Manager",
+        "monthlyTarget": 80000,
+        "targetADS": 2581,
+        "salesTillDate": 106388,
+        "presentADS": 4836,
+        "achivPct": 133,
+        "logicalSales": 56774,
+        "logicalAchivPct": 71,
+        "salesTrend": 149911,
+        "remainingSales": -26388,
+        "rads": -2932
+      },
+      {
+        "name": "Anwar Hossain",
+        "designation": "Deputy Manager",
+        "monthlyTarget": 80000,
+        "targetADS": 2581,
+        "salesTillDate": 42711,
+        "presentADS": 1941,
+        "achivPct": 53,
+        "logicalSales": 56774,
+        "logicalAchivPct": 71,
+        "salesTrend": 60184,
+        "remainingSales": 37289,
+        "rads": 4143
+      },
+      {
+        "name": "ASM Shahjalal Shakib",
+        "designation": "Asst. Manager",
+        "monthlyTarget": 70000,
+        "targetADS": 2258,
+        "salesTillDate": 37020,
+        "presentADS": 1683,
+        "achivPct": 53,
+        "logicalSales": 49677,
+        "logicalAchivPct": 71,
+        "salesTrend": 52165,
+        "remainingSales": 32980,
+        "rads": 3664
+      },
+      {
+        "name": "Amanullah",
+        "designation": "Asst. Manager",
+        "monthlyTarget": 70000,
+        "targetADS": 2258,
+        "salesTillDate": 16257,
+        "presentADS": 739,
+        "achivPct": 23,
+        "logicalSales": 49677,
+        "logicalAchivPct": 71,
+        "salesTrend": 22908,
+        "remainingSales": 53743,
+        "rads": 5971
+      },
+      {
+        "name": "Rezaul Haq",
+        "designation": "Asst. Manager",
+        "monthlyTarget": 70000,
+        "targetADS": 2258,
+        "salesTillDate": 51253,
+        "presentADS": 2330,
+        "achivPct": 73,
+        "logicalSales": 49677,
+        "logicalAchivPct": 71,
+        "salesTrend": 72221,
+        "remainingSales": 18747,
+        "rads": 2083
+      },
+      {
+        "name": "Ripon Gazi",
+        "designation": "Asst. Manager",
+        "monthlyTarget": 70000,
+        "targetADS": 2258,
+        "salesTillDate": 32841,
+        "presentADS": 1493,
+        "achivPct": 47,
+        "logicalSales": 49677,
+        "logicalAchivPct": 71,
+        "salesTrend": 46276,
+        "remainingSales": 37159,
+        "rads": 4129
+      },
+      {
+        "name": "Moniruzzaman",
+        "designation": "Asst. Manager",
+        "monthlyTarget": 70000,
+        "targetADS": 2258,
+        "salesTillDate": 58861,
+        "presentADS": 2675,
+        "achivPct": 84,
+        "logicalSales": 49677,
+        "logicalAchivPct": 71,
+        "salesTrend": 82940,
+        "remainingSales": 11139,
+        "rads": 1238
+      },
+      {
+        "name": "Azijul Islam Sojib",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 115000,
+        "targetADS": 3710,
+        "salesTillDate": 81429,
+        "presentADS": 3701,
+        "achivPct": 71,
+        "logicalSales": 81613,
+        "logicalAchivPct": 71,
+        "salesTrend": 114741,
+        "remainingSales": 33571,
+        "rads": 3730
+      },
+      {
+        "name": "MD Mostaq Mahmud",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 60000,
+        "targetADS": 1935,
+        "salesTillDate": 78250,
+        "presentADS": 3557,
+        "achivPct": 130,
+        "logicalSales": 42581,
+        "logicalAchivPct": 71,
+        "salesTrend": 110261,
+        "remainingSales": -18250,
+        "rads": -2028
+      },
+      {
+        "name": "Azizul Islam",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 60000,
+        "targetADS": 1935,
+        "salesTillDate": 61928,
+        "presentADS": 2815,
+        "achivPct": 103,
+        "logicalSales": 42581,
+        "logicalAchivPct": 71,
+        "salesTrend": 87262,
+        "remainingSales": -1928,
+        "rads": -214
+      },
+      {
+        "name": "Md. Hasanur Rahman",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 60000,
+        "targetADS": 1935,
+        "salesTillDate": 53334,
+        "presentADS": 2424,
+        "achivPct": 89,
+        "logicalSales": 42581,
+        "logicalAchivPct": 71,
+        "salesTrend": 75153,
+        "remainingSales": 6666,
+        "rads": 741
+      },
+      {
+        "name": "Md Shahadat Hossan Rifat",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 40000,
+        "targetADS": 1290,
+        "salesTillDate": 8521,
+        "presentADS": 387,
+        "achivPct": 21,
+        "logicalSales": 28387,
+        "logicalAchivPct": 71,
+        "salesTrend": 12007,
+        "remainingSales": 31479,
+        "rads": 3498
+      },
+      {
+        "name": "Jibon Chandra Nath",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 60000,
+        "targetADS": 1935,
+        "salesTillDate": 54847,
+        "presentADS": 2493,
+        "achivPct": 91,
+        "logicalSales": 42581,
+        "logicalAchivPct": 71,
+        "salesTrend": 77284,
+        "remainingSales": 5153,
+        "rads": 573
+      },
+      {
+        "name": "Raju Dev Nath",
+        "designation": "Sr. Officer",
+        "monthlyTarget": 40000,
+        "targetADS": 1290,
+        "salesTillDate": 4962,
+        "presentADS": 226,
+        "achivPct": 12,
+        "logicalSales": 28387,
+        "logicalAchivPct": 71,
+        "salesTrend": 6992,
+        "remainingSales": 35038,
+        "rads": 3893
+      },
+      {
+        "name": "Riyan Khaled Sharif",
+        "designation": "Officer",
+        "monthlyTarget": 40000,
+        "targetADS": 1290,
+        "salesTillDate": 9875,
+        "presentADS": 449,
+        "achivPct": 25,
+        "logicalSales": 28387,
+        "logicalAchivPct": 71,
+        "salesTrend": 13914,
+        "remainingSales": 30125,
+        "rads": 3347
+      },
+      {
+        "name": "ARMCL Project 1 (CSI Chittagong)",
+        "designation": "Project",
+        "monthlyTarget": 65000,
+        "targetADS": 2097,
+        "salesTillDate": 0,
+        "presentADS": 0,
+        "achivPct": 0,
+        "logicalSales": 46129,
+        "logicalAchivPct": 71,
+        "salesTrend": 0,
+        "remainingSales": 65000,
+        "rads": 7222
+      }
+    ]
   },
   "kpi": {
     "salesOrders": 376,
     "salesOrderValue": 415962354,
-    "invoices": 2567,
-    "invoiceQty": 567375,
-    "deliveries": 3582,
-    "deliveryQty": 785781,
-    "deliveryValue": 290176240,
-    "collection": 306196241,
+    "avgOrderValue": 1106283,
+    "invoices": 2592,
+    "invoiceQty": 573343,
+    "deliveries": 3586,
+    "deliveryQty": 786701,
+    "deliveryValue": 290512129,
+    "collection": 306451612,
     "collectionPct": 105.5,
     "activeCustomers": 172,
     "universe": 3622,
     "coveragePct": 4.7,
-    "orderQty": 20678303,
-    "deliveredQty": 14336680,
+    "orderQty": 20679243,
+    "deliveredQty": 14336640,
     "liftingPct": 69.3,
-    "avgOrderValue": 1106283,
     "gradeCount": 12,
     "plantCount": 5,
     "salesForce": 17
@@ -118,29 +388,29 @@
     },
     {
       "date": "2026-08-23",
-      "qty": 20375.08
+      "qty": 21295.17
     }
   ],
   "byPlant": [
     {
       "name": "ARMCL Dhour Plant",
-      "qty": 407054.52,
-      "value": 149760546.94
+      "qty": 407272.9,
+      "value": 149836979.94
     },
     {
       "name": "ARMCL Rupgonj Plant",
-      "qty": 228838.58,
-      "value": 84730923.67
+      "qty": 229098.85,
+      "value": 84827223.57
     },
     {
       "name": "ARMCL Gazipur Plant\t",
-      "qty": 106844.54,
-      "value": 39503329.87
+      "qty": 107074.09,
+      "value": 39585967.87
     },
     {
       "name": "ARMCL Narayanganj Plant",
-      "qty": 24484.45,
-      "value": 9060326.8
+      "qty": 24696.34,
+      "value": 9140845
     },
     {
       "name": "ARMCL Chittagong Plant",
@@ -151,63 +421,51 @@
   "gradeMix": [
     {
       "item": "RM 4000 PSI(PCC) - D",
-      "qty": 176723.34,
-      "value": 64375275.99
+      "qty": 176723.34
     },
     {
       "item": "RM 4500 PSI(PCC) - D",
-      "qty": 104239.22,
-      "value": 38672831.96
+      "qty": 104239.22
     },
     {
       "item": "RM 3500 PSI(PCC) - D",
-      "qty": 82089.22,
-      "value": 29083392.1
+      "qty": 82089.22
     },
     {
       "item": "RM 4000 PSI(PCC)-R",
-      "qty": 79011.9,
-      "value": 28988033.5
+      "qty": 79011.9
     },
     {
       "item": "RM 3500 PSI(PCC)-R",
-      "qty": 77968.4,
-      "value": 28301335
+      "qty": 77968.4
     },
     {
       "item": "RM 4000 PSI(PCC) - N",
-      "qty": 63700,
-      "value": 24206000
+      "qty": 63700
     },
     {
       "item": "RM 5000 PSI(PCC) - D",
-      "qty": 56512,
-      "value": 21330733
+      "qty": 56512
     },
     {
       "item": "RM 3625 PSI(PCC)-R",
-      "qty": 52642,
-      "value": 18658990
+      "qty": 52642
     },
     {
       "item": "RM 4500 PSI(PCC)-R",
-      "qty": 48624.8,
-      "value": 18641482.4
+      "qty": 48624.8
     },
     {
       "item": "RM 4000 PSI(PCC) - G",
-      "qty": 48215,
-      "value": 17551721
+      "qty": 48215
     },
     {
       "item": "RM 5000 PSI(PCC) - G",
-      "qty": 44500,
-      "value": 15628500
+      "qty": 44500
     },
     {
       "item": "RM 2500 PSI(PCC) - N",
-      "qty": 36499,
-      "value": 13257145
+      "qty": 36499
     }
   ],
   "salesForce": [
@@ -267,14 +525,14 @@
       "qty": 27051.57
     },
     {
+      "name": "Moniruzzaman [Assistant Manager] [Marketing]",
+      "txns": 115,
+      "qty": 25345.66
+    },
+    {
       "name": "Jibon Chandra Nath\t [Senior Officer] [Marketing]",
       "txns": 92,
       "qty": 19616.25
-    },
-    {
-      "name": "Moniruzzaman [Assistant Manager] [Marketing]",
-      "txns": 90,
-      "qty": 19377.39
     },
     {
       "name": "Mohammad Shahadat Hossan Rifat [Senior Officer] [Marketing]",

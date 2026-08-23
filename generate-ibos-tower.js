@@ -70,7 +70,7 @@ footer{color:#475569;font-size:0.68rem;text-align:center;padding:20px}
   <span class="badge live">● iBOS ERP Data</span>
 </div>
 <div class="container" id="root"></div>
-<footer>Source: iBOS ERP archive (DWH) · ARMCL = BU 175 · ${data.meta.period} · Framework: Akij Resource — Sales Management OS</footer>
+<footer>Source: iBOS ERP archive (DWH) + Official Google Sheet · ARMCL = BU 175 · ${data.meta.period} · Framework: Akij Resource — Sales Management OS</footer>
 <script>
 // ===== Embedded iBOS ERP data (collected offline, baked into this page) =====
 var DATA = ${JSON.stringify(data)};
@@ -88,28 +88,28 @@ function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;')
 function render(d){
   var root=document.getElementById('root');
   root.innerHTML='';
-  var k=d.kpi;
+  var k=d.kpi, o=d.official;
   document.getElementById('subtitle').textContent = d.meta.company+' · '+d.meta.period+' · '+d.meta.source;
 
   var cards=[
+    {l:'Monthly Target (CFT)',v:fmt(o.monthlyTarget),c:'blue'},
+    {l:'Sales Till Date (CFT)',v:fmt(o.salesTillDate),c:rag(o.achivPct,95,80)},
+    {l:'Achievement %',v:pct(o.achivPct),c:rag(o.achivPct,95,80)},
+    {l:'Logical Sales (CFT)',v:fmt(o.logicalSales),c:'blue'},
+    {l:'Logical Achiv %',v:pct(o.logicalAchivPct),c:rag(o.logicalAchivPct,95,80)},
+    {l:'RADS (CFT/day)',v:fmt(o.rads),c:o.rads>=o.targetADS?'green':o.rads>=o.targetADS*0.85?'amber':'red'},
     {l:'Sales Orders',v:fmt(k.salesOrders),c:'blue'},
     {l:'Order Value (BDT)',v:fmt(k.salesOrderValue),c:'blue'},
-    {l:'Avg Order Value',v:fmt(k.avgOrderValue),c:'blue'},
-    {l:'Invoices',v:fmt(k.invoices),c:'blue'},
-    {l:'Invoice Qty (CFT)',v:fmt(k.invoiceQty),c:'blue'},
-    {l:'Deliveries',v:fmt(k.deliveries),c:'blue'},
-    {l:'Delivery Qty (CFT)',v:fmt(k.deliveryQty),c:'blue'},
+    {l:'Invoices / Qty',v:fmt(k.invoices)+' / '+fmt(k.invoiceQty)+' CFT',c:'blue'},
+    {l:'Deliveries / Qty',v:fmt(k.deliveries)+' / '+fmt(k.deliveryQty)+' CFT',c:'blue'},
     {l:'Delivery Value (BDT)',v:fmt(k.deliveryValue),c:'blue'},
     {l:'Collection (BDT)',v:fmt(k.collection),c:rag(k.collectionPct,80,60)},
     {l:'Collection %',v:pct(k.collectionPct),c:rag(k.collectionPct,80,60)},
     {l:'Lifting %',v:pct(k.liftingPct),c:rag(k.liftingPct,80,60)},
     {l:'Coverage %',v:pct(k.coveragePct),c:rag(k.coveragePct,50,30)},
     {l:'Active Customers',v:fmt(k.activeCustomers),c:'blue'},
-    {l:'Customer Universe',v:fmt(k.universe),c:'blue'},
     {l:'Sales Force',v:fmt(k.salesForce),c:'blue'},
-    {l:'Plants',v:fmt(k.plantCount),c:'blue'},
-    {l:'Product Grades',v:fmt(k.gradeCount),c:'blue'},
-    {l:'Delivery Days',v:d.daily.length,c:'blue'}
+    {l:'Plants / Grades',v:fmt(k.plantCount)+' / '+fmt(k.gradeCount),c:'blue'}
   ];
   var kpiSec=document.createElement('div'); kpiSec.className='kpi-grid';
   kpiSec.innerHTML=cards.map(function(x){return '<div class="kpi '+x.c+'"><div class="lbl">'+x.l+'</div><div class="val">'+x.v+'</div></div>';}).join('');
@@ -125,6 +125,22 @@ function render(d){
     ['MARGIN','amber'],['STOCK','amber'],['DATA','blue']
   ].map(function(x){return '<div class="g"><span>'+x[0]+'</span><span class="dot '+x[1]+'"></span></div>';}).join('');
   root.appendChild(gs);
+
+  // Target vs Achievement + employee table (official tracker)
+  var r0=document.createElement('div'); r0.className='row'; root.appendChild(r0);
+  var bTgt=document.createElement('div'); bTgt.className='box'; r0.appendChild(bTgt);
+  var ach=o.achivPct;
+  bTgt.innerHTML='<h3>Target vs Achievement <span class="rag '+rag(ach,95,80)+'">'+pct(ach)+'</span></h3>'+
+    bar('Sales Till Date',o.salesTillDate,o.monthlyTarget,rag(ach,95,80),fmt(o.salesTillDate)+' / '+fmt(o.monthlyTarget)+' CFT')+
+    bar('Remaining',o.remainingSales,o.monthlyTarget,'slate',fmt(o.remainingSales)+' CFT')+
+    bar('Logical Sales',o.logicalSales,o.monthlyTarget,'green',fmt(o.logicalSales)+' CFT ('+pct(o.logicalAchivPct)+')')+
+    '<div class="note">RADS '+fmt(o.rads)+' CFT/day · Target ADS '+fmt(o.targetADS)+' · Present ADS '+fmt(o.presentADS)+' · Days '+o.daysConsumed+'/'+(o.daysConsumed+o.daysRemaining)+' · Source: Official Google Sheet</div>';
+
+  var bEmp=document.createElement('div'); bEmp.className='box'; r0.appendChild(bEmp);
+  var sorted=o.employees.slice().sort(function(a,b){return b.salesTillDate-a.salesTillDate;});
+  bEmp.innerHTML='<h3>Sales Force — Target vs Achievement (Official)</h3><div style="overflow-x:auto"><table><thead><tr><th>Employee</th><th>Designation</th><th>Target</th><th>Sales</th><th>Ach %</th></tr></thead><tbody>'+
+    sorted.map(function(e){return '<tr><td>'+esc(e.name)+'</td><td>'+esc(e.designation)+'</td><td class="num">'+fmt(e.monthlyTarget)+'</td><td class="num">'+fmt(e.salesTillDate)+'</td><td class="num">'+pct(e.achivPct)+'</td></tr>';}).join('')+
+    '</tbody></table></div>';
 
   var r1=document.createElement('div'); r1.className='row'; root.appendChild(r1);
   var bDaily=document.createElement('div'); bDaily.className='box'; r1.appendChild(bDaily);

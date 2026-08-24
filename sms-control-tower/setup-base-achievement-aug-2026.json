@@ -2,49 +2,61 @@
   "meta": {
     "report": "Set Up Base Achievement",
     "company": "Akij Ready Mix Concrete Ltd",
-    "period": "August 2026 (MTD to 24 Aug)",
-    "source": "https://erp.ibos.io/sales-management/report/setupbaseachivement",
-    "captured": "2026-08-24T04:35:27.354Z"
+    "period": "August 2026 (MTD)",
+    "source": "iBOS ERP live report (setupbaseachivement) — captured via browser",
+    "captured": "2026-08-24T05:20:48.156Z"
+  },
+  "grandTotal": {
+    "target": 1230000,
+    "oneDay": 17301.77,
+    "monthlyQty": 836088.7800000001,
+    "monthlySales": 250840801.27000004,
+    "collection": 216849962.60000002,
+    "trt": 372690000,
+    "trt70": 354055500,
+    "creditReal": 146.79
   },
   "totals": {
-    "targetQty": 795000,
-    "monthlyQty": 834411.3,
-    "monthlySales": 260653177.21,
-    "collection": 216349962.60000002,
-    "achievementPct": 104.96,
-    "collectionVsSalesPct": 83
+    "monthlyTargetCFT": 1230000,
+    "monthlyQty": 836088.7800000001,
+    "monthlySalesBDT": 250840801.27000004,
+    "collectionBDT": 216849962.60000002,
+    "achievementPct": 67.97,
+    "collectionVsSalesPct": 86.45,
+    "trt": 372690000,
+    "activeCustomers": 238
   },
   "byPerson": [
     {
       "name": "Hakim",
       "target": 255000,
-      "qty": 310065.87,
-      "sales": 88208462.74000001,
+      "qty": 310313.08,
+      "sales": 88309818.84,
       "coll": 64781018.620000005,
-      "achivPct": 121.6
+      "achivPct": 121.7
     },
     {
       "name": "Md. Sazib Miah",
       "target": 150000,
-      "qty": 221706.13999999998,
-      "sales": 73426298.29,
+      "qty": 222518.38999999998,
+      "sales": 64678348.73,
       "coll": 65786682,
-      "achivPct": 147.8
+      "achivPct": 148.3
     },
     {
       "name": "Abul Hasnat",
       "target": 290000,
-      "qty": 232947.31000000008,
-      "sales": 73667445.78,
+      "qty": 233565.33000000005,
+      "sales": 72501663.3,
       "coll": 62967713.980000004,
-      "achivPct": 80.3
+      "achivPct": 80.5
     },
     {
       "name": "Chittagong",
       "target": 100000,
       "qty": 69691.98,
       "sales": 25350970.400000002,
-      "coll": 22576255,
+      "coll": 23076255,
       "achivPct": 69.7
     },
     {
@@ -60,22 +72,22 @@
     {
       "team": "Team C",
       "target": 255000,
-      "qty": 310065.87,
-      "sales": 88208462.74000001,
+      "qty": 310313.08,
+      "sales": 88309818.84,
       "coll": 64586018.620000005
     },
     {
       "team": "Team B",
       "target": 150000,
-      "qty": 221706.13999999998,
-      "sales": 73426298.29,
+      "qty": 222518.38999999998,
+      "sales": 64678348.73,
       "coll": 65786682
     },
     {
       "team": "Team A",
       "target": 290000,
-      "qty": 232947.31000000008,
-      "sales": 73667445.78,
+      "qty": 233565.33000000005,
+      "sales": 72501663.3,
       "coll": 62967713.980000004
     },
     {
@@ -90,7 +102,7 @@
       "target": 100000,
       "qty": 69691.98,
       "sales": 25350970.400000002,
-      "coll": 22576255
+      "coll": 23076255
     },
     {
       "team": "Dhaka South",
@@ -132,16 +144,6 @@
       "collection": 5600000
     },
     {
-      "customer": "MAWNA FASHIONS LIMITED",
-      "person": "Md. Sazib Miah(Enroll:561315)",
-      "team": "Team B",
-      "targetQty": 0,
-      "monthlyQty": 24923.64,
-      "monthlySales": 9040483.12,
-      "achvPct": 0,
-      "collection": 0
-    },
-    {
       "customer": "SQUARE TOILETRIES LIMITED",
       "person": "Abul Hasnat(Enroll: 562101)",
       "team": "Team A",
@@ -159,7 +161,7 @@
       "monthlyQty": 16629.41,
       "monthlySales": 5953328.78,
       "achvPct": 0,
-      "collection": 3770000
+      "collection": 4270000
     },
     {
       "customer": "BEST WOOL SWEATERS LIMITED",
@@ -300,6 +302,16 @@
       "monthlySales": 2828028.6,
       "achvPct": 0,
       "collection": 2550650
+    },
+    {
+      "customer": "Urban Next Properties Ltd",
+      "person": "Hakim (ACRMC Territory)",
+      "team": "Team C",
+      "targetQty": 0,
+      "monthlyQty": 7914.48,
+      "monthlySales": 2803441.35,
+      "achvPct": 0,
+      "collection": 1173250
     }
   ]
 }

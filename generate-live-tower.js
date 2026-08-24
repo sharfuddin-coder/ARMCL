@@ -163,8 +163,8 @@ function render(gl, days, dayTotal){
     {l:'Monthly Target (CFT)',v:fmt(s.targetQty||target),c:'blue'},
     {l:'Sales Till Date (CFT)',v:fmt(s.monthlyQty),c:rag(ach,95,80)},
     {l:'Achievement %',v:pct(ach),c:rag(ach,95,80)},
-    {l:'Monthly Sales (BDT)',v:fmt(s.monthlySales),c:'blue'},
-    {l:'Collection (BDT)',v:fmt(s.collection),c:rag(s.collectionVsSalesPct,80,60)},
+    {l:'Monthly Sales (BDT)',v:fmt(s.monthlySalesBDT),c:'blue'},
+    {l:'Collection (BDT)',v:fmt(s.collectionBDT),c:rag(s.collectionVsSalesPct,80,60)},
     {l:'Collection vs Sales %',v:pct(s.collectionVsSalesPct),c:rag(s.collectionVsSalesPct,80,60)},
     {l:'RADS (CFT/day)',v:fmt(cleanNum(gl['RADS'])),c:'blue'},
     {l:'Target ADS',v:fmt(cleanNum(gl['Target ADS'])),c:'blue'},
@@ -230,8 +230,8 @@ function render(gl, days, dayTotal){
 
   var bColl=document.createElement('div'); bColl.className='box'; r3.appendChild(bColl);
   bColl.innerHTML='<h3>Collection Summary (iBOS)</h3>'+
-    bar('Collection',s.collection,s.monthlySales,rag(s.collectionVsSalesPct,80,60),fmt(s.collection)+' BDT')+
-    '<div class="note">Collected '+fmt(s.collection)+' BDT vs Sales '+fmt(s.monthlySales)+' BDT ('+pct(s.collectionVsSalesPct)+')<br>Source: iBOS Setup Base Achievement report.</div>';
+    bar('Collection',s.collectionBDT,s.monthlySalesBDT,rag(s.collectionVsSalesPct,80,60),fmt(s.collectionBDT)+' BDT')+
+    '<div class="note">Collected '+fmt(s.collectionBDT)+' BDT vs Sales '+fmt(s.monthlySalesBDT)+' BDT ('+pct(s.collectionVsSalesPct)+')<br>Source: iBOS Setup Base Achievement report.</div>';
 }
 
 function load(){

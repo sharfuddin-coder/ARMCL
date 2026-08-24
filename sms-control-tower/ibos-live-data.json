@@ -1,0 +1,434 @@
+{
+  "meta": {
+    "title": "ARMCL Live SMS Control Tower — iBOS ERP",
+    "company": "Akij Ready Mix Concrete Ltd (ARMCL)",
+    "source": "iBOS ERP archive (DWH) · ARMCL = BU 175 · 2026-08-24T05:12:29.183Z",
+    "period": "August 2026 (MTD)"
+  },
+  "official": {
+    "monthlyTargetCFT": 1230000,
+    "salesTillDate": 818787,
+    "achivPct": 67,
+    "logicalSales": 912581,
+    "logicalAchivPct": 74,
+    "rads": 51402,
+    "targetADS": 39677,
+    "presentADS": 35599.44,
+    "remaining": 411213,
+    "daysConsumed": 0,
+    "daysRemaining": 8,
+    "employees": [
+      {
+        "name": "Abul Hasnat",
+        "dg": "Manager",
+        "target": 90000,
+        "sales": 43680,
+        "ach": 49
+      },
+      {
+        "name": "Md. Sazib Miah",
+        "dg": "Manager",
+        "target": 90000,
+        "sales": 44468,
+        "ach": 49
+      },
+      {
+        "name": "Abdul Hakim",
+        "dg": "Deputy Manager",
+        "target": 80000,
+        "sales": 106777,
+        "ach": 133
+      },
+      {
+        "name": "Anwar Hossain",
+        "dg": "Deputy Manager",
+        "target": 80000,
+        "sales": 45713,
+        "ach": 57
+      },
+      {
+        "name": "ASM Shahjalal Shakib",
+        "dg": "Asst. Manager",
+        "target": 70000,
+        "sales": 39775,
+        "ach": 57
+      },
+      {
+        "name": "Amanullah",
+        "dg": "Asst. Manager",
+        "target": 70000,
+        "sales": 16699,
+        "ach": 24
+      },
+      {
+        "name": "Rezaul Haq",
+        "dg": "Asst. Manager",
+        "target": 70000,
+        "sales": 54252,
+        "ach": 78
+      },
+      {
+        "name": "Ripon Gazi",
+        "dg": "Asst. Manager",
+        "target": 70000,
+        "sales": 33091,
+        "ach": 47
+      },
+      {
+        "name": "Moniruzzaman",
+        "dg": "Asst. Manager",
+        "target": 70000,
+        "sales": 61668,
+        "ach": 88
+      },
+      {
+        "name": "Azijul Islam Sojib",
+        "dg": "Sr. Officer",
+        "target": 115000,
+        "sales": 87009,
+        "ach": 76
+      },
+      {
+        "name": "MD Mostaq Mahmud",
+        "dg": "Sr. Officer",
+        "target": 60000,
+        "sales": 83830,
+        "ach": 140
+      },
+      {
+        "name": "Azizul Islam",
+        "dg": "Sr. Officer",
+        "target": 60000,
+        "sales": 64573,
+        "ach": 108
+      },
+      {
+        "name": "Md. Hasanur Rahman",
+        "dg": "Sr. Officer",
+        "target": 60000,
+        "sales": 55056,
+        "ach": 92
+      },
+      {
+        "name": "Md Shahadat Hossan Rifat",
+        "dg": "Sr. Officer",
+        "target": 40000,
+        "sales": 9106,
+        "ach": 23
+      },
+      {
+        "name": "Jibon Chandra Nath",
+        "dg": "Sr. Officer",
+        "target": 60000,
+        "sales": 55624,
+        "ach": 93
+      },
+      {
+        "name": "Raju Dev Nath",
+        "dg": "Sr. Officer",
+        "target": 40000,
+        "sales": 4962,
+        "ach": 12
+      },
+      {
+        "name": "Riyan Khaled Sharif",
+        "dg": "Officer",
+        "target": 40000,
+        "sales": 12505,
+        "ach": 31
+      },
+      {
+        "name": "ARMCL Project 1 (CSI Chittagong)",
+        "dg": "Project",
+        "target": 65000,
+        "sales": 0,
+        "ach": 0
+      }
+    ]
+  },
+  "kpi": {
+    "revenueTargetBDT": 1747469076,
+    "revenueBDT": -308110470,
+    "salesOrders": 382,
+    "salesOrderValue": 418437186,
+    "avgOrderValue": 1095385,
+    "invoices": 2605,
+    "invoiceQty": 576340,
+    "deliveries": 3694,
+    "deliveryQty": 810919,
+    "deliveryValue": 299348382,
+    "collection": 315633072,
+    "collectionPct": 105.4,
+    "activeCustomers": 174,
+    "universe": 3622,
+    "coveragePct": 4.8,
+    "orderQty": 20683511,
+    "deliveredQty": 14361659,
+    "liftingPct": 69.4,
+    "gradeCount": 12,
+    "plantCount": 5,
+    "salesForce": 17
+  },
+  "daily": [
+    {
+      "date": "2026-08-01",
+      "qty": 16739.74
+    },
+    {
+      "date": "2026-08-02",
+      "qty": 36232.87
+    },
+    {
+      "date": "2026-08-03",
+      "qty": 34618.38
+    },
+    {
+      "date": "2026-08-04",
+      "qty": 22573.79
+    },
+    {
+      "date": "2026-08-05",
+      "qty": 31802.18
+    },
+    {
+      "date": "2026-08-06",
+      "qty": 20556.89
+    },
+    {
+      "date": "2026-08-07",
+      "qty": 34216.92
+    },
+    {
+      "date": "2026-08-08",
+      "qty": 35561.82
+    },
+    {
+      "date": "2026-08-09",
+      "qty": 26960.33
+    },
+    {
+      "date": "2026-08-10",
+      "qty": 24737.6
+    },
+    {
+      "date": "2026-08-11",
+      "qty": 39474.54
+    },
+    {
+      "date": "2026-08-12",
+      "qty": 28589.79
+    },
+    {
+      "date": "2026-08-13",
+      "qty": 37696.71
+    },
+    {
+      "date": "2026-08-14",
+      "qty": 53671.77
+    },
+    {
+      "date": "2026-08-15",
+      "qty": 39157.97
+    },
+    {
+      "date": "2026-08-16",
+      "qty": 43121.02
+    },
+    {
+      "date": "2026-08-17",
+      "qty": 45553.48
+    },
+    {
+      "date": "2026-08-18",
+      "qty": 41446.99
+    },
+    {
+      "date": "2026-08-19",
+      "qty": 34034.37
+    },
+    {
+      "date": "2026-08-20",
+      "qty": 46657.03
+    },
+    {
+      "date": "2026-08-21",
+      "qty": 38561.15
+    },
+    {
+      "date": "2026-08-22",
+      "qty": 33440.83
+    },
+    {
+      "date": "2026-08-23",
+      "qty": 30169.19
+    },
+    {
+      "date": "2026-08-24",
+      "qty": 15343.77
+    }
+  ],
+  "byPlant": [
+    {
+      "name": "ARMCL Dhour Plant",
+      "qty": 421554.06,
+      "value": 155180900.15
+    },
+    {
+      "name": "ARMCL Rupgonj Plant",
+      "qty": 234230.14,
+      "value": 86702369.2
+    },
+    {
+      "name": "ARMCL Gazipur Plant\t",
+      "qty": 111320.39,
+      "value": 41001758.95
+    },
+    {
+      "name": "ARMCL Narayanganj Plant",
+      "qty": 24872.92,
+      "value": 9207945.4
+    },
+    {
+      "name": "ARMCL Chittagong Plant",
+      "qty": 18941.62,
+      "value": 7255408.36
+    }
+  ],
+  "gradeMix": [
+    {
+      "item": "RM 4000 PSI(PCC) - D",
+      "qty": 176723.34
+    },
+    {
+      "item": "RM 4500 PSI(PCC) - D",
+      "qty": 104239.22
+    },
+    {
+      "item": "RM 3500 PSI(PCC) - D",
+      "qty": 85317.22
+    },
+    {
+      "item": "RM 4000 PSI(PCC)-R",
+      "qty": 79011.9
+    },
+    {
+      "item": "RM 3500 PSI(PCC)-R",
+      "qty": 77968.4
+    },
+    {
+      "item": "RM 4000 PSI(PCC) - N",
+      "qty": 63700
+    },
+    {
+      "item": "RM 5000 PSI(PCC) - D",
+      "qty": 56512
+    },
+    {
+      "item": "RM 3625 PSI(PCC)-R",
+      "qty": 52642
+    },
+    {
+      "item": "RM 4500 PSI(PCC)-R",
+      "qty": 48624.8
+    },
+    {
+      "item": "RM 4000 PSI(PCC) - G",
+      "qty": 48215
+    },
+    {
+      "item": "RM 5000 PSI(PCC) - G",
+      "qty": 44500
+    },
+    {
+      "item": "RM 2500 PSI(PCC) - N",
+      "qty": 36499
+    }
+  ],
+  "salesForce": [
+    {
+      "name": "Azijul Islam Sojib [Senior Officer] [Marketing]",
+      "txns": 391,
+      "qty": 86271.25
+    },
+    {
+      "name": "Md. Abdul Hakim [Deputy Manager] [Marketing]",
+      "txns": 348,
+      "qty": 83209.28
+    },
+    {
+      "name": "Md. Abul Hasnat [Manager] [Marketing]",
+      "txns": 232,
+      "qty": 53642.77
+    },
+    {
+      "name": "Md. Azizul Islam [Senior Officer] [Marketing]",
+      "txns": 315,
+      "qty": 52489.57
+    },
+    {
+      "name": "Md. Amanullah [Assistant Manager] [Marketing]",
+      "txns": 163,
+      "qty": 39108.22
+    },
+    {
+      "name": "A.S.M Shah Jalal [Assistant Manager] [Marketing]",
+      "txns": 143,
+      "qty": 34384.46
+    },
+    {
+      "name": "Md. Anwar Hossan [Deputy Manager] [Marketing]",
+      "txns": 133,
+      "qty": 30969.93
+    },
+    {
+      "name": "Md. Mostaq Mahmud [Senior Officer] [Marketing]",
+      "txns": 145,
+      "qty": 30719.05
+    },
+    {
+      "name": "Rezaul Haq [Assistant Manager] [Marketing]",
+      "txns": 134,
+      "qty": 29591.83
+    },
+    {
+      "name": "Md. Sazib Miah [Manager] [Marketing]",
+      "txns": 128,
+      "qty": 28251.9
+    },
+    {
+      "name": "Md. Hasanur Rahman [Senior Officer] [Marketing]",
+      "txns": 123,
+      "qty": 27527.06
+    },
+    {
+      "name": "Moniruzzaman [Assistant Manager] [Marketing]",
+      "txns": 117,
+      "qty": 25801.94
+    },
+    {
+      "name": "Jibon Chandra Nath\t [Senior Officer] [Marketing]",
+      "txns": 92,
+      "qty": 19616.25
+    },
+    {
+      "name": "Mohammad Shahadat Hossan Rifat [Senior Officer] [Marketing]",
+      "txns": 60,
+      "qty": 15660.480002
+    },
+    {
+      "name": "Md. Ripon Gazi [Assistant Manager] [Marketing]",
+      "txns": 46,
+      "qty": 9448.96
+    },
+    {
+      "name": "Riyan Khaled Sharif  [Officer] [Marketing]",
+      "txns": 30,
+      "qty": 6685.21
+    },
+    {
+      "name": "Tahmidul Islam Sohan [Officer] [Marketing]",
+      "txns": 4,
+      "qty": 861.65
+    }
+  ]
+}

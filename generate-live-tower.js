@@ -116,8 +116,11 @@ function loadSheet(gid, cb){
   document.body.appendChild(s);
 }
 function tableToArrays(table){
-  return { cols:(table.cols||[]).map(function(c){return c.label||'';}),
-    rows:(table.rows||[]).map(function(r){return (r.c||[]).map(function(c){return c?(c.f!==undefined?c.f:(c.v!==undefined?c.v:'')):'';});}); };
+  var cols = (table.cols || []).map(function(c){ return c.label || ''; });
+  var rows = (table.rows || []).map(function(r){
+    return (r.c || []).map(function(c){ return c ? (c.f !== undefined ? c.f : (c.v !== undefined ? c.v : '')) : ''; });
+  });
+  return { cols: cols, rows: rows };
 }
 function parseTarget(t){
   var d=tableToArrays(t), emp=[], gl={};
@@ -233,6 +236,9 @@ function render(gl, days, dayTotal){
 
 function load(){
   document.getElementById('err').style.display='none';
+  // Render embedded iBOS data immediately (always visible)
+  render({}, [], 0);
+  // Then refresh with live Google Sheet data when available
   loadSheet(GID_TARGET, function(t1){
     var p = parseTarget(t1);
     window.__targetEmp = p.emp;

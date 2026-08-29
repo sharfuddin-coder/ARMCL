@@ -1,10 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-// 1. iBOS ERP Setup Base Achievement (exact ERP report data - captured from live screen)
-const sba = JSON.parse(fs.readFileSync(path.join(__dirname, 'sms-control-tower', 'setup-base-achievement-aug-2026.json'), 'utf8'));
-// 2. Operational panels (DWH)
-const panels = JSON.parse(fs.readFileSync(path.join(__dirname, 'sms-control-tower', 'august-ibos-panels.json'), 'utf8'));
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'sms-control-tower', 'august-live-data.json'), 'utf8'));
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -77,10 +74,9 @@ footer{color:#475569;font-size:0.68rem;text-align:center;padding:20px}
   </div>
 </div>
 <div class="container" id="root"></div>
-<footer>Source: iBOS ERP report (setupbaseachivement) + DWH panels · ARMCL = BU 175 · August 2026 · Framework: Akij Resource — Sales Management OS</footer>
+<footer>Source: iBOS ERP archive (DWH) · ARMCL = BU 175 · ${data.meta.period} · Data through ${data.meta.dataThrough} · Framework: Akij Resource — Sales Management OS</footer>
 <script>
-var SBA = ${JSON.stringify(sba)};
-var PAN = ${JSON.stringify(panels)};
+var DATA = ${JSON.stringify(data)};
 
 function num(n){ return (n===null||n===undefined||isNaN(n))?0:Number(n); }
 function fmt(n){ return Math.round(num(n)).toLocaleString('en-US'); }
@@ -92,27 +88,30 @@ function bar(label,val,total,cls,show){
 }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
-function render(){
+function render(d){
   var root=document.getElementById('root');
   root.innerHTML='';
-  var t=SBA.totals;
-  document.getElementById('subtitle').textContent = 'Akij Ready Mix Concrete Ltd (ARMCL) · August 2026 MTD · iBOS ERP report + DWH panels · Captured '+SBA.meta.captured.slice(0,10);
+  var k=d.kpi, o=d.official;
+  var revAch = k.revenueBDT>0 && k.salesOrderValue>0 ? k.salesOrderValue/k.revenueBDT*100 : 0;
+  document.getElementById('subtitle').textContent = d.meta.company+' · '+d.meta.period+' · Data through '+d.meta.dataThrough+' · Collected '+d.meta.collected.slice(0,16).replace('T',' ');
 
   var cards=[
-    {l:'Monthly Target (CFT)',v:fmt(t.monthlyTargetCFT),c:'blue'},
-    {l:'Sales Till Date (CFT)',v:fmt(t.monthlyQty),c:rag(t.achievementPct,95,80)},
-    {l:'Achievement %',v:pct(t.achievementPct),c:rag(t.achievementPct,95,80)},
-    {l:'Monthly Sales (BDT)',v:fmt(t.monthlySalesBDT),c:'blue'},
-    {l:'Collection (BDT)',v:fmt(t.collectionBDT),c:rag(t.collectionVsSalesPct,80,60)},
-    {l:'Collection vs Sales %',v:pct(t.collectionVsSalesPct),c:rag(t.collectionVsSalesPct,80,60)},
-    {l:'TRT (BDT)',v:fmt(t.trt),c:'blue'},
-    {l:'Active Customers',v:fmt(t.activeCustomers),c:'blue'},
-    {l:'Sales Persons',v:fmt(SBA.byPerson.length),c:'blue'},
-    {l:'Teams',v:fmt(SBA.byTeam.length),c:'blue'},
-    {l:'Delivery Qty (CFT)',v:fmt(PAN.delivery.qty),c:'blue'},
-    {l:'Delivery Value (BDT)',v:fmt(PAN.delivery.value),c:'blue'},
-    {l:'Coverage %',v:pct(PAN.coverage.active/PAN.coverage.universe*100),c:rag(PAN.coverage.active/PAN.coverage.universe*100,50,30)},
-    {l:'Plants / Grades',v:fmt(PAN.byPlant.length)+' / '+fmt(PAN.gradeMix.length),c:'blue'}
+    {l:'Revenue (Sales BDT)',v:fmt(k.revenueBDT),c:'blue'},
+    {l:'Sales Order Value (BDT)',v:fmt(k.salesOrderValue),c:'blue'},
+    {l:'Sales Orders',v:fmt(k.salesOrders),c:'blue'},
+    {l:'Active Customers',v:fmt(k.activeCustomers),c:'blue'},
+    {l:'Invoices',v:fmt(k.invoices),c:'blue'},
+    {l:'Invoice Qty (CFT)',v:fmt(k.invoiceQty),c:'blue'},
+    {l:'Deliveries',v:fmt(k.deliveries),c:'blue'},
+    {l:'Delivery Qty (CFT)',v:fmt(k.deliveryQty),c:'blue'},
+    {l:'Delivery Value (BDT)',v:fmt(k.deliveryValue),c:'blue'},
+    {l:'Collection (BDT)',v:fmt(k.collection),c:rag(k.collectionPct,80,60)},
+    {l:'Collection %',v:pct(k.collectionPct),c:rag(k.collectionPct,80,60)},
+    {l:'Lifting %',v:pct(k.liftingPct),c:rag(k.liftingPct,80,60)},
+    {l:'Coverage %',v:pct(k.coveragePct),c:rag(k.coveragePct,50,30)},
+    {l:'Sales Force',v:fmt(k.salesForce),c:'blue'},
+    {l:'Plants / Grades',v:fmt(k.plantCount)+' / '+fmt(k.gradeCount),c:'blue'},
+    {l:'Avg Order Value',v:fmt(k.avgOrderValue),c:'blue'}
   ];
   var kpiSec=document.createElement('div'); kpiSec.className='kpi-grid';
   kpiSec.innerHTML=cards.map(function(x){return '<div class="kpi '+x.c+'"><div class="lbl">'+x.l+'</div><div class="val">'+x.v+'</div></div>';}).join('');
@@ -120,79 +119,75 @@ function render(){
 
   var gs=document.createElement('div'); gs.className='guard';
   gs.innerHTML=[
-    ['SALES', rag(t.achievementPct,95,80)],
-    ['CASH', rag(t.collectionVsSalesPct,80,60)],
-    ['CREDIT', rag(t.collectionVsSalesPct,80,60)],
-    ['COVERAGE', rag(PAN.coverage.active/PAN.coverage.universe*100,50,30)],
-    ['SERVICE','amber'],['MARGIN','amber'],['STOCK','amber'],['DATA','blue']
+    ['SALES', k.salesOrderValue>0?'green':'amber'],
+    ['CASH', rag(k.collectionPct,80,60)],
+    ['CREDIT', rag(k.collectionPct,80,60)],
+    ['SERVICE', rag(k.liftingPct,80,60)],
+    ['COVERAGE', rag(k.coveragePct,50,30)],
+    ['MARGIN','amber'],['STOCK','amber'],['DATA','blue']
   ].map(function(x){return '<div class="g"><span>'+x[0]+'</span><span class="dot '+x[1]+'"></span></div>';}).join('');
   root.appendChild(gs);
 
-  // Row1: daily + target
+  // Row1: daily + official tracker
   var r1=document.createElement('div'); r1.className='row'; root.appendChild(r1);
   var bDaily=document.createElement('div'); bDaily.className='box'; r1.appendChild(bDaily);
-  var maxD=1; PAN.daily.forEach(function(x){if(x.qty>maxD)maxD=x.qty;});
+  var maxD=1; d.daily.forEach(function(x){if(x.qty>maxD)maxD=x.qty;});
   bDaily.innerHTML='<h3>Daily Delivery Trend (CFT)</h3><div class="daily">'+
-    PAN.daily.map(function(x){var h=Math.max(2,x.qty/maxD*100);
+    d.daily.map(function(x){var h=Math.max(2,x.qty/maxD*100);
       return '<div class="day" title="'+x.date+'"><div class="fill" style="height:'+h+'%;background:'+(x.qty>0?'#3b82f6':'#1e293b')+'"></div><div class="tt">'+fmt(x.qty/1000)+'k</div><div class="dl">'+x.date.slice(8,10)+'</div></div>';}).join('')+
-    '</div><div class="note">'+PAN.daily.length+' delivery days · Total '+fmt(PAN.delivery.qty)+' CFT</div>';
+    '</div><div class="note">'+d.daily.length+' delivery days · Total '+fmt(k.deliveryQty)+' CFT</div>';
 
-  var bTgt=document.createElement('div'); bTgt.className='box'; r1.appendChild(bTgt);
-  var ach=t.achievementPct;
-  bTgt.innerHTML='<h3>Target vs Achievement <span class="rag '+rag(ach,95,80)+'">'+pct(ach)+'</span></h3>'+
-    bar('Sales Till Date',t.monthlyQty,t.monthlyTargetCFT,rag(ach,95,80),fmt(t.monthlyQty)+' / '+fmt(t.monthlyTargetCFT)+' CFT')+
-    bar('Collection vs Sales',t.collectionBDT,t.monthlySalesBDT,rag(t.collectionVsSalesPct,80,60),fmt(t.collectionBDT)+' / '+fmt(t.monthlySalesBDT)+' BDT')+
-    '<div class="note">TRT (target revenue) '+fmt(t.trt)+' BDT · Source: iBOS ERP setupbaseachivement report</div>';
+  var bOff=document.createElement('div'); bOff.className='box'; r1.appendChild(bOff);
+  var ach=o.achivPct;
+  bOff.innerHTML='<h3>Official Tracker <span class="rag '+rag(ach,95,80)+'">'+pct(ach)+'</span></h3>'+
+    bar('Sales Till Date',o.salesTillDate,o.monthlyTargetCFT,rag(ach,95,80),fmt(o.salesTillDate)+' / '+fmt(o.monthlyTargetCFT)+' CFT')+
+    '<div class="note">RADS '+fmt(o.rads)+' · Target ADS '+fmt(o.targetADS)+' · Days '+o.daysConsumed+'/'+(o.daysConsumed+o.daysRemaining)+'<br>Source: Official Google Sheet tracker</div>';
 
-  // Row2: person-wise + team-wise
+  // Row2: sales force + plants
   var r2=document.createElement('div'); r2.className='row'; root.appendChild(r2);
-  var bPerson=document.createElement('div'); bPerson.className='box'; r2.appendChild(bPerson);
-  var maxP=1; SBA.byPerson.forEach(function(x){if(x.qty>maxP)maxP=x.qty;});
-  bPerson.innerHTML='<h3>Sales Person Wise (Qty CFT)</h3>'+
-    SBA.byPerson.slice().sort(function(a,b){return b.qty-a.qty;}).map(function(x){
-      return bar(esc(x.name),x.qty,maxP,'blue',fmt(x.qty)+' · '+pct(x.achivPct));
-    }).join('')+
-    '<div class="note">Source: iBOS ERP report col "Region" (sales person)</div>';
+  var bForce=document.createElement('div'); bForce.className='box'; r2.appendChild(bForce);
+  var maxF=1; d.salesForce.forEach(function(x){if(x.qty>maxF)maxF=x.qty;});
+  bForce.innerHTML='<h3>Sales Force (iBOS)</h3>'+
+    d.salesForce.slice(0,10).map(function(x){return bar(esc(x.name),x.qty,maxF,'violet',fmt(x.qty)+' CFT');}).join('')+
+    '<div class="note">'+d.salesForce.length+' persons · Source: oms.tblSalesInvoiceArc.strSoldByName</div>';
 
-  var bTeam=document.createElement('div'); bTeam.className='box'; r2.appendChild(bTeam);
-  var maxT=1; SBA.byTeam.forEach(function(x){if(x.qty>maxT)maxT=x.qty;});
-  bTeam.innerHTML='<h3>Team Wise</h3>'+
-    SBA.byTeam.slice().sort(function(a,b){return b.qty-a.qty;}).map(function(x){
-      return bar(esc(x.team),x.qty,maxT,'violet',fmt(x.qty)+' CFT · coll '+fmt(x.coll));
-    }).join('');
-
-  // Row3: plants + grades
-  var r3=document.createElement('div'); r3.className='row2'; root.appendChild(r3);
-  var bPlant=document.createElement('div'); bPlant.className='box'; r3.appendChild(bPlant);
-  var maxPL=1; PAN.byPlant.forEach(function(x){if(x.qty>maxPL)maxPL=x.qty;});
+  var bPlant=document.createElement('div'); bPlant.className='box'; r2.appendChild(bPlant);
+  var maxP=1; d.byPlant.forEach(function(x){if(x.qty>maxP)maxP=x.qty;});
   bPlant.innerHTML='<h3>Plant-wise Delivery (CFT)</h3>'+
-    PAN.byPlant.map(function(x){return bar(esc(x.name.trim()),x.qty,maxPL,'blue',fmt(x.qty)+' CFT');}).join('');
+    d.byPlant.map(function(x){return bar(esc(x.name.trim()),x.qty,maxP,'blue',fmt(x.qty)+' CFT');}).join('');
 
+  // Row3: grades + collection
+  var r3=document.createElement('div'); r3.className='row2'; root.appendChild(r3);
   var bMix=document.createElement('div'); bMix.className='box'; r3.appendChild(bMix);
-  var maxM=1; PAN.gradeMix.forEach(function(x){if(x.qty>maxM)maxM=x.qty;});
+  var maxM=1; d.gradeMix.forEach(function(x){if(x.qty>maxM)maxM=x.qty;});
   bMix.innerHTML='<h3>Product / Grade Mix (CFT)</h3>'+
-    PAN.gradeMix.map(function(x){return bar(esc(x.item),x.qty,maxM,'slate',fmt(x.qty)+' CFT');}).join('');
+    d.gradeMix.map(function(x){return bar(esc(x.item),x.qty,maxM,'slate',fmt(x.qty)+' CFT');}).join('');
 
-  // Row4: top customers + coverage
+  var bColl=document.createElement('div'); bColl.className='box'; r3.appendChild(bColl);
+  var coll=k.collectionPct;
+  bColl.innerHTML='<h3>Collection vs Delivery Value <span class="rag '+rag(coll,80,60)+'">'+pct(coll)+'</span></h3>'+
+    bar('Collection',k.collection,k.deliveryValue,rag(coll,80,60),fmt(k.collection)+' BDT')+
+    '<div class="note">Trade Receivable journal vs delivered '+fmt(k.deliveryValue)+' BDT</div>';
+
+  // Row4: employee tracker + coverage
   var r4=document.createElement('div'); r4.className='row'; root.appendChild(r4);
-  var bTop=document.createElement('div'); bTop.className='box'; r4.appendChild(bTop);
-  bTop.innerHTML='<h3>Top 10 Customers (iBOS ERP)</h3><div style="overflow-x:auto"><table><thead><tr><th>Customer</th><th>Team</th><th>Qty</th><th>Sales</th><th>Collection</th></tr></thead><tbody>'+
-    SBA.topCustomers.slice(0,10).map(function(c){
-      return '<tr><td>'+esc(c.customer)+'</td><td>'+esc(c.team)+'</td><td class="num">'+fmt(c.monthlyQty)+'</td><td class="num">'+fmt(c.monthlySales)+'</td><td class="num">'+fmt(c.collection)+'</td></tr>';
+  var bEmp=document.createElement('div'); bEmp.className='box'; r4.appendChild(bEmp);
+  bEmp.innerHTML='<h3>Sales Force — Official Tracker</h3><div style="overflow-x:auto"><table><thead><tr><th>Employee</th><th>Designation</th><th>Target</th><th>Sales</th><th>Ach %</th></tr></thead><tbody>'+
+    (o.employees||[]).sort(function(a,b){return b.sales-a.sales;}).map(function(e){
+      return '<tr><td>'+esc(e.name)+'</td><td>'+esc(e.dg)+'</td><td class="num">'+fmt(e.target)+'</td><td class="num">'+fmt(e.sales)+'</td><td class="num">'+pct(e.ach)+'</td></tr>';
     }).join('')+'</tbody></table></div>';
 
   var bCov=document.createElement('div'); bCov.className='box'; r4.appendChild(bCov);
-  var cov=PAN.coverage;
-  var covPct=cov.universe>0?cov.active/cov.universe*100:0;
+  var covPct=k.coveragePct;
   bCov.innerHTML='<h3>Market Coverage <span class="rag '+rag(covPct,50,30)+'">'+pct(covPct)+'</span></h3>'+
-    bar('Active / Universe',cov.active,cov.universe,rag(covPct,50,30),cov.active+' / '+fmt(cov.universe))+
-    '<div class="note">'+fmt(cov.active)+' active customers of '+fmt(cov.universe)+' universe</div>';
+    bar('Active / Universe',k.activeCustomers,k.universe,rag(covPct,50,30),k.activeCustomers+' / '+fmt(k.universe))+
+    '<div class="note">'+fmt(k.activeCustomers)+' active of '+fmt(k.universe)+' customers</div>';
 }
 
-render();
+render(DATA);
 </script>
 </body>
 </html>
 `;
 fs.writeFileSync(path.join(__dirname, 'sms-control-tower', 'august-live-tower.html'), html, 'utf8');
-console.log('August live tower written: sms-control-tower/august-live-tower.html |', html.length, 'bytes');
+console.log('August live tower updated: sms-control-tower/august-live-tower.html |', html.length, 'bytes');
